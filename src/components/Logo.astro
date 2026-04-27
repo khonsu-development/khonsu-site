@@ -1,0 +1,15 @@
+---
+type Props = { class?: string };
+const { class: className } = Astro.props;
+---
+
+<span class:list={['inline-flex items-center gap-2 font-semibold tracking-tight', className]}>
+  <span
+    class="inline-grid h-8 w-8 place-items-center rounded-lg bg-white/10 ring-1 ring-white/15"
+    aria-hidden="true"
+  >
+    <span class="text-sm font-black">K</span>
+  </span>
+  <span>Khonsu Development</span>
+</span>
+

@@ -1,0 +1,53 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  --color-brand: oklch(0.72 0.16 265);
+  --color-brand2: oklch(0.74 0.18 330);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-brand) 35%, black);
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition;
+  }
+  .btn-primary {
+    @apply bg-white text-zinc-950 hover:bg-white/90;
+  }
+  .btn-secondary {
+    @apply bg-white/5 text-white ring-1 ring-white/10 hover:bg-white/10;
+  }
+  .card {
+    @apply rounded-2xl bg-white/5 ring-1 ring-white/10;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,104 @@
+---
+import '../styles/global.css';
+import Container from '../components/Container.astro';
+import Logo from '../components/Logo.astro';
+
+type Props = {
+  title: string;
+  description?: string;
+  canonicalPath?: string;
+};
+
+const { title, description, canonicalPath } = Astro.props;
+
+const site = {
+  name: 'Khonsu Development',
+  description:
+    description ??
+    'Modern educational apps that make learning niche topics immersive, fun, and accessible.',
+  url: (Astro.site?.toString() ?? 'https://www.khonsu.eu').replace(/\/$/, ''),
+};
+
+const canonicalUrl = canonicalPath ? new URL(canonicalPath, site.url).toString() : undefined;
+const ogImageUrl = `${site.url}/og.svg`;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{title}</title>
+    <meta name="description" content={site.description} />
+    {canonicalUrl ? <link rel="canonical" href={canonicalUrl} /> : null}
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={site.description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    {canonicalUrl ? <meta property="og:url" content={canonicalUrl} /> : null}
+    <meta property="og:image" content={ogImageUrl} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={site.description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+  </head>
+
+  <body class="min-h-screen bg-zinc-950 text-zinc-50 antialiased">
+    <a
+      href="#content"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-zinc-950"
+    >
+      Skip to content
+    </a>
+
+    <header class="sticky top-0 z-40 border-b border-white/10 bg-zinc-950/70 backdrop-blur">
+      <Container as="nav" class="flex h-16 items-center justify-between">
+        <a href="/" class="group inline-flex items-center gap-2">
+          <Logo class="text-sm" />
+        </a>
+
+        <div class="hidden items-center gap-6 text-sm text-zinc-200 sm:flex">
+          <a class="hover:text-white" href="/apps">Apps</a>
+          <a class="hover:text-white" href="/about">About</a>
+          <a class="hover:text-white" href="/press">Press</a>
+          <a class="hover:text-white" href="/contact">Contact</a>
+        </div>
+
+        <a
+          class="inline-flex items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-zinc-950 ring-1 ring-white/10 hover:bg-white/90"
+          href="/apps"
+        >
+          Explore apps
+        </a>
+      </Container>
+    </header>
+
+    <main id="content">
+      <slot />
+    </main>
+
+    <footer class="border-t border-white/10">
+      <Container class="py-10 text-sm text-zinc-300">
+        <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div class="flex items-center gap-3">
+            <Logo class="text-sm text-zinc-200" />
+          </div>
+
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <a class="hover:text-white" href="/privacy">Privacy</a>
+            <a class="hover:text-white" href="/terms">Terms</a>
+          </div>
+        </div>
+        <div class="mt-6 text-xs text-zinc-500">
+          © {new Date().getFullYear()} Khonsu Development. All rights reserved.
+        </div>
+      </Container>
+    </footer>
+  </body>
+</html>
+

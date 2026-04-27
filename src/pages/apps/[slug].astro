@@ -1,0 +1,59 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/Container.astro';
+
+export async function getStaticPaths() {
+  const apps = await getCollection('apps');
+  return apps.map((app) => ({
+    params: { slug: app.id.replace(/\.(md|mdx)$/, '') },
+    props: { app }
+  }));
+}
+
+const { app } = Astro.props;
+const slug = app.id.replace(/\.(md|mdx)$/, '');
+const { Content } = await render(app);
+---
+
+<BaseLayout title={`${app.data.name} — Khonsu Development`} canonicalPath={`/apps/${slug}`}>
+  <section class="py-12 sm:py-16">
+    <Container>
+      <div class="max-w-3xl">
+        <a class="text-sm font-semibold text-zinc-300 hover:text-white" href="/apps">← All apps</a>
+        <h1 class="mt-4 text-3xl font-black tracking-tight text-white sm:text-5xl">
+          {app.data.name}
+        </h1>
+        <p class="mt-4 text-lg text-zinc-200">{app.data.tagline}</p>
+
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          {app.data.googlePlayUrl ? (
+            <a
+              class="btn btn-primary"
+              href={app.data.googlePlayUrl}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Get it on Google Play
+            </a>
+          ) : null}
+          {app.data.appStoreUrl ? (
+            <a
+              class="btn btn-secondary"
+              href={app.data.appStoreUrl}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Download on the App Store
+            </a>
+          ) : null}
+        </div>
+
+        <article class="prose prose-invert mt-10 max-w-none prose-p:text-zinc-200 prose-li:text-zinc-200">
+          <Content />
+        </article>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
+

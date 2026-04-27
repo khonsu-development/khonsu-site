@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Khonsu Development — Educational apps for curious minds"
+  description="We craft engaging, educational mobile apps that help you dive deep into niche topics — immersive, fun, and accessible."
+  canonicalPath="/"
+>
+  <section class="relative overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 opacity-70">
+      <div class="absolute -top-32 left-1/2 h-[520px] w-[920px] -translate-x-1/2 rounded-full bg-gradient-to-tr from-indigo-500/20 via-fuchsia-500/20 to-amber-400/10 blur-3xl"></div>
+      <div class="absolute -bottom-40 left-1/2 h-[520px] w-[920px] -translate-x-1/2 rounded-full bg-gradient-to-tr from-emerald-400/10 via-cyan-400/10 to-indigo-500/10 blur-3xl"></div>
+    </div>
+
+    <div class="mx-auto w-full max-w-6xl px-5 py-16 sm:py-24">
+      <div class="max-w-2xl">
+        <p class="text-sm font-semibold tracking-wide text-zinc-300">
+          Learned anything fun today?
+        </p>
+        <h1 class="mt-4 text-4xl font-black tracking-tight text-white sm:text-6xl">
+          Beautiful apps for deep dives into niche worlds.
+        </h1>
+        <p class="mt-5 text-base leading-relaxed text-zinc-200 sm:text-lg">
+          From ancient alphabets to prehistoric giants and revolutionary ideas, Khonsu apps make
+          learning immersive, rewarding, and easy to pick up anywhere.
+        </p>
+
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <a
+            class="btn btn-primary"
+            href="/apps"
+          >
+            Discover our apps
+          </a>
+          <a
+            class="btn btn-secondary"
+            href="/about"
+          >
+            Why Khonsu?
+          </a>
+        </div>
+
+        <div class="mt-10 grid gap-4 sm:grid-cols-3">
+          <div class="card p-5">
+            <div class="text-sm font-semibold text-white">Expertly crafted</div>
+            <div class="mt-2 text-sm text-zinc-300">
+              Clear structure, careful research, and delightful presentation.
+            </div>
+          </div>
+          <div class="card p-5">
+            <div class="text-sm font-semibold text-white">Learn at your pace</div>
+            <div class="mt-2 text-sm text-zinc-300">
+              Five minutes or fifty — the experience fits your day.
+            </div>
+          </div>
+          <div class="card p-5">
+            <div class="text-sm font-semibold text-white">Interactive and fun</div>
+            <div class="mt-2 text-sm text-zinc-300">
+              Quizzes, exploration, and a sense of progress.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
