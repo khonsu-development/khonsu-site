@@ -37,17 +37,27 @@ const { Content } = await render(app);
               Get it on Google Play
             </a>
           ) : null}
-          {app.data.appStoreUrl ? (
-            <a
-              class="btn btn-secondary"
-              href={app.data.appStoreUrl}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Download on the App Store
-            </a>
-          ) : null}
         </div>
+
+        {app.data.privacyUrl || app.data.termsUrl || app.data.websiteUrl ? (
+          <div class="mt-6 flex flex-col gap-2 text-sm text-zinc-300 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
+            {app.data.websiteUrl ? (
+              <a class="font-semibold text-white hover:underline" href={app.data.websiteUrl}>
+                App microsite
+              </a>
+            ) : null}
+            {app.data.privacyUrl ? (
+              <a class="font-semibold text-white hover:underline" href={app.data.privacyUrl}>
+                App privacy policy
+              </a>
+            ) : null}
+            {app.data.termsUrl ? (
+              <a class="font-semibold text-white hover:underline" href={app.data.termsUrl}>
+                App terms &amp; conditions
+              </a>
+            ) : null}
+          </div>
+        ) : null}
 
         <article class="prose prose-invert mt-10 max-w-none prose-p:text-zinc-200 prose-li:text-zinc-200">
           <Content />

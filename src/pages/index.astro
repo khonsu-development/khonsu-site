@@ -1,5 +1,19 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/Container.astro';
+
+const allApps = await getCollection('apps');
+const order = [
+  'world-of-alphabets',
+  'world-of-dinosaurs',
+  'world-of-communism',
+  'freestyle-rap'
+] as const;
+
+const apps = order
+  .map((id) => allApps.find((a) => a.id === `${id}.mdx`))
+  .filter((a): a is NonNullable<typeof a> => Boolean(a));
 ---
 
 <BaseLayout
@@ -63,5 +77,38 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
       </div>
     </div>
+  </section>
+
+  <section class="border-t border-white/10 py-16 sm:py-20">
+    <Container>
+      <div class="max-w-2xl">
+        <h2 class="text-2xl font-black tracking-tight sm:text-4xl">Discover our apps</h2>
+        <p class="mt-4 text-zinc-300">
+          A growing “World of Apps” — one deep dive at a time, with clear writing, strong structure, and
+          plenty to explore.
+        </p>
+      </div>
+
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {apps.map((app) => (
+          <a
+            href={`/apps/${app.id.replace(/\.(md|mdx)$/, '')}`}
+            class="card group p-6 transition hover:bg-white/7"
+          >
+            <div class="text-lg font-bold tracking-tight text-white">{app.data.name}</div>
+            <div class="mt-2 text-sm leading-relaxed text-zinc-300">{app.data.tagline}</div>
+            <div class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white/90">
+              View details <span class="transition group-hover:translate-x-0.5">→</span>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <div class="mt-10">
+        <a class="btn btn-secondary" href="/apps">
+          Browse all apps
+        </a>
+      </div>
+    </Container>
   </section>
 </BaseLayout>
