@@ -5,15 +5,15 @@ Modern marketing site for Khonsu apps, built with Astro + Tailwind and deployed 
 ## Local development
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 ## Build
 
 ```bash
-npm run build
-npm run preview
+pnpm run build
+pnpm run preview
 ```
 
 The static output is generated in `dist/`.
@@ -25,7 +25,7 @@ The static output is generated in `dist/`.
 
 ## Cloudflare Pages
 
-- **Build command**: `npm run build`
+- **Build command**: `pnpm run build`
 - **Build output directory**: `dist`
 - **Node.js version**: `20` (or newer)
 

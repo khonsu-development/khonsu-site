@@ -4,14 +4,14 @@ This repo is a modern marketing site built with **Astro + Tailwind** and deploye
 
 ## Quick start
 
-- **Install**: `npm install`
-- **Dev**: `npm run dev`
-- **Build**: `npm run build`
-- **Preview**: `npm run preview`
+- **Install**: `pnpm install`
+- **Dev**: `pnpm run dev`
+- **Build**: `pnpm run build`
+- **Preview**: `pnpm run preview`
 
 Cloudflare Pages settings:
 
-- **Build command**: `npm run build`
+- **Build command**: `pnpm run build`
 - **Output directory**: `dist`
 - **Node.js**: `20` (or newer)
 
@@ -29,7 +29,7 @@ Cloudflare Pages settings:
 
 ## Before you say “done”
 
-- Run `npm run lint` and fix any errors.
-- Run `npm run build` and fix any errors.
-- If you touched UI/content, sanity-check with `npm run dev` or `npm run preview`.
+- Run `pnpm run lint` and fix any errors.
+- Run `pnpm run build` and fix any errors.
+- If you touched UI/content, sanity-check with `pnpm run dev` or `pnpm run preview`.
 - Ensure the `dist/` output is not committed unless the repo already does so (default: don’t commit build artifacts).
