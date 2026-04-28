@@ -1,10 +1,10 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Container from '../../components/Container.astro';
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/Container.astro";
 
-const apps = (await getCollection('apps')).sort((a, b) =>
-  a.data.name.localeCompare(b.data.name, 'en')
+const apps = (await getCollection("apps")).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name, "en"),
 );
 ---
 
@@ -14,26 +14,32 @@ const apps = (await getCollection('apps')).sort((a, b) =>
       <div class="max-w-2xl">
         <h1 class="text-3xl font-black tracking-tight sm:text-5xl">Apps</h1>
         <p class="mt-4 text-zinc-300">
-          Curated deep dives into niche topics — designed to be beautiful, fun, and confidently
-          informative.
+          Curated deep dives into niche topics — designed to be beautiful, fun,
+          and confidently informative.
         </p>
       </div>
 
       <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {apps.map((app) => (
-          <a
-            href={`/apps/${app.id.replace(/\.(md|mdx)$/, '')}`}
-            class="card group p-6 transition hover:bg-white/7"
-          >
-            <div class="text-lg font-bold tracking-tight text-white">{app.data.name}</div>
-            <div class="mt-2 text-sm leading-relaxed text-zinc-300">{app.data.tagline}</div>
-            <div class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white/90">
-              View details <span class="transition group-hover:translate-x-0.5">→</span>
-            </div>
-          </a>
-        ))}
+        {
+          apps.map((app) => (
+            <a
+              href={`/apps/${app.id.replace(/\.(md|mdx)$/, "")}`}
+              class="card group p-6 transition hover:bg-white/7"
+            >
+              <div class="text-lg font-bold tracking-tight text-white">
+                {app.data.name}
+              </div>
+              <div class="mt-2 text-sm leading-relaxed text-zinc-300">
+                {app.data.tagline}
+              </div>
+              <div class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white/90">
+                View details{" "}
+                <span class="transition group-hover:translate-x-0.5">→</span>
+              </div>
+            </a>
+          ))
+        }
       </div>
     </Container>
   </section>
 </BaseLayout>
-

@@ -1,7 +1,7 @@
 ---
-import '../styles/global.css';
-import Container from '../components/Container.astro';
-import Logo from '../components/Logo.astro';
+import "../styles/global.css";
+import Container from "../components/Container.astro";
+import Logo from "../components/Logo.astro";
 
 type Props = {
   title: string;
@@ -12,14 +12,16 @@ type Props = {
 const { title, description, canonicalPath } = Astro.props;
 
 const site = {
-  name: 'Khonsu Development',
+  name: "Khonsu Development",
   description:
     description ??
-    'Modern educational apps that make learning niche topics immersive, fun, and accessible.',
-  url: (Astro.site?.toString() ?? 'https://www.khonsu.eu').replace(/\/$/, ''),
+    "Modern educational apps that make learning niche topics immersive, fun, and accessible.",
+  url: (Astro.site?.toString() ?? "https://www.khonsu.eu").replace(/\/$/, ""),
 };
 
-const canonicalUrl = canonicalPath ? new URL(canonicalPath, site.url).toString() : undefined;
+const canonicalUrl = canonicalPath
+  ? new URL(canonicalPath, site.url).toString()
+  : undefined;
 const ogImageUrl = `${site.url}/og.svg`;
 ---
 
@@ -51,12 +53,14 @@ const ogImageUrl = `${site.url}/og.svg`;
   <body class="min-h-screen bg-zinc-950 text-zinc-50 antialiased">
     <a
       href="#content"
-      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-zinc-950"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-zinc-950"
     >
       Skip to content
     </a>
 
-    <header class="sticky top-0 z-40 border-b border-white/10 bg-zinc-950/70 backdrop-blur">
+    <header
+      class="sticky top-0 z-40 border-b border-white/10 bg-zinc-950/70 backdrop-blur"
+    >
       <Container as="nav" class="flex h-16 items-center justify-between">
         <a href="/" class="group inline-flex items-center gap-2">
           <Logo class="text-sm" />
@@ -84,14 +88,18 @@ const ogImageUrl = `${site.url}/og.svg`;
 
     <footer class="border-t border-white/10">
       <Container class="py-10 text-sm text-zinc-300">
-        <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <div
+          class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
+        >
           <div class="flex items-center gap-3">
             <Logo class="text-sm text-zinc-200" />
           </div>
 
           <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
             <a class="hover:text-white" href="/privacy-policy">Privacy</a>
-            <a class="hover:text-white" href="/terms-and-conditions-for-khonsu">Terms</a>
+            <a class="hover:text-white" href="/terms-and-conditions-for-khonsu"
+              >Terms</a
+            >
           </div>
         </div>
         <div class="mt-6 text-xs text-zinc-500">
@@ -101,4 +109,3 @@ const ogImageUrl = `${site.url}/og.svg`;
     </footer>
   </body>
 </html>
-

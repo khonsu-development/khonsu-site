@@ -1,69 +1,91 @@
 ---
-import { getCollection, render } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Container from '../../components/Container.astro';
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/Container.astro";
 
 export async function getStaticPaths() {
-  const apps = await getCollection('apps');
+  const apps = await getCollection("apps");
   return apps.map((app) => ({
-    params: { slug: app.id.replace(/\.(md|mdx)$/, '') },
-    props: { app }
+    params: { slug: app.id.replace(/\.(md|mdx)$/, "") },
+    props: { app },
   }));
 }
 
 const { app } = Astro.props;
-const slug = app.id.replace(/\.(md|mdx)$/, '');
+const slug = app.id.replace(/\.(md|mdx)$/, "");
 const { Content } = await render(app);
 ---
 
-<BaseLayout title={`${app.data.name} — Khonsu Development`} canonicalPath={`/apps/${slug}`}>
+<BaseLayout
+  title={`${app.data.name} — Khonsu Development`}
+  canonicalPath={`/apps/${slug}`}
+>
   <section class="py-12 sm:py-16">
     <Container>
       <div class="max-w-3xl">
-        <a class="text-sm font-semibold text-zinc-300 hover:text-white" href="/apps">← All apps</a>
-        <h1 class="mt-4 text-3xl font-black tracking-tight text-white sm:text-5xl">
+        <a
+          class="text-sm font-semibold text-zinc-300 hover:text-white"
+          href="/apps">← All apps</a
+        >
+        <h1
+          class="mt-4 text-3xl font-black tracking-tight text-white sm:text-5xl"
+        >
           {app.data.name}
         </h1>
         <p class="mt-4 text-lg text-zinc-200">{app.data.tagline}</p>
 
         <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-          {app.data.googlePlayUrl ? (
-            <a
-              class="btn btn-primary"
-              href={app.data.googlePlayUrl}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Get it on Google Play
-            </a>
-          ) : null}
+          {
+            app.data.googlePlayUrl ? (
+              <a
+                class="btn btn-primary"
+                href={app.data.googlePlayUrl}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Get it on Google Play
+              </a>
+            ) : null
+          }
         </div>
 
-        {app.data.privacyUrl || app.data.termsUrl || app.data.websiteUrl ? (
-          <div class="mt-6 flex flex-col gap-2 text-sm text-zinc-300 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
-            {app.data.websiteUrl ? (
-              <a class="font-semibold text-white hover:underline" href={app.data.websiteUrl}>
-                App microsite
-              </a>
-            ) : null}
-            {app.data.privacyUrl ? (
-              <a class="font-semibold text-white hover:underline" href={app.data.privacyUrl}>
-                App privacy policy
-              </a>
-            ) : null}
-            {app.data.termsUrl ? (
-              <a class="font-semibold text-white hover:underline" href={app.data.termsUrl}>
-                App terms &amp; conditions
-              </a>
-            ) : null}
-          </div>
-        ) : null}
+        {
+          app.data.privacyUrl || app.data.termsUrl || app.data.websiteUrl ? (
+            <div class="mt-6 flex flex-col gap-2 text-sm text-zinc-300 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
+              {app.data.websiteUrl ? (
+                <a
+                  class="font-semibold text-white hover:underline"
+                  href={app.data.websiteUrl}
+                >
+                  App microsite
+                </a>
+              ) : null}
+              {app.data.privacyUrl ? (
+                <a
+                  class="font-semibold text-white hover:underline"
+                  href={app.data.privacyUrl}
+                >
+                  App privacy policy
+                </a>
+              ) : null}
+              {app.data.termsUrl ? (
+                <a
+                  class="font-semibold text-white hover:underline"
+                  href={app.data.termsUrl}
+                >
+                  App terms &amp; conditions
+                </a>
+              ) : null}
+            </div>
+          ) : null
+        }
 
-        <article class="prose prose-invert mt-10 max-w-none prose-p:text-zinc-200 prose-li:text-zinc-200">
+        <article
+          class="prose prose-invert prose-p:text-zinc-200 prose-li:text-zinc-200 mt-10 max-w-none"
+        >
           <Content />
         </article>
       </div>
     </Container>
   </section>
 </BaseLayout>
-
