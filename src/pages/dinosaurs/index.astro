@@ -1,137 +1,287 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/Container.astro";
+
+const stats = [
+  { label: "Prehistoric animals", value: "1900+" },
+  { label: "Quiz styles", value: "Multiple" },
+  { label: "Time scale", value: "Interactive" },
+];
+
+const features = [
+  {
+    title: "A massive bestiary",
+    body:
+      "Explore 1900+ prehistoric animals. Dinosaurs, pterosaurs, ocean giants, and Cenozoic mammals that feel surprisingly close to home.",
+    icon: "sparkles",
+  },
+  {
+    title: "Rich, readable profiles",
+    body:
+      "Clear descriptions, lifelike illustrations, size comparisons, habitat info, and fun trivia that make each species stick in your memory.",
+    icon: "book",
+  },
+  {
+    title: "Go back in time",
+    body:
+      "Travel through billions of years with an interactive Geological Time Scale that puts every creature in context.",
+    icon: "grid",
+  },
+  {
+    title: "Articles worth binge-reading",
+    body:
+      "Fossils, extinctions, new research, and the big questions. Perfect for quick curiosity or deep rabbit holes.",
+    icon: "cards",
+  },
+  {
+    title: "Quizzes that actually teach",
+    body:
+      "Play bite-sized quizzes designed for beginners and experts. Learn names, recognize images, and lock in facts.",
+    icon: "quiz",
+  },
+  {
+    title: "Discovery sites map",
+    body:
+      "Explore fossil digging sites around the world, and see what was found near you.",
+    icon: "map",
+  },
+  {
+    title: "Dark mode",
+    body: "A polished dark theme for comfortable reading day or night.",
+    icon: "moon",
+  },
+];
+
+const iconPaths: Record<string, string> = {
+  sparkles:
+    "M12 2l1.2 4.4a6 6 0 0 0 4.4 4.4L22 12l-4.4 1.2a6 6 0 0 0-4.4 4.4L12 22l-1.2-4.4a6 6 0 0 0-4.4-4.4L2 12l4.4-1.2a6 6 0 0 0 4.4-4.4L12 2z",
+  book:
+    "M6 4.5A2.5 2.5 0 0 1 8.5 2H20a1 1 0 0 1 1 1v15.5a.5.5 0 0 1-.8.4c-1.9-1.4-4.3-2.1-7.2-2.1H8.5A2.5 2.5 0 0 0 6 19.3V4.5z M3 6.5A2.5 2.5 0 0 1 5.5 4H6v15.3A4.5 4.5 0 0 0 8.5 23H19a1 1 0 1 0 0-2H8.5A2.5 2.5 0 0 1 6 18.5V6H5.5A.5.5 0 0 0 5 6.5V18a1 1 0 1 1-2 0V6.5z",
+  grid:
+    "M4 4h7v7H4V4zm9 0h7v7h-7V4zM4 13h7v7H4v-7zm9 0h7v7h-7v-7z",
+  cards:
+    "M7 4h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3zm0 2a1 1 0 0 0-1 1v1h12V7a1 1 0 0 0-1-1H7zm11 5H6v4a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-4z",
+  map:
+    "M9 4l6-2 6 2v16l-6-2-6 2-6-2V2l6 2zm0 2.2L5 4.9v12.2l4 1.3V6.2zm2-.7v12.2l4-1.3V4.2l-4 1.3zm6-1.3v12.2l4 1.3V4.9l-4-1.3z",
+  moon: "M21 14.5A8.5 8.5 0 0 1 9.5 3a7 7 0 1 0 11.5 11.5z",
+  quiz:
+    "M7 6h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3zm0 2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H7zm1.5 2.5h5a1 1 0 1 1 0 2h-5a1 1 0 1 1 0-2zm0 4h3a1 1 0 1 1 0 2h-3a1 1 0 1 1 0-2zm7 .2a1.1 1.1 0 1 1 0-2.2 1.1 1.1 0 0 1 0 2.2z",
+};
+
+function iconPath(name: string) {
+  return iconPaths[name] ?? iconPaths.sparkles;
+}
 ---
 
 <BaseLayout
-  title="World of Dinosaurs — Khonsu Development"
+  title="World of Dinosaurs - Khonsu Development"
   description="Explore dinosaurs and prehistoric animals with articles, illustrations, quizzes, discovery sites, and more."
   canonicalPath="/dinosaurs"
 >
+  <section class="relative overflow-hidden py-12 sm:py-16">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+      <div
+        class="absolute -top-48 left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[color-mix(in_oklab,var(--color-brand)_18%,transparent)] blur-3xl"
+      >
+      </div>
+      <div
+        class="absolute -bottom-56 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-[color-mix(in_oklab,var(--color-brand2)_16%,transparent)] blur-3xl"
+      >
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-zinc-950"></div>
+    </div>
+    <Container>
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-center">
+        <div class="lg:col-span-7">
+          <p class="inline-flex items-center rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-zinc-200 ring-1 ring-white/10">
+            A prehistoric companion for curious minds
+          </p>
+          <h1 class="mt-4 text-balance text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+            Meet the giants of deep time
+          </h1>
+          <p class="mt-4 max-w-2xl text-pretty text-lg leading-relaxed text-zinc-200">
+            <span class="font-semibold text-white">World of Dinosaurs</span> is a free mobile app packed with profiles,
+            quizzes, and articles that make prehistoric life feel vivid and close.
+          </p>
+
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a
+              class="btn btn-primary"
+              href="https://play.google.com/store/apps/details?id=eu.khonsu.dinosaurs"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Get it on Google Play
+            </a>
+            <a class="btn btn-secondary" href="/apps">
+              Explore all apps
+            </a>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-2">
+            {stats.map((s) => (
+              <div class="inline-flex items-baseline gap-2 rounded-full bg-white/5 px-3 py-1.5 ring-1 ring-white/10">
+                <span class="text-sm font-semibold text-white">{s.value}</span>
+                <span class="text-xs text-zinc-300">{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="card relative overflow-hidden p-5 sm:p-6">
+            <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-white/0">
+            </div>
+            <div class="relative">
+              <div class="flex items-center gap-4">
+                <div class="h-12 w-12 overflow-hidden rounded-2xl bg-white/10 ring-1 ring-white/10">
+                  <img
+                    src="/apps/dinosaurs/dinosaurs.png"
+                    alt="World of Dinosaurs app icon"
+                    class="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-white">World of Dinosaurs</div>
+                  <div class="text-xs text-zinc-300">Profiles • Quizzes • Time scale</div>
+                </div>
+              </div>
+
+              <div class="mt-5 grid grid-cols-2 gap-3">
+                <div class="overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10">
+                  <img
+                    src="/apps/dinosaurs/screenshot-1.png"
+                    alt="World of Dinosaurs app screenshot"
+                    class="h-44 w-full object-cover sm:h-48"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10">
+                  <img
+                    src="/apps/dinosaurs/screenshot-2.png"
+                    alt="World of Dinosaurs app screenshot"
+                    class="h-44 w-full object-cover sm:h-48"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
   <section class="py-12 sm:py-16">
     <Container>
-      <div class="max-w-3xl">
-        <article
-          class="prose prose-invert prose-headings:tracking-tight prose-p:text-zinc-200 prose-li:text-zinc-200 max-w-none"
+      <div class="flex items-end justify-between gap-6">
+        <div>
+          <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">A quote for your inner paleontologist</h2>
+          <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-300">
+            Prehistoric life is gone, but the wonder is very much alive.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-8 grid gap-4 md:grid-cols-3">
+        <div class="card p-6">
+          <p class="text-sm leading-relaxed text-zinc-200">
+            “Dinosaurs may be extinct from the face of the planet, but they are alive and well in our imaginations.”
+          </p>
+          <p class="mt-4 text-xs text-zinc-400">Steve Miller</p>
+        </div>
+        <div class="card p-6">
+          <p class="text-sm leading-relaxed text-zinc-200">
+            Built for quick curiosity and deep dives. Open it for one fact and suddenly it is an hour later.
+          </p>
+          <p class="mt-4 text-xs text-zinc-400">World of Dinosaurs</p>
+        </div>
+        <div class="card p-6">
+          <p class="text-sm leading-relaxed text-zinc-200">
+            Found a mistake or a missing creature? Send feedback and help improve the library for everyone.
+          </p>
+          <p class="mt-4 text-xs text-zinc-400">khonsu.development@gmail.com</p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <section class="py-12 sm:py-16">
+    <Container>
+      <div class="flex items-end justify-between gap-6">
+        <div>
+          <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">Features</h2>
+          <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-300">
+            Everything you need to explore prehistoric life in a clean, satisfying flow.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {features.map((f) => (
+          <div class="card p-6">
+            <div class="flex items-start gap-3">
+              <div class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 ring-1 ring-white/10">
+                <svg viewBox="0 0 24 24" class="h-5 w-5 text-white" fill="currentColor" aria-hidden="true">
+                  <path d={iconPath(f.icon)} />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-sm font-semibold text-white">{f.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-zinc-300">{f.body}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <section class="py-12 sm:py-16">
+    <Container>
+      <div class="card relative overflow-hidden p-6 sm:p-8">
+        <div
+          class="pointer-events-none absolute inset-0 bg-gradient-to-r from-[color-mix(in_oklab,var(--color-brand)_22%,transparent)] via-white/0 to-[color-mix(in_oklab,var(--color-brand2)_20%,transparent)]"
         >
-          <h1>Welcome to World of Dinosaurs</h1>
-          <p>A tribute to all the animals that roamed our planet before us.</p>
-          <p>
-            Learn all about dinosaurs and prehistoric animals with World of
-            Dinosaurs.
-          </p>
-
-          <p>
-            Introducing World of Dinosaurs — packed with tons of information,
-            fun quizzes, and features to help you explore the fascinating world
-            of dinosaurs and prehistoric animals.
-          </p>
-
-          <h2>Features</h2>
-          <p>
-            With World of Dinosaurs, access an extensive library of articles and
-            illustrations — from behavior and habitat to unique characteristics
-            — including popular dinosaurs and lesser-known species.
-          </p>
-
-          <h3>Broad list of animals</h3>
-          <p>
-            Discover <strong>1900+ prehistoric animals</strong>: dinosaurs,
-            pterosaurs, aquatic titans, but also extinct animals of the Cenozoic
-            — closer to us and just as fascinating.
-          </p>
-
-          <h3>Extensive information</h3>
-          <p>
-            Detailed descriptions, lifelike images, size comparisons, habitat
-            info, and fun trivia to bring prehistoric giants to life.
-          </p>
-
-          <h3>Go back in time</h3>
-          <p>
-            Explore billions of years in the life of planet Earth with the
-            interactive Geological Time Scale.
-          </p>
-
-          <h3>Articles</h3>
-          <p>
-            Stories across prehistoric lives, extinction, fossils, and new
-            research.
-          </p>
-
-          <p>
-            World of Dinosaurs also offers interactive quizzes — great for
-            experts and beginners — with hours of learning and entertainment.
-          </p>
-
-          <h3>Tailored quiz</h3>
-          <p>
-            Customize quizzes: match names, identify images, or dive into
-            fascinating dino facts.
-          </p>
-
-          <h3>Learn about your favourite animals</h3>
-          <p>
-            Different quizzes for different categories of prehistoric animals.
-          </p>
-
-          <h3>Discovery sites</h3>
-          <p>
-            Explore fossil digging sites from around the world, and find which
-            animals were found close to you.
-          </p>
-
-          <h3>Dark mode</h3>
-          <p>
-            Sleek elegance and eye comfort — reduce eye strain, save battery,
-            and enjoy a modern interface tailored for night-time or all-day use.
-          </p>
-
-          <blockquote>
-            <p>
-              “Dinosaurs may be extinct from the face of the planet, but they
-              are alive and well in our imaginations.”
+        </div>
+        <div class="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="text-2xl font-semibold tracking-tight text-white">Explore World of Dinosaurs</h2>
+            <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-200">
+              A free mobile app with profiles, quizzes, discovery sites, and deep dives into prehistoric life.
             </p>
-            <p>— Steve Miller</p>
-          </blockquote>
-
-          <p>
-            If you found a bug or a content error, please report it to{" "}
-            <a href="mailto:khonsu.development@gmail.com"
-              >khonsu.development@gmail.com</a
-            >.
-          </p>
-        </article>
-
-        <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <a
-            class="btn btn-primary"
-            href="https://play.google.com/store/apps/details?id=eu.khonsu.dinosaurs"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Get it on Google Play
-          </a>
-          <a class="btn btn-secondary" href="/apps/world-of-dinosaurs">
-            View on this site
-          </a>
+          </div>
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a
+              class="btn btn-primary"
+              href="https://play.google.com/store/apps/details?id=eu.khonsu.dinosaurs"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Get it on Google Play
+            </a>
+            <a class="btn btn-secondary" href="/apps">
+              Explore all apps
+            </a>
+          </div>
         </div>
+      </div>
 
-        <div class="mt-10 text-sm text-zinc-400">
-          <a
-            class="underline decoration-white/20 underline-offset-4 hover:text-white"
-            href="/dinosaurs/terms-and-conditions-for-world-of-dinosaurs"
-          >
-            Terms &amp; Conditions for World of Dinosaurs
-          </a>
-          {" · "}
-          <a
-            class="underline decoration-white/20 underline-offset-4 hover:text-white"
-            href="/dinosaurs/privacy-policy-for-world-of-dinosaurs"
-          >
-            Privacy Policy for World of Dinosaurs
-          </a>
-        </div>
+      <div class="mt-8 text-sm text-zinc-400">
+        <a
+          class="underline decoration-white/20 underline-offset-4 hover:text-white"
+          href="/dinosaurs/terms-and-conditions-for-world-of-dinosaurs"
+        >
+          Terms &amp; Conditions for World of Dinosaurs
+        </a>
+        {" · "}
+        <a
+          class="underline decoration-white/20 underline-offset-4 hover:text-white"
+          href="/dinosaurs/privacy-policy-for-world-of-dinosaurs"
+        >
+          Privacy Policy for World of Dinosaurs
+        </a>
       </div>
     </Container>
   </section>

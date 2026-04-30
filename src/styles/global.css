@@ -12,6 +12,81 @@
 @layer base {
   :root {
     color-scheme: dark;
+
+    /*
+      Color tokens (runtime CSS variables)
+      - Content references stable keys (e.g. `themeColor: app-alphabets`)
+      - UI can use `var(--color-app-alphabets-primary)` etc.
+    */
+
+    /* Current “site-picked” app colors (keep these as-is). */
+    --color-app-alphabets: #5b7cfa;
+    --color-app-dinosaurs: #22c55e;
+    --color-app-communism: #d62b2b;
+    --color-app-freestyle: #f59e0b;
+
+    /*
+      App palettes (source-of-truth from the apps)
+      Naming: --color-app-<app>-<role>
+    */
+
+    /* World of Alphabets */
+    --color-app-alphabets-primary: #4fc3f7;
+    --color-app-alphabets-primary-light: #8bf6ff;
+    --color-app-alphabets-primary-dark: #0093c4;
+    --color-app-alphabets-secondary: #ffcc80;
+    --color-app-alphabets-secondary-light: #ffe0b2;
+    --color-app-alphabets-secondary-dark: #ca9b52;
+    --color-app-alphabets-text-primary: #ffffff;
+    --color-app-alphabets-text-secondary: #000000;
+    --color-app-alphabets-primary-dark-transparent: #aa4fc3f7;
+    --color-app-alphabets-primary-very-light: #c7eeff;
+    --color-app-alphabets-primary-very-dark: #3a474c;
+
+    /* World of Communism */
+    --color-app-communism-primary: #d50000;
+    --color-app-communism-primary-light: #ff5131;
+    --color-app-communism-primary-dark: #9b0000;
+    --color-app-communism-secondary: #ffd600;
+    --color-app-communism-secondary-light: #ffff52;
+    --color-app-communism-secondary-dark: #c7a500;
+    --color-app-communism-text-primary: #ffffff;
+    --color-app-communism-text-secondary: #000000;
+    --color-app-communism-primary-dark-transparent: #aa9b0000;
+    --color-app-communism-primary-very-light: #ffcfc4;
+    --color-app-communism-primary-very-dark: #420000;
+
+    /* World of Dinosaurs */
+    --color-app-dinosaurs-primary: #827717;
+    --color-app-dinosaurs-primary-light: #b4a647;
+    --color-app-dinosaurs-primary-dark: #524c00;
+    --color-app-dinosaurs-secondary: #ffd54f;
+    --color-app-dinosaurs-secondary-light: #ffff81;
+    --color-app-dinosaurs-secondary-dark: #c8a415;
+    --color-app-dinosaurs-text-primary: #ffffff;
+    --color-app-dinosaurs-text-secondary: #000000;
+    --color-app-dinosaurs-primary-dark-transparent: #aa524c00;
+    --color-app-dinosaurs-primary-very-light: #eddb58;
+    --color-app-dinosaurs-primary-very-dark: #3e3917;
+
+    /* World of Tea */
+    --color-app-tea-primary: #c5e1a5;
+    --color-app-tea-primary-light: #f8ffd7;
+    --color-app-tea-primary-dark: #94af76;
+    --color-app-tea-secondary: #3a1505;
+    --color-app-tea-secondary-light: #673c2e;
+    --color-app-tea-secondary-dark: #1e0000;
+    --color-app-tea-text-primary: #000000;
+    --color-app-tea-text-secondary: #ffffff;
+    --color-app-tea-primary-dark-transparent: #aac8a415;
+    --color-app-tea-primary-very-light: #f8ffd7;
+
+    /* Freestyle Rap */
+    --color-app-freestyle-primary: #212121;
+    --color-app-freestyle-secondary: #fafafa;
+    --color-app-freestyle-orange: #fdb100;
+    --color-app-freestyle-white: #ffffff;
+    --color-app-freestyle-black: #000000;
   }
 
   body {

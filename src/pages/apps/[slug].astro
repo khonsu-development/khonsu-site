@@ -14,6 +14,10 @@ export async function getStaticPaths() {
 const { app } = Astro.props;
 const slug = app.id.replace(/\.(md|mdx)$/, "");
 const { Content } = await render(app);
+
+if (app.data.websiteUrl && app.data.websiteUrl.startsWith("/") && !app.data.websiteUrl.startsWith("/apps/")) {
+  return Astro.redirect(app.data.websiteUrl, 301);
+}
 ---
 
 <BaseLayout

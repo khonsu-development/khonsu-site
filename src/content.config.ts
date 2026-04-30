@@ -18,6 +18,13 @@ const apps = defineCollection({
     appStoreUrl: absoluteOrSitePathUrl.optional(),
     websiteUrl: absoluteOrSitePathUrl.optional(),
     icon: z.string().optional(),
+    themeColor: z
+      .string()
+      .regex(
+        /^app-[a-z0-9-]+$/i,
+        "themeColor must be a color token key like app-alphabets",
+      )
+      .optional(),
     screenshots: z.array(z.string()).default([]),
     releaseStatus: z
       .enum(["released", "beta", "coming_soon"])

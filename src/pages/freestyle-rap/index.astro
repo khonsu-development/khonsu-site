@@ -11,6 +11,42 @@ import Container from "../../components/Container.astro";
   <section class="py-12 sm:py-16">
     <Container>
       <div class="max-w-3xl">
+        <div class="card mb-10 overflow-hidden p-5 sm:p-6">
+          <div class="flex items-center gap-4">
+            <div class="h-12 w-12 overflow-hidden rounded-2xl bg-white/10 ring-1 ring-white/10">
+              <img
+                src="/apps/freestyle/freestyle.png"
+                alt="Freestyle Rap app icon"
+                class="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <div>
+              <div class="text-sm font-semibold text-white">Freestyle Rap</div>
+              <div class="text-xs text-zinc-300">Beats • Rhymes • Inspiration • Tempo</div>
+            </div>
+          </div>
+
+          <div class="mt-5 grid grid-cols-2 gap-3">
+            <div class="overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10">
+              <img
+                src="/apps/freestyle/screenshot-1.png"
+                alt="Freestyle Rap app screenshot"
+                class="h-44 w-full object-cover sm:h-48"
+                loading="lazy"
+              />
+            </div>
+            <div class="overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10">
+              <img
+                src="/apps/freestyle/screenshot-2.png"
+                alt="Freestyle Rap app screenshot"
+                class="h-44 w-full object-cover sm:h-48"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+
         <article
           class="prose prose-invert prose-headings:tracking-tight prose-p:text-zinc-200 prose-li:text-zinc-200 max-w-none"
         >
@@ -85,8 +121,8 @@ import Container from "../../components/Container.astro";
           >
             Get it on Google Play
           </a>
-          <a class="btn btn-secondary" href="/apps/freestyle-rap">
-            View on this site
+          <a class="btn btn-secondary" href="/apps">
+            Explore all apps
           </a>
         </div>
 
