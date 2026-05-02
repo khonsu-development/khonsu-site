@@ -7,9 +7,11 @@ type Props = {
   title: string;
   description?: string;
   canonicalPath?: string;
+  ogImage?: string;
+  ogType?: "website" | "article";
 };
 
-const { title, description, canonicalPath } = Astro.props;
+const { title, description, canonicalPath, ogImage, ogType } = Astro.props;
 
 const site = {
   name: "Khonsu Development",
@@ -22,7 +24,11 @@ const site = {
 const canonicalUrl = canonicalPath
   ? new URL(canonicalPath, site.url).toString()
   : undefined;
-const ogImageUrl = `${site.url}/og.svg`;
+const ogImageUrl = ogImage
+  ? ogImage.startsWith("http")
+    ? ogImage
+    : `${site.url}${ogImage}`
+  : `${site.url}/og.svg`;
 ---
 
 <!doctype html>
@@ -42,7 +48,7 @@ const ogImageUrl = `${site.url}/og.svg`;
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={site.description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType ?? "website"} />
     <meta property="og:site_name" content={site.name} />
     {canonicalUrl ? <meta property="og:url" content={canonicalUrl} /> : null}
     <meta property="og:image" content={ogImageUrl} />

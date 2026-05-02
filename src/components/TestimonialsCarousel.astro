@@ -1,0 +1,305 @@
+---
+export interface Props {
+  testimonials: { quote: string; author: string }[];
+  labelledBy: string;
+}
+
+const { testimonials, labelledBy } = Astro.props;
+const n = testimonials.length;
+---
+
+<div
+  class="testimonials-carousel relative mx-auto mt-10 w-full max-w-6xl outline-none lg:max-w-7xl"
+  data-testimonials-carousel
+  tabindex="0"
+  role="region"
+  aria-roledescription="carousel"
+  aria-labelledby={labelledBy}
+>
+  <div
+    aria-live="polite"
+    class="pointer-events-none absolute h-px w-px overflow-hidden opacity-0"
+    data-carousel-announce
+  >
+    {n > 0 ? `Review group 1 of ${n}` : ""}
+  </div>
+
+  <div class="carousel-viewport overflow-hidden" data-carousel-viewport>
+    <div class="carousel-track flex" style="transform: translate3d(0, 0, 0)" data-carousel-track>
+      {
+        n === 1 ? (
+          <div
+            class="carousel-frame flex w-full shrink-0"
+            data-carousel-frame
+            aria-hidden="false"
+          >
+            <blockquote class="card relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden p-5 sm:p-7">
+              <div
+                aria-hidden="true"
+                class="pointer-events-none absolute inset-0 opacity-50"
+                style={`background: radial-gradient(420px circle at 15% 15%, color-mix(in oklab, var(--app-primary) 14%, transparent), transparent 58%);`}
+              />
+              <p class="relative text-sm leading-relaxed text-zinc-200">{testimonials[0].quote}</p>
+              <footer class="relative mt-4 text-xs font-medium text-zinc-400">{testimonials[0].author}</footer>
+            </blockquote>
+          </div>
+        ) : (
+          Array.from({ length: n }, (_, slideIndex) => (
+            <div
+              class="carousel-frame flex w-full shrink-0 gap-2 sm:gap-4"
+              data-carousel-frame
+              aria-hidden={slideIndex === 0 ? "false" : "true"}
+            >
+              {[0, 1, 2].map((k) => {
+                const t = testimonials[(slideIndex + k) % n];
+                return (
+                  <blockquote class="card relative flex min-h-0 min-w-0 flex-1 basis-0 flex-col overflow-hidden p-4 sm:p-6">
+                    <div
+                      aria-hidden="true"
+                      class="pointer-events-none absolute inset-0 opacity-50"
+                      style={`background: radial-gradient(420px circle at 15% 15%, color-mix(in oklab, var(--app-primary) 14%, transparent), transparent 58%);`}
+                    />
+                    <p class="relative text-xs leading-relaxed text-zinc-200 sm:text-sm">{t.quote}</p>
+                    <footer class="relative mt-3 text-xs font-medium text-zinc-400">{t.author}</footer>
+                  </blockquote>
+                );
+              })}
+            </div>
+          ))
+        )
+      }
+    </div>
+  </div>
+
+  {
+    n > 1 ? (
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+        <button
+          type="button"
+          class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-white ring-1 ring-white/15 transition hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50 sm:h-12 sm:w-12"
+          data-carousel-prev
+          aria-label="Previous testimonials"
+        >
+          <svg class="h-5 w-5 shrink-0 sm:h-6 sm:w-6" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path
+              fill-rule="evenodd"
+              d="M12.707 14.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L8.414 10l4.293 4.293a1 1 0 010 1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+
+        <nav class="flex max-w-[16rem] flex-wrap justify-center gap-2 px-2" aria-label="Testimonial pagination">
+          {testimonials.map((_, dotIndex) => (
+            <button
+              type="button"
+              class:list={[
+                "h-2.5 w-2.5 rounded-full transition hover:bg-white/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50",
+                dotIndex === 0 ? "carousel-dot-is-active bg-white" : "bg-white/25",
+              ]}
+              data-carousel-dot={dotIndex}
+              aria-label={`Show reviews starting at ${dotIndex + 1}`}
+            />
+          ))}
+        </nav>
+
+        <button
+          type="button"
+          class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-white ring-1 ring-white/15 transition hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50 sm:h-12 sm:w-12"
+          data-carousel-next
+          aria-label="Next testimonials"
+        >
+          <svg class="h-5 w-5 shrink-0 sm:h-6 sm:w-6" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path
+              fill-rule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L11.586 10 7.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+      </div>
+    ) : null
+  }
+</div>
+
+<script>
+  const AUTOPLAY_MS = 5500;
+
+  const roots = document.querySelectorAll<HTMLElement>("[data-testimonials-carousel]");
+
+  function setupCarousel(root: HTMLElement): void {
+    const viewport = root.querySelector<HTMLElement>("[data-carousel-viewport]");
+    const track = root.querySelector<HTMLElement>("[data-carousel-track]");
+    const frames = [...root.querySelectorAll<HTMLElement>("[data-carousel-frame]")];
+    const prevBtn = root.querySelector<HTMLElement>("[data-carousel-prev]");
+    const nextBtn = root.querySelector<HTMLElement>("[data-carousel-next]");
+    const announce = root.querySelector<HTMLElement>("[data-carousel-announce]");
+    const dotButtons = [...root.querySelectorAll<HTMLElement>("[data-carousel-dot]")];
+
+    if (!viewport || !track || frames.length === 0) return;
+
+    const total = frames.length;
+    let index = 0;
+    let reducedMotion =
+      typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let autoplayTimer: ReturnType<typeof setInterval> | null = null;
+
+    function slideWidth(): number {
+      return viewport.getBoundingClientRect().width;
+    }
+
+    function setFrameSizes(): void {
+      const w = `${slideWidth()}px`;
+      for (const f of frames) {
+        f.style.flexShrink = "0";
+        f.style.width = w;
+        f.style.minWidth = w;
+        f.style.maxWidth = w;
+      }
+    }
+
+    function setTransition(enabled: boolean): void {
+      if (reducedMotion || !enabled) {
+        track.style.transition = "none";
+      } else {
+        track.style.transition = "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)";
+      }
+    }
+
+    function applyTransform(enableTransition: boolean): void {
+      setTransition(enableTransition);
+      const w = slideWidth();
+      track.style.transform = `translate3d(${-index * w}px, 0, 0)`;
+    }
+
+    function updateDots(): void {
+      for (let i = 0; i < dotButtons.length; i++) {
+        const btn = dotButtons[i];
+        const on = i === index;
+        btn.classList.toggle("carousel-dot-is-active", on);
+        btn.classList.toggle("bg-white", on);
+        btn.classList.toggle("bg-white/25", !on);
+      }
+    }
+
+    function setAriaFrames(): void {
+      for (let i = 0; i < frames.length; i++) {
+        frames[i].setAttribute("aria-hidden", i === index ? "false" : "true");
+      }
+    }
+
+    function announceSlide(): void {
+      if (!announce || total <= 1) return;
+      announce.textContent = `Review group ${index + 1} of ${total}`;
+    }
+
+    function goTo(nextIndex: number, animate: boolean): void {
+      if (total < 1) return;
+      index = ((nextIndex % total) + total) % total;
+      applyTransform(animate);
+      updateDots();
+      setAriaFrames();
+      announceSlide();
+    }
+
+    function step(delta: number): void {
+      goTo(index + delta, true);
+    }
+
+    function stopAutoplay(): void {
+      if (autoplayTimer !== null) {
+        clearInterval(autoplayTimer);
+        autoplayTimer = null;
+      }
+    }
+
+    function startAutoplay(): void {
+      stopAutoplay();
+      if (reducedMotion || total < 2) return;
+      autoplayTimer = setInterval(() => step(1), AUTOPLAY_MS);
+    }
+
+    function initLayout(): void {
+      setTransition(false);
+      setFrameSizes();
+      goTo(index, false);
+      setTransition(true);
+    }
+
+    const ro = new ResizeObserver(() => {
+      initLayout();
+    });
+    ro.observe(viewport);
+    initLayout();
+
+    window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", (e) => {
+      reducedMotion = e.matches;
+      stopAutoplay();
+      initLayout();
+      if (!reducedMotion && total >= 2) startAutoplay();
+    });
+
+    prevBtn?.addEventListener("click", () => {
+      step(-1);
+      stopAutoplay();
+      startAutoplay();
+    });
+    nextBtn?.addEventListener("click", () => {
+      step(1);
+      stopAutoplay();
+      startAutoplay();
+    });
+
+    for (let dotIndex = 0; dotIndex < dotButtons.length; dotIndex++) {
+      dotButtons[dotIndex].addEventListener("click", () => {
+        goTo(dotIndex, true);
+        stopAutoplay();
+        startAutoplay();
+      });
+    }
+
+    root.addEventListener("keydown", (e) => {
+      if (total < 2) return;
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        step(-1);
+        stopAutoplay();
+        startAutoplay();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        step(1);
+        stopAutoplay();
+        startAutoplay();
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        goTo(0, true);
+        stopAutoplay();
+        startAutoplay();
+      } else if (e.key === "End") {
+        e.preventDefault();
+        goTo(total - 1, true);
+        stopAutoplay();
+        startAutoplay();
+      }
+    });
+
+    root.addEventListener("mouseenter", stopAutoplay);
+    root.addEventListener("mouseleave", startAutoplay);
+    root.addEventListener("focusin", stopAutoplay);
+    root.addEventListener("focusout", () => {
+      queueMicrotask(() => {
+        if (!root.contains(document.activeElement)) startAutoplay();
+      });
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) stopAutoplay();
+      else startAutoplay();
+    });
+
+    if (!reducedMotion && total >= 2) startAutoplay();
+  }
+
+  for (const root of roots) setupCarousel(root);
+</script>

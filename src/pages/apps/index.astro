@@ -2,69 +2,57 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/Container.astro";
+import AppCard from "../../components/AppCard.astro";
 
-const apps = (await getCollection("apps")).sort((a, b) =>
-  a.data.name.localeCompare(b.data.name, "en"),
-);
+const apps = await getCollection("apps");
+const priority = [
+  "world-of-alphabets",
+  "world-of-dinosaurs",
+  "world-of-communism",
+  "freestyle-rap",
+] as const;
+
+const priorityRank = new Map(priority.map((slug, idx) => [slug, idx]));
+
+function slugOf(app: (typeof apps)[number]) {
+  return app.id.replace(/\.(md|mdx)$/, "");
+}
+
+const orderedApps = [...apps].sort((a, b) => {
+  const ar = priorityRank.get(slugOf(a)) ?? Number.POSITIVE_INFINITY;
+  const br = priorityRank.get(slugOf(b)) ?? Number.POSITIVE_INFINITY;
+  if (ar !== br) return ar - br;
+  return a.data.name.localeCompare(b.data.name, "en");
+});
 ---
 
-<BaseLayout title="Apps — Khonsu Development" canonicalPath="/apps">
+<BaseLayout
+  title="Educational apps for deep dives | Khonsu Development"
+  description="Discover Khonsu’s educational apps: bite-sized learning experiences that go deep into niche topics. Beautiful design, clear structure, and satisfying progress."
+  canonicalPath="/apps"
+>
   <section class="py-12 sm:py-16">
     <Container>
       <div class="max-w-2xl">
         <h1 class="text-3xl font-black tracking-tight sm:text-5xl">Apps</h1>
         <p class="mt-4 text-zinc-300">
-          Curated deep dives into niche topics — designed to be beautiful, fun,
-          and confidently informative.
+          A small, growing catalog of learning apps, each one a carefully crafted
+          “world” you can explore in minutes a day (or lose an entire evening
+          to).
         </p>
       </div>
 
       <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {
-          apps.map((app) => (
-            <a
+          orderedApps.map((app) => (
+            <AppCard
+              app={app}
               href={
                 app.data.websiteUrl && app.data.websiteUrl.startsWith("/")
                   ? app.data.websiteUrl
                   : `/apps/${app.id.replace(/\.(md|mdx)$/, "")}`
               }
-              class="card group p-6 transition hover:bg-white/7"
-            >
-              <div class="flex items-start gap-4">
-                <div
-                  class="h-12 w-12 shrink-0 overflow-hidden rounded-2xl bg-white/10 ring-1 ring-white/10"
-                  style={
-                    app.data.themeColor
-                      ? `background: color-mix(in oklab, var(--color-${app.data.themeColor}-primary) 65%, black);`
-                      : undefined
-                  }
-                >
-                  {app.data.icon ? (
-                    <img
-                      src={app.data.icon}
-                      alt={`${app.data.name} app icon`}
-                      class="h-full w-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : (
-                    <div class="h-full w-full bg-white/5" />
-                  )}
-                </div>
-                <div>
-                  <div class="text-lg font-bold tracking-tight text-white">
-                    {app.data.name}
-                  </div>
-                  <div class="mt-2 text-sm leading-relaxed text-zinc-300">
-                    {app.data.tagline}
-                  </div>
-                </div>
-              </div>
-              <div class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white/90">
-                View{" "}
-                <span class="transition group-hover:translate-x-0.5">→</span>
-              </div>
-            </a>
+            />
           ))
         }
       </div>

@@ -1,0 +1,661 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "./Container.astro";
+import HeroGooglePlaySpotlight from "./HeroGooglePlaySpotlight.astro";
+import TestimonialsCarousel from "./TestimonialsCarousel.astro";
+import WritingSystemsCloud from "./WritingSystemsCloud.astro";
+import StockBlurbSection from "./StockBlurbSection.astro";
+
+type Stat = { label: string; value: string };
+type Feature = { title: string; body: string; imageSrc?: string; imageAlt?: string };
+type FAQ = { q: string; a: string };
+type StockImage = { src: string; alt: string };
+type Testimonial = { quote: string; author: string };
+
+type Props = {
+  canonicalPath: string;
+  title: string;
+  description: string;
+  themeColor: string; // e.g. "app-alphabets"
+  appName: string;
+  logoSrc?: string;
+  logoAlt?: string;
+  eyebrow?: string;
+  headline: string;
+  subhead: string;
+  googlePlayUrl?: string;
+  appStoreUrl?: string;
+  screenshots: [string, string];
+  centerScreenshot?: string;
+  coverImage?: string;
+  coverImageAlt?: string;
+  stockImages?: StockImage[];
+  stats: Stat[];
+  /** Shown above the stat grid (e.g. Google Play rating & downloads with Palme-style framing). */
+  heroSpotlightStats?: Stat[];
+  features: Feature[];
+  /** When set, overrides the default “Everything you need” heading above the feature grid or rows */
+  featuresSectionTitle?: string;
+  featuresSectionSubtitle?: string;
+  faqs?: FAQ[];
+  testimonials?: Testimonial[];
+  /** Second copy + stock collage below testimonials (mirrored layout on large screens). */
+  postCarouselBlurb?: { title: string; body: string; stockImages: StockImage[] };
+  writingSystemsWithSigns?: string[];
+  writingSystemsTitle?: string;
+  writingSystemsSubtitle?: string;
+  termsUrl?: string;
+  privacyUrl?: string;
+  ogImage?: string;
+  /** YouTube video ID only (from youtube.com/watch?v=…) for an embedded app preview */
+  youtubeVideoId?: string;
+  youtubeVideoTitle?: string;
+};
+
+const {
+  canonicalPath,
+  title,
+  description,
+  themeColor,
+  appName,
+  logoSrc,
+  logoAlt,
+  eyebrow,
+  headline,
+  subhead,
+  googlePlayUrl,
+  appStoreUrl,
+  screenshots,
+  centerScreenshot,
+  coverImage,
+  stockImages,
+  stats,
+  heroSpotlightStats,
+  features,
+  featuresSectionTitle,
+  featuresSectionSubtitle,
+  faqs,
+  testimonials,
+  postCarouselBlurb,
+  writingSystemsWithSigns,
+  writingSystemsTitle,
+  writingSystemsSubtitle,
+  termsUrl,
+  privacyUrl,
+  ogImage,
+  youtubeVideoId,
+  youtubeVideoTitle,
+} = Astro.props;
+
+const displayStats = stats.slice(0, 5);
+const statSectionClass =
+  displayStats.length >= 5
+    ? "mx-auto mt-6 grid max-w-5xl gap-4 sm:mt-8 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5"
+    : displayStats.length >= 4
+      ? "mx-auto mt-6 grid max-w-4xl gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4"
+      : "mx-auto mt-6 grid max-w-3xl gap-4 sm:mt-8 sm:grid-cols-3";
+
+const secondaryVar =
+  themeColor === "app-freestyle"
+    ? "var(--color-app-freestyle-orange)"
+    : `var(--color-${themeColor}-secondary)`;
+
+const themeStyle = `--app-primary: var(--color-${themeColor}-primary); --app-secondary: ${secondaryVar};`;
+
+/** Stronger cyan/blue ambience on Alphabets so hero glow reads clearly on zinc-950. */
+const isAlphabetsTheme = themeColor === "app-alphabets";
+const heroGlowTopPrimaryPct = isAlphabetsTheme ? 52 : 22;
+const heroGlowBottomSecondaryPct = isAlphabetsTheme ? 24 : 16;
+const heroGlowScreenshotPrimaryPct = isAlphabetsTheme ? 48 : 18;
+const heroGlowTopOrbClass = isAlphabetsTheme ? "h-[48rem] w-[80rem]" : "h-[42rem] w-[72rem]";
+
+const featuresAreRich = features.some((f) => Boolean(f.imageSrc));
+const reviewsHeadingId = `reviews-heading-${themeColor}`;
+
+/** Embed params: fewer on-screen controls where YouTube honours them (often still shows minimal UI on tap). */
+const youtubeEmbedQuery = youtubeVideoId
+  ? `?${new URLSearchParams({
+      controls: "0",
+      modestbranding: "1",
+      rel: "0",
+    }).toString()}`
+  : "";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={canonicalPath}
+  ogImage={ogImage ?? coverImage}
+>
+  <div style={themeStyle} class="relative">
+    <div
+      aria-hidden="true"
+      class="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+      data-app-landing-fixed-glow
+    >
+      <div class="absolute inset-[-12%]" data-app-landing-glow-parallax>
+        <div
+          class="absolute left-1/2 top-[36%] h-[48rem] w-[min(94vw,88rem)] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+          style={`opacity: ${isAlphabetsTheme ? 0.82 : 0.66}; background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) ${isAlphabetsTheme ? 42 : 34}%, transparent), transparent);`}
+        >
+        </div>
+        <div
+          class="absolute bottom-[-8%] left-1/2 h-[min(42vh,28rem)] w-[min(100vw,78rem)] -translate-x-1/2 rounded-full blur-3xl"
+          style={`opacity: ${isAlphabetsTheme ? 0.62 : 0.52}; background: radial-gradient(closest-side, color-mix(in oklab, var(--app-secondary) 38%, transparent), transparent);`}
+        >
+        </div>
+      </div>
+    </div>
+
+    <div class="relative z-10">
+      <section class:list={[isAlphabetsTheme ? "relative overflow-visible" : "relative overflow-hidden", "pt-12 sm:pt-16"]}>
+      <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+        {isAlphabetsTheme ? (
+          <div class:list={["absolute -top-56 left-1/2 flex -translate-x-1/2 justify-center", heroGlowTopOrbClass]}>
+            <div
+              class="h-full w-full rounded-full blur-3xl"
+              style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) ${heroGlowTopPrimaryPct}%, transparent), transparent);`}
+            >
+            </div>
+          </div>
+        ) : (
+          <div
+            class:list={[
+              "absolute -top-56 left-1/2 -translate-x-1/2 rounded-full blur-3xl",
+              heroGlowTopOrbClass,
+            ]}
+            style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) ${heroGlowTopPrimaryPct}%, transparent), transparent);`}
+          >
+          </div>
+        )}
+        {isAlphabetsTheme ? (
+          <div
+            class="absolute -top-36 left-[18%] h-[34rem] w-[34rem] rounded-full blur-3xl"
+            style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) 36%, transparent), transparent);`}
+          >
+          </div>
+        ) : null}
+        {isAlphabetsTheme ? (
+          <div class="absolute -bottom-72 left-1/2 flex h-[42rem] w-[72rem] -translate-x-1/2 justify-center">
+            <div
+              class="h-full w-full rounded-full blur-3xl"
+              style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-secondary) ${heroGlowBottomSecondaryPct}%, transparent), transparent);`}
+            >
+            </div>
+          </div>
+        ) : (
+          <div
+            class="absolute -bottom-72 left-1/2 h-[42rem] w-[72rem] -translate-x-1/2 rounded-full blur-3xl"
+            style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-secondary) ${heroGlowBottomSecondaryPct}%, transparent), transparent);`}
+          >
+          </div>
+        )}
+        <div
+          class:list={[
+            "absolute inset-0 bg-gradient-to-b from-white/0",
+            isAlphabetsTheme ? "via-white/0 to-transparent" : "via-white/0 to-zinc-950",
+          ]}
+        >
+        </div>
+      </div>
+
+      <Container>
+        <div class="mx-auto max-w-3xl text-center">
+          {logoSrc ? (
+            <div class="mb-5">
+              <img
+                src={logoSrc}
+                alt={logoAlt ?? `${appName} app logo`}
+                class="mx-auto h-24 w-24 object-contain sm:h-28 sm:w-28"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+          ) : null}
+          {eyebrow ? (
+            <p class="inline-flex items-center rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-zinc-200 ring-1 ring-white/10">
+              {eyebrow}
+            </p>
+          ) : null}
+
+          <h1 class="mt-5 text-balance text-4xl font-semibold tracking-tight text-white sm:text-6xl">
+            {headline}
+          </h1>
+          <p class="mx-auto mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-zinc-200 sm:text-xl">
+            {subhead}
+          </p>
+
+          <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            {googlePlayUrl ? (
+              <a
+                class="inline-flex focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
+                href={googlePlayUrl}
+                rel="noopener noreferrer"
+                target="_blank"
+                aria-label="Get it on Google Play"
+              >
+                <img
+                  src="/google-play-badges/GetItOnGooglePlay_Badge_Web_color_English.svg"
+                  alt="Get it on Google Play"
+                  class="h-14 w-auto sm:h-16"
+                  decoding="async"
+                />
+              </a>
+            ) : null}
+            {appStoreUrl ? (
+              <a class="btn btn-secondary" href={appStoreUrl} rel="noopener noreferrer" target="_blank">
+                Download on the App Store
+              </a>
+            ) : null}
+          </div>
+
+        </div>
+
+        <div class="relative mx-auto mt-12 max-w-5xl pb-10 sm:mt-16 sm:pb-14">
+          <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+            <div
+              class:list={[
+                "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl",
+                isAlphabetsTheme ? "h-[33rem] w-[33rem] sm:h-[38rem] sm:w-[38rem]" : "h-[26rem] w-[26rem]",
+              ]}
+              style={
+                isAlphabetsTheme
+                  ? `background: radial-gradient(ellipse 68% 66% at 50% 44%, color-mix(in oklab, var(--app-primary) ${heroGlowScreenshotPrimaryPct}%, transparent) 50%, transparent 76%);`
+                  : `background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) ${heroGlowScreenshotPrimaryPct}%, transparent), transparent);`
+              }
+            >
+            </div>
+          </div>
+
+          <div class="relative grid place-items-center">
+            <div class="relative h-[26rem] w-full sm:h-[34rem]">
+              <div class="device device-left">
+                <img
+                  src={screenshots[0]}
+                  alt={`${appName} app screenshot`}
+                  class="h-full w-full object-contain"
+                />
+              </div>
+              <div class="device device-right">
+                <img
+                  src={screenshots[1]}
+                  alt={`${appName} app screenshot`}
+                  class="h-full w-full object-contain"
+                />
+              </div>
+
+              <div class="device device-center hidden sm:block">
+                {centerScreenshot ? (
+                  <img
+                    src={centerScreenshot}
+                    alt={`${appName} app screenshot`}
+                    class="h-full w-full object-contain"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <div
+                    class="h-full w-full"
+                    style={`background: linear-gradient(135deg, color-mix(in oklab, var(--app-primary) 18%, black), color-mix(in oklab, var(--app-secondary) 14%, black));`}
+                  >
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {heroSpotlightStats?.length ? <HeroGooglePlaySpotlight stats={heroSpotlightStats} /> : null}
+
+        <div class={statSectionClass}>
+          {displayStats.map((s) => (
+            <div class="card relative overflow-hidden p-5 text-center">
+              <div
+                aria-hidden="true"
+                class="pointer-events-none absolute inset-0 opacity-60"
+                style={`background: radial-gradient(350px circle at 50% 25%, color-mix(in oklab, var(--app-primary) 18%, transparent), transparent 60%);`}
+              >
+              </div>
+              <div class="relative">
+                <div class="text-xs font-semibold text-zinc-300">{s.label}</div>
+                <div class="mt-2 text-2xl font-semibold tracking-tight text-white">{s.value}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    {youtubeVideoId ? (
+      <section class="py-10 sm:py-14">
+        <Container>
+          <div class="mx-auto mt-8 max-w-3xl">
+            <div class="relative aspect-video w-full overflow-hidden rounded-xl bg-black ring-1 ring-white/10">
+              <iframe
+                class="absolute inset-0 h-full w-full"
+                src={`https://www.youtube-nocookie.com/embed/${youtubeVideoId}${youtubeEmbedQuery}`}
+                title={youtubeVideoTitle ?? `${appName} app preview on YouTube`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </Container>
+      </section>
+    ) : null}
+
+    <StockBlurbSection
+      title="Designed for quick curiosity and deep rabbit holes"
+      body="Open it for a minute, stay for an hour. The experience is structured, calm, and satisfying, so learning feels effortless."
+      stockImages={stockImages}
+    />
+
+    <section class="py-12 sm:py-16">
+      <Container>
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 class="text-balance text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+            {featuresSectionTitle ?? "Everything you need"}
+          </h2>
+          <p class="mt-3 text-sm leading-relaxed text-zinc-300">
+            {featuresSectionSubtitle ??
+              "Built to be readable, interactive, and genuinely useful, not just pretty."}
+          </p>
+        </div>
+
+        {featuresAreRich ? (
+          <div class="mx-auto mt-10 max-w-5xl space-y-12 sm:space-y-16">
+            {features.map((f, i) => (
+              <div
+                class:list={[
+                  "flex flex-col gap-4 md:items-center lg:gap-8",
+                  i % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row",
+                ]}
+              >
+                {f.imageSrc ? (
+                  <div
+                    class:list={[
+                      "relative md:w-5/12",
+                      i === 0 ? "" : "md:-mt-14 lg:-mt-20",
+                      isAlphabetsTheme ? "overflow-visible" : "card overflow-hidden p-2 sm:p-3",
+                    ]}
+                  >
+                    {!isAlphabetsTheme ? (
+                      <div
+                        aria-hidden="true"
+                        class="pointer-events-none absolute inset-0 opacity-45"
+                        style={`background: radial-gradient(520px circle at 28% 22%, color-mix(in oklab, var(--app-primary) 18%, transparent), transparent 56%);`}
+                      />
+                    ) : null}
+                    <img
+                      src={f.imageSrc}
+                      alt={f.imageAlt ?? f.title}
+                      class:list={[
+                        "mx-auto w-full max-w-[520px] object-contain max-h-[420px] sm:max-h-[520px]",
+                        isAlphabetsTheme ? "relative rounded-none" : "relative rounded-xl",
+                      ]}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                ) : null}
+                <div class="md:flex md:w-7/12 md:flex-col md:justify-center">
+                  <h3 class="text-lg font-semibold text-white sm:text-xl">{f.title}</h3>
+                  <p class="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">{f.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {features.map((f) => (
+              <div class="card relative overflow-hidden p-6">
+                <div
+                  aria-hidden="true"
+                  class="pointer-events-none absolute inset-0 opacity-60"
+                  style={`background: radial-gradient(450px circle at 20% 20%, color-mix(in oklab, var(--app-primary) 16%, transparent), transparent 55%);`}
+                >
+                </div>
+                <div class="relative">
+                  <h3 class="text-sm font-semibold text-white">{f.title}</h3>
+                  <p class="mt-2 text-sm leading-relaxed text-zinc-300">{f.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </Container>
+    </section>
+
+    {writingSystemsWithSigns?.length ? (
+      <section class="overflow-x-clip py-12 sm:py-16">
+        <Container class="!max-w-7xl">
+          <div class="mx-auto max-w-2xl text-center">
+            <h2 class="text-balance text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+              {writingSystemsTitle ?? "Writing systems with signs"}
+            </h2>
+            <p class="mt-3 text-sm leading-relaxed text-zinc-300">
+              {writingSystemsSubtitle ??
+                "A selection of the writing systems you can study with character signs inside the app."}
+            </p>
+          </div>
+
+          <div class="relative isolate mx-auto mt-10 w-full">
+            <div
+              aria-hidden="true"
+              class="pointer-events-none absolute -inset-y-32 inset-x-0 z-0 opacity-70"
+            >
+              <div
+                class="absolute left-1/2 top-1/2 h-[46rem] w-[min(110vw,88rem)] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+                style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) 26%, transparent), transparent);`}
+              />
+              <div
+                class="absolute bottom-[-20%] left-1/2 h-[28rem] w-[min(100vw,72rem)] -translate-x-1/2 rounded-full blur-3xl"
+                style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) 14%, transparent), transparent);`}
+              />
+            </div>
+            <div class="relative z-10 w-full">
+              <WritingSystemsCloud words={writingSystemsWithSigns} />
+            </div>
+          </div>
+        </Container>
+      </section>
+    ) : null}
+
+    {testimonials?.length ? (
+      <section class="py-12 sm:py-16">
+        <Container>
+          <div class="mx-auto max-w-2xl text-center">
+            <h2
+              id={reviewsHeadingId}
+              class="text-balance text-2xl font-semibold tracking-tight text-white sm:text-3xl"
+            >
+              What people are saying
+            </h2>
+            <p class="mt-3 text-sm leading-relaxed text-zinc-300">Reviews from Google Play.</p>
+          </div>
+
+          <TestimonialsCarousel testimonials={testimonials} labelledBy={reviewsHeadingId} />
+        </Container>
+      </section>
+    ) : null}
+
+    {postCarouselBlurb?.stockImages?.length ? (
+      <StockBlurbSection
+        title={postCarouselBlurb.title}
+        body={postCarouselBlurb.body}
+        stockImages={postCarouselBlurb.stockImages}
+        mirror
+      />
+    ) : null}
+
+    {faqs?.length ? (
+      <section class="py-12 sm:py-16">
+        <Container>
+          <div class="mx-auto max-w-2xl text-center">
+            <h2 class="text-balance text-2xl font-semibold tracking-tight text-white sm:text-3xl">FAQ</h2>
+            <p class="mt-3 text-sm leading-relaxed text-zinc-300">A few quick answers.</p>
+          </div>
+
+          <div class="mx-auto mt-10 max-w-3xl space-y-3">
+            {faqs.map((f) => (
+              <details class="card group cursor-pointer overflow-hidden p-5" data-app-faq-details>
+                <summary class="list-none cursor-pointer text-sm font-semibold text-white">
+                  <span class="inline-flex items-center gap-2">
+                    <span
+                      class="inline-block h-2 w-2 rounded-full"
+                      style={`background: color-mix(in oklab, var(--app-primary) 70%, white);`}
+                    >
+                    </span>
+                    {f.q}
+                  </span>
+                </summary>
+                <p class="mt-3 text-sm leading-relaxed text-zinc-300">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </Container>
+      </section>
+    ) : null}
+
+    <section class="py-12 sm:py-16">
+      <Container>
+        <div class="card relative overflow-hidden p-6 sm:p-10">
+          <div
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-0 opacity-90"
+            style={`background: radial-gradient(1000px circle at 20% 20%, color-mix(in oklab, var(--app-primary) 22%, transparent), transparent 60%), radial-gradient(1000px circle at 80% 60%, color-mix(in oklab, var(--app-secondary) 18%, transparent), transparent 62%);`}
+          >
+          </div>
+          <div class="relative flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:text-left">
+            <div>
+              <h2 class="text-balance text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+                Explore {appName}
+              </h2>
+              <p class="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-200">{description}</p>
+            </div>
+            {googlePlayUrl ? (
+              <div class="flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center">
+                <a
+                  class="inline-flex focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
+                  href={googlePlayUrl}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  aria-label="Get it on Google Play"
+                >
+                  <img
+                    src="/google-play-badges/GetItOnGooglePlay_Badge_Web_color_English.svg"
+                    alt="Get it on Google Play"
+                    class="h-14 w-auto sm:h-16"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </a>
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        {(termsUrl || privacyUrl) && (
+          <div class="mt-8 text-center text-sm text-zinc-400">
+            {termsUrl ? (
+              <a class="underline decoration-white/20 underline-offset-4 hover:text-white" href={termsUrl}>
+                Terms
+              </a>
+            ) : null}
+            {termsUrl && privacyUrl ? " · " : null}
+            {privacyUrl ? (
+              <a class="underline decoration-white/20 underline-offset-4 hover:text-white" href={privacyUrl}>
+                Privacy
+              </a>
+            ) : null}
+          </div>
+        )}
+      </Container>
+    </section>
+    </div>
+  </div>
+
+  <script>
+    function initFixedGlowParallax(): void {
+      const parallaxEl = document.querySelector<HTMLElement>("[data-app-landing-glow-parallax]");
+      if (!parallaxEl) return;
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        parallaxEl.style.removeProperty("transform");
+        return;
+      }
+
+      const strength = 0.075;
+      const maxPx = 72;
+      let rafId = 0;
+
+      function apply(): void {
+        rafId = 0;
+        const y = Math.min(window.scrollY * strength, maxPx);
+        parallaxEl.style.transform = `translate3d(0, ${y}px, 0)`;
+      }
+
+      function onScrollOrResize(): void {
+        if (rafId !== 0) return;
+        rafId = window.requestAnimationFrame(apply);
+      }
+
+      apply();
+      window.addEventListener("scroll", onScrollOrResize, { passive: true });
+      window.addEventListener("resize", onScrollOrResize);
+    }
+
+    initFixedGlowParallax();
+
+    function initFaqWholeCardToggle(): void {
+      document.querySelectorAll<HTMLDetailsElement>("[data-app-faq-details]").forEach((el) => {
+        el.addEventListener("click", (e) => {
+          const target = e.target;
+          if (!(target instanceof Element)) return;
+          if (target.closest("summary")) return;
+          if (target.closest("a, button, input, textarea, select")) return;
+          el.open = !el.open;
+        });
+      });
+    }
+
+    initFaqWholeCardToggle();
+  </script>
+
+  <style>
+    .device {
+      position: absolute;
+      overflow: visible;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .device-left {
+      left: 2%;
+      top: 10%;
+      width: 52%;
+      height: 86%;
+      transform: rotate(-10deg);
+    }
+    .device-right {
+      right: 2%;
+      top: 10%;
+      width: 52%;
+      height: 86%;
+      transform: rotate(10deg);
+    }
+    .device-center {
+      left: 50%;
+      top: 3%;
+      width: 42%;
+      height: 94%;
+      transform: translateX(-50%);
+    }
+  </style>
+
+</BaseLayout>
+

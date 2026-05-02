@@ -1,0 +1,112 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+  app: CollectionEntry<"apps">;
+  href: string;
+};
+
+const { app, href } = Astro.props;
+
+const themeColor = app.data.themeColor;
+const style = themeColor
+  ? `--app-primary: var(--color-${themeColor}-primary); --app-secondary: var(--color-${themeColor}-secondary);`
+  : `--app-primary: var(--color-brand); --app-secondary: var(--color-brand2);`;
+
+const topics = (app.data.topics ?? []).slice(0, 3);
+const platforms = app.data.platforms ?? [];
+---
+
+<a
+  href={href}
+  class="card group relative overflow-hidden transition hover:bg-white/7 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+  style={style}
+>
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100">
+    <div
+      class="absolute inset-0"
+      style={`background: radial-gradient(600px circle at 30% 20%, color-mix(in oklab, var(--app-primary) 30%, transparent), transparent 55%);`}
+    >
+    </div>
+  </div>
+
+  <div class="relative">
+    <div class="relative aspect-[16/10] overflow-hidden">
+      {app.data.coverImage ? (
+        <img
+          src={app.data.coverImage}
+          alt={app.data.coverImageAlt ?? `${app.data.name} cover image`}
+          class="h-full w-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <div
+          class="h-full w-full"
+          style={`background: linear-gradient(135deg, color-mix(in oklab, var(--app-primary) 35%, black), color-mix(in oklab, var(--app-secondary) 20%, black));`}
+        />
+      )}
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/40 to-transparent"
+      >
+      </div>
+    </div>
+
+    <div class="p-6">
+      <div class="flex items-start gap-4">
+        <div
+          class="h-12 w-12 shrink-0 overflow-hidden rounded-2xl ring-1 ring-white/10"
+          style={`background: color-mix(in oklab, var(--app-primary) 55%, black);`}
+        >
+          {app.data.icon ? (
+            <img
+              src={app.data.icon}
+              alt={`${app.data.name} app icon`}
+              class="h-full w-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <div class="h-full w-full bg-white/5" />
+          )}
+        </div>
+
+        <div class="min-w-0">
+          <div class="text-lg font-bold tracking-tight text-white">
+            {app.data.name}
+          </div>
+          <div class="mt-2 text-sm leading-relaxed text-zinc-200">
+            {app.data.tagline}
+          </div>
+
+          {(topics.length || platforms.length) && (
+            <div class="mt-4 flex flex-wrap gap-2">
+              {topics.map((t) => (
+                <span
+                  class="rounded-full bg-white/5 px-2.5 py-1 text-xs font-medium text-white ring-1 ring-white/10"
+                >
+                  {t}
+                </span>
+              ))}
+              {platforms.map((p) => (
+                <span
+                  class="rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-white/10"
+                  style={`background: color-mix(in oklab, var(--app-primary) 18%, black); color: white;`}
+                >
+                  {p}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/90">
+        Explore{" "}
+        <span class="transition group-hover:translate-x-0.5">→</span>
+      </div>
+    </div>
+  </div>
+</a>
+

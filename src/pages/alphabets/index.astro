@@ -1,409 +1,260 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Container from "../../components/Container.astro";
+import AppLandingAerium from "../../components/AppLandingAerium.astro";
+
+const heroSpotlightStats = [
+  { label: "Google Play downloads", value: "140k+" },
+  { label: "Google Play rating", value: "4.5★" },
+];
 
 const stats = [
-  { label: "Writing systems", value: "267+" },
-  { label: "Signs to learn", value: "54" },
-  { label: "Languages", value: "628+" },
+  { label: "Writing systems to explore", value: "267" },
+  { label: "Characters to learn", value: "2400+" },
+  { label: "Languages included", value: "629" },
 ];
 
 const features = [
   {
     title: "Vast choice of scripts",
-    body:
-      "Learn about 267+ writing systems, and the signs for 54 of them. Discover constructed scripts and fictitious alphabets from the Lord of the Rings, Star Wars, and more.",
-    icon: "sparkles",
+    body: "Learn about 267 writing systems and 2400+ characters across them. Discover constructed scripts and fictitious alphabets from the Lord of the Rings, Star Wars, and more.",
+    imageSrc: "/apps/alphabets/features/scripts.png",
+    imageAlt: "Screenshot of alphabet history and details in World of Alphabets.",
   },
   {
     title: "Learn the story behind the alphabets",
-    body:
-      "Discover each alphabet's history, characteristics and related languages. Each script is a fascinating world!",
-    icon: "book",
+    body: "Discover each alphabet's history, characteristics and related languages. Each script is a fascinating world!",
+    imageSrc: "/apps/alphabets/features/alphabet-overview.png",
+    imageAlt: "Screenshot of a letter overview with transliteration and pronunciation.",
   },
   {
     title: "Alphabet overview",
-    body:
-      "Get an instant overview of each alphabet: the letter, its name, its transliteration and its sound in a glance.",
-    icon: "grid",
+    body: "Get an instant overview of each alphabet: the letter, its name, its transliteration and its sound in a glance.",
+    imageSrc: "/apps/alphabets/features/signs.png",
+    imageAlt:
+      "Screenshot of the alphabet overview list with characters, names, and transliteration.",
   },
   {
     title: "Flashcards",
-    body:
-      "Use flashcards to learn each character at your own pace, including how to write it by hand, and how it's most often pronounced.",
-    icon: "cards",
+    body: "Use flashcards to learn each character at your own pace, including how to write it by hand, and how it's most often pronounced.",
+    imageSrc: "/apps/alphabets/features/flashcard.png",
+    imageAlt: "Screenshot of flashcard study mode in World of Alphabets.",
   },
   {
     title: "Script Map",
-    body:
-      "Navigate a world of scripts. The birthplaces of all 267+ scripts have been meticulously added to this map.",
-    icon: "map",
+    body: "Navigate a world of scripts. The birthplaces of all 267 scripts have been meticulously added to this map.",
+    imageSrc: "/apps/alphabets/features/script-map.png",
+    imageAlt: "Screenshot of the world map of writing systems.",
   },
   {
     title: "Languages",
-    body: "Learn about 628+ languages, real and constructed, and which writing systems they use.",
-    icon: "globe",
+    body: "Learn about 629 languages, real and constructed, and which writing systems they use.",
+    imageSrc: "/apps/alphabets/features/languages.png",
+    imageAlt: "Screenshot of a multiple-choice quiz in World of Alphabets.",
   },
   {
     title: "Dark mode",
-    body:
-      "Experience sleek elegance and eye comfort with the dark theme — tailored for night-time or all-day use.",
-    icon: "moon",
+    body: "Experience sleek elegance and eye comfort with the dark theme. Reduce eye strain, save battery, and enjoy a modern, sophisticated interface tailored for night-time or all-day use.",
+    imageSrc: "/apps/alphabets/features/dark-mode.png",
+    imageAlt: "Screenshot of World of Alphabets in dark mode.",
   },
   {
     title: "Tailored quiz",
-    body:
-      "Challenge yourself to a multiple-choice quiz, to learn each sign. You can even design your own quizzes.",
-    icon: "quiz",
+    body: "Challenge yourself to a multiple-choice quiz, to learn each sign. You can even design your own quizzes.",
+    imageSrc: "/apps/alphabets/features/quiz.png",
+    imageAlt: "Screenshot of flashcard study mode in World of Alphabets.",
   },
 ];
 
-const writingSystems = [
-  "American Sign Language",
-  "Anatolian Hieroglyphs",
-  "Arabic",
-  "Aramaic",
-  "Armenian",
-  "Aurebesh",
-  "Baybayin",
-  "Braille",
-  "Cherokee",
-  "Coptic",
-  "Cuneiform",
-  "Cyrillic",
-  "Devanagari",
-  "Egyptian Hieroglyphs",
-  "Elder Futhark",
-  "Futhorc",
-  "Ge'ez",
-  "Georgian (Asomtavruli)",
-  "Georgian (Mkhedruli)",
-  "Georgian (Nuskhuri)",
-  "Glagolitic",
-  "Gothic",
-  "Greek (Ancient)",
-  "Greek (Modern)",
-  "Hebrew",
-  "Hiragana",
-  "Inuktitut",
-  "Katakana",
-  "Khmer",
-  "Klingon",
-  "Korean (Hangul)",
-  "Latin",
-  "Linear B",
-  "Lontara",
-  "Lycian",
-  "Lydian",
-  "Malayalam",
-  "Maya",
-  "Mongolian",
-  "Morse",
-  "N'Ko",
-  "Neo-Tifinagh",
-  "Ogham",
-  "Old Italic",
-  "Old Turkic (Orkhon)",
-  "Phoenician",
-  "Semaphore",
-  "Syriac",
-  "Telugu",
-  "Tengwar",
-  "Thaana",
-  "Thai",
-  "Tibetan",
-  "Younger Futhark",
+const testimonials = [
+  {
+    quote:
+      "My son has become infatuated with writing systems. He is 5 years old and knows 13 alphabets that I know of including Russian, Armenian, Korean, and Urdu. He LOVES this app!!",
+    author: "Ambalamb",
+  },
+  {
+    quote:
+      "If I could give 100 Stars I would! This app is incredible because it's one of a kind. One of a kind doesn't always mean it's good but this one is very very good. Somebody took a lot of time to make this and I'm so happy. Much appreciated!",
+    author: "K Leigh",
+  },
+  {
+    quote:
+      "This app is a holy grail for ancient languages and modern languages. I can not recommend it more to everyone who's interested in learning alphabets, may they be modern or ancient. I love this app!",
+    author: "Ela18",
+  },
+  {
+    quote:
+      "Love it, simple concept but effective. Clean interface and easy to use with a massive selection. I use it for Baybayin, but it's fun to study the others too.",
+    author: "Google Play user",
+  },
+  {
+    quote:
+      "Honestly great! The application is super complete, intuitive and educational! I recommend without any hesitation. Congratulations again for this gem!",
+    author: "Google Play user",
+  },
+  {
+    quote:
+      "It is a fantastic app for the curious minds who want to learn more about the origin of written and sign languages! All the information is in one place!",
+    author: "Google Play user",
+  },
+  {
+    quote:
+      "Excellent app. Indispensable tool for those who love, research and work with languages. It's not just an app, it's a tool to open doors to this fascinating world of Letters. Thanks.",
+    author: "Google Play user",
+  },
+  {
+    quote:
+      "Very interesting app with not only modern language's alphabets but also ancient one and even sign languages! Well done.",
+    author: "Google Play user",
+  },
+  {
+    quote:
+      "Amazing, absolutely astounding. Beware: the explanations that accompany each alphabet are addictive! Enjoy.",
+    author: "Paul E. Long",
+  },
 ];
 
-const iconPaths: Record<string, string> = {
-  sparkles:
-    "M12 2l1.2 4.4a6 6 0 0 0 4.4 4.4L22 12l-4.4 1.2a6 6 0 0 0-4.4 4.4L12 22l-1.2-4.4a6 6 0 0 0-4.4-4.4L2 12l4.4-1.2a6 6 0 0 0 4.4-4.4L12 2z",
-  book:
-    "M6 4.5A2.5 2.5 0 0 1 8.5 2H20a1 1 0 0 1 1 1v15.5a.5.5 0 0 1-.8.4c-1.9-1.4-4.3-2.1-7.2-2.1H8.5A2.5 2.5 0 0 0 6 19.3V4.5z M3 6.5A2.5 2.5 0 0 1 5.5 4H6v15.3A4.5 4.5 0 0 0 8.5 23H19a1 1 0 1 0 0-2H8.5A2.5 2.5 0 0 1 6 18.5V6H5.5A.5.5 0 0 0 5 6.5V18a1 1 0 1 1-2 0V6.5z",
-  grid:
-    "M4 4h7v7H4V4zm9 0h7v7h-7V4zM4 13h7v7H4v-7zm9 0h7v7h-7v-7z",
-  cards:
-    "M7 4h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3zm0 2a1 1 0 0 0-1 1v1h12V7a1 1 0 0 0-1-1H7zm11 5H6v4a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-4z",
-  map:
-    "M9 4l6-2 6 2v16l-6-2-6 2-6-2V2l6 2zm0 2.2L5 4.9v12.2l4 1.3V6.2zm2-.7v12.2l4-1.3V4.2l-4 1.3zm6-1.3v12.2l4 1.3V4.9l-4-1.3z",
-  globe:
-    "M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20zm0 2c-1.7 0-3.2 2.2-3.8 5H15.8C15.2 6.2 13.7 4 12 4zm-4 7a16 16 0 0 0 0 2h8a16 16 0 0 0 0-2H8zm.2 4C8.8 18.8 10.3 21 12 21s3.2-2.2 3.8-6H8.2zM4.1 13H6a18 18 0 0 1 0-2H4.1a8 8 0 0 0 0 2zm.6 2a8 8 0 0 0 3.2 3.6c-.5-1.1-.9-2.3-1.1-3.6H4.7zM4.7 9h2.1c.2-1.3.6-2.5 1.1-3.6A8 8 0 0 0 4.7 9zm15.2 0a8 8 0 0 0-3.2-3.6c.5 1.1.9 2.3 1.1 3.6h2.1zm0 6h-2.1c-.2 1.3-.6 2.5-1.1 3.6A8 8 0 0 0 19.3 15z",
-  moon: "M21 14.5A8.5 8.5 0 0 1 9.5 3a7 7 0 1 0 11.5 11.5z",
-  quiz:
-    "M7 6h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3zm0 2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H7zm1.5 2.5h5a1 1 0 1 1 0 2h-5a1 1 0 1 1 0-2zm0 4h3a1 1 0 1 1 0 2h-3a1 1 0 1 1 0-2zm7 .2a1.1 1.1 0 1 1 0-2.2 1.1 1.1 0 0 1 0 2.2z",
-};
-
-function iconPath(name: string) {
-  return iconPaths[name] ?? iconPaths.sparkles;
-}
+const writingSystemsWithSigns = [
+  "Latin script",
+  "Greek alphabet",
+  "Cyrillic script",
+  "Hebrew alphabet",
+  "Elder Futhark",
+  "Arabic script",
+  "Morse code",
+  "Armenian alphabet",
+  "Coptic script",
+  "N’ko",
+  "Thaana",
+  "Hangul",
+  "Cherokee syllabary",
+  "Gothic script",
+  "Phoenician script",
+  "Egyptian hieroglyphs",
+  "Neo-Tifinagh",
+  "Geʽez script",
+  "Braille script",
+  "Devanagari",
+  "Hiragana",
+  "Katakana",
+  "Cuneiform",
+  "Thai script",
+  "Canadian Aboriginal syllabics",
+  "Ogham",
+  "Lontara",
+  "Eastern Syriac script",
+  "Malayalam script",
+  "Glagolitic",
+  "Younger Futhark",
+  "Tibetan alphabet",
+  "Linear B",
+  "Lycian",
+  "Lydian",
+  "Baybayin",
+  "Khmer",
+  "Telugu",
+  "Mongolian",
+  "Anatolian Hieroglyphs",
+  "Futhorc",
+  "Old Italic",
+  "Old Turkic",
+  "Aramaic alphabet",
+  "Leet",
+  "Tamil script",
+  "Avestan",
+  "Bangla alphabet",
+  "Mandaic",
+  "Old Hungarian",
+  "Bamum script",
+  "Lao",
+  "Aurebesh",
+  "Avoiuli",
+  "Mkhedruli",
+  "Nuskhuri",
+  "Asomtavruli",
+  "Tengwar",
+  "American Sign Language",
+  "Javanese script",
+  "Standard Galactic Alphabet",
+  "Flag semaphore",
+  "Mayan hieroglyphs",
+  "PIqaD",
+];
 ---
-
-<BaseLayout
-  title="World of Alphabets — Khonsu Development"
-  description="Discover writing systems from around the world — flashcards, quizzes, maps, and tailored learning."
+<AppLandingAerium
   canonicalPath="/alphabets"
->
-  <section class="relative overflow-hidden py-12 sm:py-16">
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
-      <div
-        class="absolute -top-48 left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[color-mix(in_oklab,var(--color-brand)_20%,transparent)] blur-3xl"
-      >
-      </div>
-      <div
-        class="absolute -bottom-56 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-[color-mix(in_oklab,var(--color-brand2)_18%,transparent)] blur-3xl"
-      >
-      </div>
-      <div class="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-zinc-950"></div>
-    </div>
-    <Container>
-      <div class="grid gap-10 lg:grid-cols-12 lg:items-center">
-        <div class="lg:col-span-7">
-          <p
-            class="inline-flex items-center rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-zinc-200 ring-1 ring-white/10"
-          >
-            A free mobile app for writing systems
-          </p>
-          <h1 class="mt-4 text-balance text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-            Learn new alphabets easily
-          </h1>
-          <p class="mt-4 max-w-2xl text-pretty text-lg leading-relaxed text-zinc-200">
-            Discover <span class="font-semibold text-white">World of Alphabets</span> — a free mobile app designed to
-            teach writing systems from all around the world.
-          </p>
-
-          <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <a
-              class="btn btn-primary"
-              href="https://play.google.com/store/apps/details?id=eu.khonsu.alphabets"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Get it on Google Play
-            </a>
-            <a class="btn btn-secondary" href="/apps">
-              Explore all apps
-            </a>
-          </div>
-
-          <div class="mt-8 flex flex-wrap gap-2">
-            {stats.map((s) => (
-              <div class="inline-flex items-baseline gap-2 rounded-full bg-white/5 px-3 py-1.5 ring-1 ring-white/10">
-                <span class="text-sm font-semibold text-white">{s.value}</span>
-                <span class="text-xs text-zinc-300">{s.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div class="lg:col-span-5">
-          <div class="card relative overflow-hidden p-5 sm:p-6">
-            <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-white/0">
-            </div>
-            <div class="relative">
-              <div class="flex items-center gap-4">
-                <div class="h-12 w-12 overflow-hidden rounded-2xl bg-white/10 ring-1 ring-white/10">
-                  <img
-                    src="/apps/alphabets/alphabets.png"
-                    alt="World of Alphabets app icon"
-                    class="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-                <div>
-                  <div class="text-sm font-semibold text-white">World of Alphabets</div>
-                  <div class="text-xs text-zinc-300">Flashcards • Quizzes • Script map</div>
-                </div>
-              </div>
-
-              <div class="mt-5 grid grid-cols-2 gap-3">
-                <div class="overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10">
-                  <img
-                    src="/apps/alphabets/screenshot-1.jpg"
-                    alt="World of Alphabets app screenshot"
-                    class="h-44 w-full object-cover sm:h-48"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10">
-                  <img
-                    src="/apps/alphabets/screenshot-2.jpg"
-                    alt="World of Alphabets app screenshot"
-                    class="h-44 w-full object-cover sm:h-48"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-
-              <p class="mt-4 text-xs leading-relaxed text-zinc-400">
-                Screenshots are sourced from the app media repos and copied into{" "}
-                <span class="font-mono text-zinc-300">public/apps/alphabets/</span>.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Container>
-  </section>
-
-  <section class="py-12 sm:py-16">
-    <Container>
-      <div class="flex items-end justify-between gap-6">
-        <div>
-          <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">User Testimonials</h2>
-          <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-300">
-            This section exists on the original page. If you want to feature specific reviews, send them over and I’ll
-            drop them in as quote cards.
-          </p>
-        </div>
-      </div>
-
-      <div class="mt-8 grid gap-4 md:grid-cols-3">
-        <div class="card p-6">
-          <p class="text-sm leading-relaxed text-zinc-200">
-            Want to appear here? Leave a rating or a comment on Google Play and I can feature it (with your permission).
-          </p>
-          <p class="mt-4 text-xs text-zinc-400">Testimonials — coming soon</p>
-        </div>
-        <div class="card p-6">
-          <p class="text-sm leading-relaxed text-zinc-200">
-            Short quotes look best. I’ll style them with subtle highlights and keep the layout consistent across apps.
-          </p>
-          <p class="mt-4 text-xs text-zinc-400">Testimonials — coming soon</p>
-        </div>
-        <div class="card p-6">
-          <p class="text-sm leading-relaxed text-zinc-200">
-            If you’d rather not show reviews, we can replace this section with a “Why it works” block instead.
-          </p>
-          <p class="mt-4 text-xs text-zinc-400">Testimonials — coming soon</p>
-        </div>
-      </div>
-    </Container>
-  </section>
-
-  <section class="py-12 sm:py-16">
-    <Container>
-      <div class="flex items-end justify-between gap-6">
-        <div>
-          <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">Features</h2>
-          <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-300">
-            Everything you need to explore writing systems — in a fast, focused learning flow.
-          </p>
-        </div>
-      </div>
-
-      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {features.map((f) => (
-          <div class="card p-6">
-            <div class="flex items-start gap-3">
-              <div class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 ring-1 ring-white/10">
-                <svg viewBox="0 0 24 24" class="h-5 w-5 text-white" fill="currentColor" aria-hidden="true">
-                  <path d={iconPath(f.icon)} />
-                </svg>
-              </div>
-              <div>
-                <h3 class="text-sm font-semibold text-white">{f.title}</h3>
-                <p class="mt-2 text-sm leading-relaxed text-zinc-300">{f.body}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </Container>
-  </section>
-
-  <section class="py-12 sm:py-16">
-    <Container>
-      <div class="flex items-end justify-between gap-6">
-        <div>
-          <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">54 writing systems to discover</h2>
-          <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-300">
-            A curated set of real and constructed scripts — with more coming soon.
-          </p>
-        </div>
-      </div>
-
-      <div class="mt-8 flex flex-wrap gap-2">
-        {writingSystems.map((name) => (
-          <span class="rounded-full bg-white/5 px-3 py-1.5 text-sm text-zinc-200 ring-1 ring-white/10 hover:bg-white/10">
-            {name}
-          </span>
-        ))}
-      </div>
-
-      <div class="mt-10 grid gap-4 lg:grid-cols-12 lg:items-start">
-        <div class="lg:col-span-7">
-          <div class="card p-6">
-            <h3 class="text-sm font-semibold text-white">More alphabets coming soon</h3>
-            <p class="mt-2 text-sm leading-relaxed text-zinc-300">
-              More alphabets will be integrated soon! Leave a comment on Google Play to let us know which alphabet or
-              script you want to see added to the app.
-            </p>
-          </div>
-        </div>
-        <div class="lg:col-span-5">
-          <div class="card p-6">
-            <h3 class="text-sm font-semibold text-white">Feedback</h3>
-            <p class="mt-2 text-sm leading-relaxed text-zinc-300">
-              If you found a bug or a content error, please report it to{" "}
-              <a
-                class="underline decoration-white/20 underline-offset-4 hover:text-white"
-                href="mailto:khonsu.development@gmail.com"
-              >
-                khonsu.development@gmail.com
-              </a>
-              .
-            </p>
-          </div>
-        </div>
-      </div>
-    </Container>
-  </section>
-
-  <section class="py-12 sm:py-16">
-    <Container>
-      <div class="card relative overflow-hidden p-6 sm:p-8">
-        <div
-          class="pointer-events-none absolute inset-0 bg-gradient-to-r from-[color-mix(in_oklab,var(--color-brand)_25%,transparent)] via-white/0 to-[color-mix(in_oklab,var(--color-brand2)_22%,transparent)]"
-        >
-        </div>
-        <div class="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 class="text-2xl font-semibold tracking-tight text-white">Discover World of Alphabets</h2>
-            <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-200">
-              A free mobile app designed to teach writing systems from all around the world.
-            </p>
-          </div>
-          <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <a
-              class="btn btn-primary"
-              href="https://play.google.com/store/apps/details?id=eu.khonsu.alphabets"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Get it on Google Play
-            </a>
-            <a class="btn btn-secondary" href="/apps">
-              Explore all apps
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-8 text-sm text-zinc-400">
-        <a
-          class="underline decoration-white/20 underline-offset-4 hover:text-white"
-          href="/alphabets/terms-and-conditions-for-world-of-alphabets"
-        >
-          Terms &amp; Conditions for World of Alphabets
-        </a>
-        {" · "}
-        <a
-          class="underline decoration-white/20 underline-offset-4 hover:text-white"
-          href="/alphabets/privacy-policy-for-world-of-alphabets"
-        >
-          Privacy Policy for World of Alphabets
-        </a>
-      </div>
-    </Container>
-  </section>
-</BaseLayout>
+  title="World of Alphabets | Khonsu Development"
+  description="Learn writing systems with flashcards, quizzes, and a script map. Explore 267+ alphabets and 2400+ characters."
+  themeColor="app-alphabets"
+  appName="World of Alphabets"
+  logoSrc="/apps/alphabets/alphabets.png"
+  eyebrow="A writing systems atlas in your pocket"
+  headline="Learn writing systems without the overwhelm"
+  subhead="Explore 267+ writing systems and 2400+ characters with flashcards and quizzes—plus a world map of scripts."
+  googlePlayUrl="https://play.google.com/store/apps/details?id=eu.khonsu.alphabets"
+  screenshots={[
+    "/apps/alphabets/features/alphabet-overview.png",
+    "/apps/alphabets/features/script-map.png",
+  ]}
+  centerScreenshot="/apps/alphabets/features/main-menu.png"
+  coverImage="/stock/alphabets/cover-hebrew.jpg"
+  coverImageAlt="Close-up of an ancient text with Hebrew writing."
+  stockImages={[
+    {
+      src: "/stock/alphabets/egyptian-hieroglyphic.jpg",
+      alt: "",
+    },
+    {
+      src: "/stock/alphabets/cuneiform.jpg",
+      alt: "",
+    },
+    {
+      src: "/stock/alphabets/arabic.jpg",
+      alt: "",
+    },
+    {
+      src: "/stock/alphabets/chinese.jpg",
+      alt: "",
+    },
+    {
+      src: "/stock/alphabets/runes.jpg",
+      alt: "",
+    },
+  ]}
+  heroSpotlightStats={heroSpotlightStats}
+  stats={stats}
+  features={features}
+  featuresSectionTitle="Features"
+  featuresSectionSubtitle="Explore writing systems, practice characters, browse languages on a map, and more."
+  writingSystemsWithSigns={writingSystemsWithSigns}
+  writingSystemsTitle="Writing systems with signs"
+  writingSystemsSubtitle="These writing systems include character signs you can study inside the app."
+  testimonials={testimonials}
+  postCarouselBlurb={{
+    title: "Humanity, written down",
+    body: "Scripts carry laws, prayers, jokes, and grocery lists—the traces of real lives across continents. Wander through that diversity at your own pace: no homework, no pressure, just curiosity.",
+    stockImages: [
+      { src: "/stock/alphabets/greek.jpg", alt: "" },
+      { src: "/stock/alphabets/coptic.jpg", alt: "" },
+      { src: "/stock/alphabets/tibetan.jpg", alt: "" },
+      { src: "/stock/alphabets/kanji.jpg", alt: "" },
+      { src: "/stock/alphabets/korean.jpg", alt: "" },
+    ],
+  }}
+  faqs={[
+    {
+      q: "Is this just flashcards?",
+      a: "No. World of Alphabets is also an atlas and a reference. You can explore scripts by history, region, and language, then switch into practice mode when you’re ready.",
+    },
+    {
+      q: "Can I learn fictional or constructed alphabets too?",
+      a: "Yes. Alongside historical writing systems, you’ll find constructed scripts and pop-culture favorites to keep exploration fun.",
+    },
+    {
+      q: "Is it good for short daily practice?",
+      a: "Absolutely. The flow is designed for quick sessions. Browse a script, learn a few characters, take a quiz, and you’re done.",
+    },
+  ]}
+  termsUrl="/alphabets/terms-and-conditions-for-world-of-alphabets"
+  privacyUrl="/alphabets/privacy-policy-for-world-of-alphabets"
+  youtubeVideoId="AJv_n7niDWo"
+  youtubeVideoTitle="See World of Alphabets in action"
+/>

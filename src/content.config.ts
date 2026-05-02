@@ -12,12 +12,18 @@ const apps = defineCollection({
   schema: z.object({
     name: z.string(),
     tagline: z.string(),
+    seoTitle: z.string().optional(),
+    seoDescription: z.string().optional(),
+    keywords: z.array(z.string()).default([]),
     topics: z.array(z.string()).default([]),
     platforms: z.array(z.enum(["android", "ios", "web"])).default([]),
     googlePlayUrl: absoluteOrSitePathUrl.optional(),
     appStoreUrl: absoluteOrSitePathUrl.optional(),
     websiteUrl: absoluteOrSitePathUrl.optional(),
     icon: z.string().optional(),
+    coverImage: absoluteOrSitePathUrl.optional(),
+    coverImageAlt: z.string().optional(),
+    ogImage: absoluteOrSitePathUrl.optional(),
     themeColor: z
       .string()
       .regex(

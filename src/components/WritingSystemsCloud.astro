@@ -1,0 +1,161 @@
+---
+/**
+ * Decorative “word cloud” for writing-system names. Cursor (or touch) moves the
+ * labels with parallax. Layout is deterministic (SSR-stable). Screen readers
+ * get a plain list via sr-only.
+ *
+ * For a canvas-based 3D rotating cloud, TagCanvas is the usual choice:
+ * https://www.goat1000.com/tagcanvas.php
+ */
+export interface Props {
+  words: string[];
+}
+
+const { words } = Astro.props;
+
+function hashStr(s: string): number {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+  return h === -2147483648 ? 0 : Math.abs(h);
+}
+
+/** Vogel spiral (golden-angle disk) spreads points evenly; smaller jitter preserves SR stability without crowding. */
+const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
+
+const n = Math.max(words.length, 1);
+const placed = words.map((text, i) => {
+  const h = hashStr(`${text}\0${i}`);
+  const order = i + 1;
+  let rNorm = Math.sqrt(order / (n + 1));
+  /* Push labels away from the centre and edge margin so long names don’t clip. */
+  rNorm = 0.12 + rNorm * 0.78;
+  rNorm *= 1 + ((h % 21) - 10) / 280;
+  const theta = i * GOLDEN_ANGLE + ((h % 80) / 80) * 0.12;
+  const ellipseX = 47;
+  const ellipseY = 44;
+  const left = 50 + Math.cos(theta) * rNorm * ellipseX;
+  const top = 50 + Math.sin(theta) * rNorm * ellipseY;
+  const depth = 0.2 + ((h >> 3) % 80) / 100;
+  const fontRem = 0.74 + ((h >> 5) % 22) / 100;
+  const rot = ((h >> 7) % 7) - 3;
+  const opacity = 0.55 + ((h >> 9) % 40) / 100;
+  return { text, left, top, depth, fontRem, rot, opacity };
+});
+---
+
+<div class="writing-systems-cloud-root" data-ws-cloud>
+  <!-- Full-viewport-width parallax hit target; labels live in a centered max-width column. -->
+  <div
+    data-ws-cloud-surface
+    class="writing-systems-cloud-surface relative left-1/2 w-screen min-h-[min(92vw,480px)] -translate-x-1/2 cursor-crosshair select-none sm:min-h-[560px] lg:min-h-[660px]"
+    role="presentation"
+    aria-hidden="true"
+  >
+    <div class="pointer-events-none absolute inset-y-0 left-1/2 w-full max-w-6xl -translate-x-1/2 lg:max-w-7xl">
+      {
+        placed.map((p) => (
+          <span
+            class="writing-systems-cloud-chip pointer-events-none absolute whitespace-nowrap font-medium will-change-transform"
+            style={{
+              left: `${p.left}%`,
+              top: `${p.top}%`,
+              zIndex: Math.round(p.depth * 20),
+              "--d": String(p.depth),
+              fontSize: `${p.fontRem}rem`,
+              opacity: p.opacity,
+              color: `color-mix(in oklab, var(--app-primary) ${28 + (p.depth * 42)}%, rgb(228 228 231))`,
+              transform: `translate3d(calc(-50% + var(--mx, 0) * 52px * var(--d)), calc(-50% + var(--my, 0) * 48px * var(--d)), 0) rotate(${p.rot}deg)`,
+            }}
+          >
+            {p.text}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+  <ul class="sr-only">
+    {words.map((w) => (
+      <li>{w}</li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  const roots = document.querySelectorAll<HTMLElement>("[data-ws-cloud]");
+
+  function prefersReducedMotion(): boolean {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function bindCloud(root: HTMLElement): void {
+    const surface = root.querySelector<HTMLElement>("[data-ws-cloud-surface]");
+    if (!surface) return;
+
+    if (prefersReducedMotion()) {
+      root.style.setProperty("--mx", "0");
+      root.style.setProperty("--my", "0");
+      return;
+    }
+
+    let active = false;
+
+    const setFromClient = (clientX: number, clientY: number): void => {
+      const r = surface.getBoundingClientRect();
+      if (r.width < 1 || r.height < 1) return;
+      const mx = ((clientX - r.left) / r.width - 0.5) * 2;
+      const my = ((clientY - r.top) / r.height - 0.5) * 2;
+      root.style.setProperty("--mx", mx.toFixed(4));
+      root.style.setProperty("--my", my.toFixed(4));
+    };
+
+    const onEnter = (): void => {
+      active = true;
+    };
+
+    const onMove = (e: MouseEvent): void => {
+      if (!active) return;
+      setFromClient(e.clientX, e.clientY);
+    };
+
+    const onLeave = (): void => {
+      active = false;
+      root.style.setProperty("--mx", "0");
+      root.style.setProperty("--my", "0");
+    };
+
+    surface.addEventListener("mouseenter", onEnter);
+    surface.addEventListener("mousemove", onMove, { passive: true });
+    surface.addEventListener("mouseleave", onLeave);
+
+    surface.addEventListener(
+      "touchstart",
+      (e) => {
+        active = true;
+        const t = e.touches[0];
+        if (t) setFromClient(t.clientX, t.clientY);
+      },
+      { passive: true },
+    );
+    surface.addEventListener(
+      "touchmove",
+      (e) => {
+        const t = e.touches[0];
+        if (t) setFromClient(t.clientX, t.clientY);
+      },
+      { passive: true },
+    );
+    surface.addEventListener("touchend", onLeave, { passive: true });
+    surface.addEventListener("touchcancel", onLeave, { passive: true });
+  }
+
+  for (const root of roots) bindCloud(root);
+</script>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    .writing-systems-cloud-root {
+      --mx: 0 !important;
+      --my: 0 !important;
+    }
+  }
+</style>

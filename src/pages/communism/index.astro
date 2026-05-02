@@ -1,165 +1,77 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Container from "../../components/Container.astro";
+import AppLandingAerium from "../../components/AppLandingAerium.astro";
+
+const stats = [
+  { label: "Key thinkers", value: "140+" },
+  { label: "Study modes", value: "Browse + quiz" },
+  { label: "Learning style", value: "Structured" },
+];
+
+const features = [
+  {
+    title: "Thinkers with context",
+    body: "Explore philosophers, artists, and political figures, understand ideas, lives, and influence without the jargon fog.",
+  },
+  {
+    title: "Movements & definitions",
+    body: "From ethical socialism to green anarchism, navigate labels and distinctions with clean explanations.",
+  },
+  {
+    title: "Writings & references",
+    body: "A curated library of texts and themes, so reading recommendations feel actionable rather than overwhelming.",
+  },
+  {
+    title: "Interactive map",
+    body: "See how countries intersected with communist and anarchist histories through a browsable map view.",
+  },
+  {
+    title: "Songs & hymns",
+    body: "Discover left-wing music from around the world, with lyrics for exploration and cultural context.",
+  },
+  {
+    title: "Quizzes that reinforce vocabulary",
+    body: "Category quizzes and tailored sets help you turn reading into memory, great for beginners and enthusiasts.",
+  },
+  {
+    title: "Built for calm reading",
+    body: "A polished dark UI designed for long sessions and focused study.",
+  },
+  {
+    title: "Learn end‑to‑end",
+    body: "Ideas → people → movements → places → culture. The app is designed as a cohesive learning journey.",
+  },
+];
 ---
-
-<BaseLayout
-  title="World of Communism — Khonsu Development"
-  description="Explore Communism, Socialism, and Anarchism — thinkers, movements, writings, maps, music, and quizzes."
+<AppLandingAerium
   canonicalPath="/communism"
->
-  <section class="py-12 sm:py-16">
-    <Container>
-      <div class="max-w-3xl">
-        <div class="card mb-10 overflow-hidden p-5 sm:p-6">
-          <div class="flex items-center gap-4">
-            <div class="h-12 w-12 overflow-hidden rounded-2xl bg-white/10 ring-1 ring-white/10">
-              <img
-                src="/apps/communism/communism.png"
-                alt="World of Communism app icon"
-                class="h-full w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <div>
-              <div class="text-sm font-semibold text-white">World of Communism</div>
-              <div class="text-xs text-zinc-300">Thinkers • Movements • Maps • Quizzes</div>
-            </div>
-          </div>
-
-          <div class="mt-5 grid grid-cols-2 gap-3">
-            <div class="overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10">
-              <img
-                src="/apps/communism/screenshot-1.png"
-                alt="World of Communism app screenshot"
-                class="h-44 w-full object-cover sm:h-48"
-                loading="lazy"
-              />
-            </div>
-            <div class="overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10">
-              <img
-                src="/apps/communism/screenshot-2.png"
-                alt="World of Communism app screenshot"
-                class="h-44 w-full object-cover sm:h-48"
-                loading="lazy"
-              />
-            </div>
-          </div>
-        </div>
-
-        <article
-          class="prose prose-invert prose-headings:tracking-tight prose-p:text-zinc-200 prose-li:text-zinc-200 max-w-none"
-        >
-          <h1>Get ready for the Revolution, Comrade!</h1>
-          <p>Your guide to revolutionary thinkers and their works.</p>
-          <p>
-            Learn all about Communism and Anarchism with World of Communism.
-          </p>
-
-          <blockquote>
-            <p>“The first duty of a man is to think for himself”</p>
-            <p>— Jose Marti, Cuban poet and philosopher</p>
-          </blockquote>
-
-          <h2>Features</h2>
-
-          <h3>Treasure trove of information</h3>
-          <p>
-            Discover <strong>140+</strong> key Communist and Anarchist personalities,
-            as well as dozens of movements and writings — neatly organised.
-          </p>
-
-          <h3>Meet the vanguard</h3>
-          <p>
-            Explore philosophers, artists, and politicians — from Karl Marx to
-            Emma Goldman — through their ideas, struggles, and lasting impact.
-          </p>
-
-          <h3>Interactive map</h3>
-          <p>
-            Explore an interactive map to learn about each country's Communist
-            and Anarchist experiences.
-          </p>
-
-          <h3>Music for a revolution</h3>
-          <p>
-            Discover left-wing hymns and songs — with lyrics — from all around
-            the world.
-          </p>
-
-          <h3>Category quizzes</h3>
-          <p>
-            Test your knowledge with engaging quizzes across movements,
-            influential figures, songs, and books — fun, challenging
-            multiple-choice questions.
-          </p>
-
-          <h3>Tailored quizzes</h3>
-          <p>
-            Design quizzes based on what you want to study — great for learners
-            at any level.
-          </p>
-
-          <h3>Navigate movements</h3>
-          <p>
-            Confused about the difference between Ethical Socialism and Green
-            Anarchism? Detailed descriptions help you navigate left-wing
-            movements.
-          </p>
-
-          <h3>Dark theme</h3>
-          <p>
-            Sleek elegance and eye comfort — built for long reading sessions.
-          </p>
-
-          <blockquote>
-            <p>
-              “Freedom is always and exclusively freedom for the one who thinks
-              differently.”
-            </p>
-            <p>
-              — Rosa Luxemburg, revolutionary socialist and anti-war activist
-            </p>
-          </blockquote>
-
-          <p>
-            If you found a bug or a content error, please report it to{" "}
-            <a href="mailto:khonsu.development@gmail.com"
-              >khonsu.development@gmail.com</a
-            >.
-          </p>
-        </article>
-
-        <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <a
-            class="btn btn-primary"
-            href="https://play.google.com/store/apps/details?id=eu.khonsu.communism"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Get it on Google Play
-          </a>
-          <a class="btn btn-secondary" href="/apps">
-            Explore all apps
-          </a>
-        </div>
-
-        <div class="mt-10 text-sm text-zinc-400">
-          <a
-            class="underline decoration-white/20 underline-offset-4 hover:text-white"
-            href="/communism/terms-and-conditions-for-world-of-communism"
-          >
-            Terms &amp; Conditions for World of Communism
-          </a>
-          {" · "}
-          <a
-            class="underline decoration-white/20 underline-offset-4 hover:text-white"
-            href="/communism/privacy-policy-for-world-of-communism"
-          >
-            Privacy Policy for World of Communism
-          </a>
-        </div>
-      </div>
-    </Container>
-  </section>
-</BaseLayout>
+  title="World of Communism | Khonsu Development"
+  description="Explore Communism, Socialism, and Anarchism through thinkers, movements, maps, music, and quizzes."
+  themeColor="app-communism"
+  appName="World of Communism"
+  logoSrc="/apps/communism/communism.png"
+  eyebrow="Ideas, history, and movements, made navigable"
+  headline="Understand the left, clearly"
+  subhead="A structured guide to communist, socialist, and anarchist ideas: key thinkers, movements, writings, maps, songs, and quizzes."
+  googlePlayUrl="https://play.google.com/store/apps/details?id=eu.khonsu.communism"
+  screenshots={["/apps/communism/framed-1.png", "/apps/communism/framed-2.png"]}
+  coverImage="/stock/apps/communism/cover.jpg"
+  coverImageAlt="A crowd holding flags during a May Day demonstration."
+  stats={stats}
+  features={features}
+  faqs={[
+    {
+      q: "Is this propaganda?",
+      a: "No. It’s a structured learning tool that helps you understand ideas, people, and movements with context, so you can think for yourself.",
+    },
+    {
+      q: "Do I need prior knowledge?",
+      a: "Not at all. Start with quick browsing and definitions, then deepen with writings, maps, and quizzes as you go.",
+    },
+    {
+      q: "What’s the best way to use it?",
+      a: "Pick one thread (an idea, a person, or a movement), follow the links, then reinforce with a tailored quiz.",
+    },
+  ]}
+  termsUrl="/communism/terms-and-conditions-for-world-of-communism"
+  privacyUrl="/communism/privacy-policy-for-world-of-communism"
+/>

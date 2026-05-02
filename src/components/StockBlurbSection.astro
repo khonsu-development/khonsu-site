@@ -1,0 +1,124 @@
+---
+import Container from "./Container.astro";
+
+export type StockImage = { src: string; alt: string };
+
+type Props = {
+  title: string;
+  body: string;
+  stockImages?: StockImage[];
+  /** Desktop: collage on the left, copy on the right. Mobile keeps headline first. */
+  mirror?: boolean;
+};
+
+const { title, body, stockImages, mirror = false } = Astro.props;
+
+/** Decorative overlapping rounded tiles; max 5 (indices map to preset slots). */
+const STOCK_POLAROID_SLOTS = [
+  "left-[3%] top-[10%] z-[2] h-[58%] max-h-[248px] w-[54%] -rotate-[5deg] sm:top-[12%]",
+  "right-[0%] top-[4%] z-[4] h-[52%] max-h-[228px] w-[46%] rotate-[8deg]",
+  "left-[12%] bottom-[2%] z-[6] h-[48%] max-h-[210px] w-[42%] -rotate-[6deg]",
+  "right-[10%] bottom-[10%] z-[5] h-[42%] max-h-[190px] w-[38%] rotate-[6deg]",
+  "left-[34%] top-[34%] z-[8] h-[38%] max-h-[168px] w-[34%] rotate-[3deg]",
+] as const;
+---
+
+<section class="py-12 sm:py-16">
+  <Container>
+    <div class="grid gap-8 lg:grid-cols-12 lg:items-center">
+      <div
+        class:list={[
+          mirror ? "order-1 lg:order-2 lg:col-span-5 lg:col-start-8" : "lg:col-span-5",
+        ]}
+      >
+        <h2 class="text-balance text-2xl font-semibold tracking-tight text-white sm:text-3xl">{title}</h2>
+        <p class="mt-4 text-pretty text-sm leading-relaxed text-zinc-300">{body}</p>
+      </div>
+      <div
+        class:list={[
+          mirror ? "order-2 lg:order-1 lg:col-span-7 lg:col-start-1" : "lg:col-span-7",
+        ]}
+      >
+        {
+          stockImages?.length === 2 ? (
+            <div class="relative mt-5 sm:mt-6">
+              <div
+                aria-hidden="true"
+                class="pointer-events-none absolute -inset-10 opacity-65"
+                style={`background: radial-gradient(700px circle at 40% 25%, color-mix(in oklab, var(--app-primary) 16%, transparent), transparent 60%);`}
+              >
+              </div>
+              <div class="relative mx-auto h-[14rem] max-w-xl sm:h-[16rem]">
+                <div class="card absolute left-1/2 top-1/2 w-[70%] -translate-x-[60%] -translate-y-[55%] -rotate-6 overflow-hidden">
+                  <img
+                    src={stockImages[0].src}
+                    alt={stockImages[0].alt}
+                    class="h-44 w-full object-cover sm:h-52"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="card absolute left-1/2 top-1/2 w-[72%] -translate-x-[35%] -translate-y-[40%] rotate-4 overflow-hidden">
+                  <img
+                    src={stockImages[1].src}
+                    alt={stockImages[1].alt}
+                    class="h-44 w-full object-cover sm:h-52"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </div>
+            </div>
+          ) : stockImages && stockImages.length >= 3 ? (
+            <div class="relative mt-6 sm:mt-7">
+              <p class="sr-only">
+                Decorative stock photographs of manuscripts and inscriptions; not screenshots of the app.
+              </p>
+              <div
+                aria-hidden="true"
+                class="pointer-events-none absolute -inset-x-8 -inset-y-10 opacity-70 sm:-inset-x-12"
+                style={`background: radial-gradient(780px ellipse at 55% 35%, color-mix(in oklab, var(--app-primary) 12%, transparent), transparent 58%);`}
+              >
+              </div>
+              <div
+                aria-hidden="true"
+                class="relative mx-auto min-h-[min(72vw,360px)] w-full max-w-xl sm:min-h-[380px] lg:max-w-2xl"
+              >
+                {stockImages.slice(0, STOCK_POLAROID_SLOTS.length).map((img, i) => (
+                  <div
+                    class:list={[
+                      "absolute origin-center overflow-hidden rounded-lg motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out",
+                      STOCK_POLAROID_SLOTS[i] ?? STOCK_POLAROID_SLOTS[0],
+                    ]}
+                  >
+                    <img
+                      src={img.src}
+                      alt=""
+                      class="block h-full w-full border-0 object-cover outline-none"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : stockImages?.length ? (
+            <div class="mt-4 grid gap-3 sm:mt-5 sm:grid-cols-3">
+              {stockImages.slice(0, 3).map((img) => (
+                <div class="card overflow-hidden">
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    class="h-28 w-full object-cover sm:h-32"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              ))}
+            </div>
+          ) : null
+        }
+      </div>
+    </div>
+  </Container>
+</section>

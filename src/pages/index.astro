@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/Container.astro";
+import AppCard from "../components/AppCard.astro";
 
 const allApps = await getCollection("apps");
 const order = [
@@ -17,8 +18,8 @@ const apps = order
 ---
 
 <BaseLayout
-  title="Khonsu Development — Educational apps for curious minds"
-  description="We craft engaging, educational mobile apps that help you dive deep into niche topics — immersive, fun, and accessible."
+  title="Khonsu Development | Educational apps for curious minds"
+  description="Khonsu Development builds educational apps for curious minds: beautiful, structured deep dives into niche topics, made for quick sessions or long rabbit holes."
   canonicalPath="/"
 >
   <section class="relative overflow-hidden">
@@ -41,12 +42,11 @@ const apps = order
         <h1
           class="mt-4 text-4xl font-black tracking-tight text-white sm:text-6xl"
         >
-          Beautiful apps for deep dives into niche worlds.
+          Educational apps for deep dives into niche worlds.
         </h1>
         <p class="mt-5 text-base leading-relaxed text-zinc-200 sm:text-lg">
-          From ancient alphabets to prehistoric giants and revolutionary ideas,
-          Khonsu apps make learning immersive, rewarding, and easy to pick up
-          anywhere.
+          From ancient alphabets to prehistoric giants and political history,
+          Khonsu apps turn curiosity into a clean, satisfying learning flow.
         </p>
 
         <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -66,7 +66,7 @@ const apps = order
               Learn at your pace
             </div>
             <div class="mt-2 text-sm text-zinc-300">
-              Five minutes or fifty — the experience fits your day.
+              Five minutes or fifty, the experience fits your day.
             </div>
           </div>
           <div class="card p-5">
@@ -89,57 +89,22 @@ const apps = order
           Discover our apps
         </h2>
         <p class="mt-4 text-zinc-300">
-          A growing “World of Apps” — one deep dive at a time, with clear
-          writing, strong structure, and plenty to explore.
+          A growing “World of Apps”, one focused topic at a time. Each app is
+          designed for clarity, momentum, and that “just one more page” feeling.
         </p>
       </div>
 
       <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {
           apps.map((app) => (
-            <a
+            <AppCard
+              app={app}
               href={
                 app.data.websiteUrl && app.data.websiteUrl.startsWith("/")
                   ? app.data.websiteUrl
                   : `/apps/${app.id.replace(/\.(md|mdx)$/, "")}`
               }
-              class="card group p-6 transition hover:bg-white/7"
-            >
-              <div class="flex items-start gap-4">
-                <div
-                  class="h-12 w-12 shrink-0 overflow-hidden rounded-2xl bg-white/10 ring-1 ring-white/10"
-                  style={
-                    app.data.themeColor
-                      ? `background: color-mix(in oklab, var(--color-${app.data.themeColor}-primary) 65%, black);`
-                      : undefined
-                  }
-                >
-                  {app.data.icon ? (
-                    <img
-                      src={app.data.icon}
-                      alt={`${app.data.name} app icon`}
-                      class="h-full w-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : (
-                    <div class="h-full w-full bg-white/5" />
-                  )}
-                </div>
-                <div>
-                  <div class="text-lg font-bold tracking-tight text-white">
-                    {app.data.name}
-                  </div>
-                  <div class="mt-2 text-sm leading-relaxed text-zinc-300">
-                    {app.data.tagline}
-                  </div>
-                </div>
-              </div>
-              <div class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white/90">
-                View{" "}
-                <span class="transition group-hover:translate-x-0.5">→</span>
-              </div>
-            </a>
+            />
           ))
         }
       </div>

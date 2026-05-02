@@ -1,147 +1,77 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Container from "../../components/Container.astro";
+import AppLandingAerium from "../../components/AppLandingAerium.astro";
+
+const stats = [
+  { label: "Practice modes", value: "Beats + prompts" },
+  { label: "Tempo control", value: "Adjustable" },
+  { label: "Languages", value: "50+" },
+];
+
+const features = [
+  {
+    title: "Beats that keep you moving",
+    body: "Pick a beat, hit record, and stay in flow. It’s designed to remove friction so you can generate lines fast.",
+  },
+  {
+    title: "Timed rhyme + image prompts",
+    body: "On-beat prompts nudge your brain into motion, so you don’t freeze or overthink between bars.",
+  },
+  {
+    title: "Adjustable tempo",
+    body: "Slow it down to build control, then speed up as you get comfortable. Train the skill, not just the vibe.",
+  },
+  {
+    title: "Record & review",
+    body: "Listen back, spot what works, and share takes, or keep everything private while you improve.",
+  },
+  {
+    title: "Powered by Double Rhyme",
+    body: "Complex rhyme generation and bilingual prompts give you richer material than basic end-rhyme lists.",
+  },
+  {
+    title: "Built for consistency",
+    body: "Five minutes a day is enough to build confidence. The app is structured to help you show up and improve.",
+  },
+  {
+    title: "Bilingual practice",
+    body: "Switch languages to train flexibility and discover new rhythms in how different languages rhyme.",
+  },
+  {
+    title: "From warm‑up to performance",
+    body: "Use it as a daily drill, a pre-session warm-up, or a full freestyle challenge with friends.",
+  },
+];
 ---
-
-<BaseLayout
-  title="Freestyle Rap — Khonsu Development"
-  description="Practice freestyle rap with beats, rhymes, visual inspiration, adjustable tempo, and recording — powered by Double Rhyme."
+<AppLandingAerium
   canonicalPath="/freestyle-rap"
->
-  <section class="py-12 sm:py-16">
-    <Container>
-      <div class="max-w-3xl">
-        <div class="card mb-10 overflow-hidden p-5 sm:p-6">
-          <div class="flex items-center gap-4">
-            <div class="h-12 w-12 overflow-hidden rounded-2xl bg-white/10 ring-1 ring-white/10">
-              <img
-                src="/apps/freestyle/freestyle.png"
-                alt="Freestyle Rap app icon"
-                class="h-full w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <div>
-              <div class="text-sm font-semibold text-white">Freestyle Rap</div>
-              <div class="text-xs text-zinc-300">Beats • Rhymes • Inspiration • Tempo</div>
-            </div>
-          </div>
-
-          <div class="mt-5 grid grid-cols-2 gap-3">
-            <div class="overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10">
-              <img
-                src="/apps/freestyle/screenshot-1.png"
-                alt="Freestyle Rap app screenshot"
-                class="h-44 w-full object-cover sm:h-48"
-                loading="lazy"
-              />
-            </div>
-            <div class="overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10">
-              <img
-                src="/apps/freestyle/screenshot-2.png"
-                alt="Freestyle Rap app screenshot"
-                class="h-44 w-full object-cover sm:h-48"
-                loading="lazy"
-              />
-            </div>
-          </div>
-        </div>
-
-        <article
-          class="prose prose-invert prose-headings:tracking-tight prose-p:text-zinc-200 prose-li:text-zinc-200 max-w-none"
-        >
-          <h1>Ready for your new rap challenge?</h1>
-          <p>
-            Up your freestyle rapping game with Freestyle Rap — a simple app to
-            learn how to rap freestyle, with inspiration.
-          </p>
-
-          <blockquote>
-            <p>
-              “There’s no reason for somebody who’s good at writing rap to be
-              good at freestyling. They’re different parts of your brain. You
-              can develop both skills. I’m a much better writer.”
-            </p>
-            <p>— Daveed Diggs, American actor and rapper</p>
-          </blockquote>
-
-          <h2>How it works</h2>
-          <h3>1. Choose your favorite beat</h3>
-          <p>Purchase your favorite beats in a large library.</p>
-
-          <h3>2. Get ready</h3>
-          <p>Decide on a language, a beat, and a tempo.</p>
-
-          <h3>3. Rap your freestyle</h3>
-          <p>
-            A rhyme and a picture appear on a regular tempo, for you to use as
-            inspiration during your freestyle rapping.
-          </p>
-
-          <h3>4. Review your recording</h3>
-          <p>
-            At the end of the beat, review and share your performance — or
-            challenge your friends!
-          </p>
-
-          <h2>Freestyle rap in 50 languages!</h2>
-          <p>
-            Afrikaans, Albanian, Arabic, Armenian, Azerbaijani, Basque, Bosnian,
-            Bulgarian, Catalan, Chinese, Croatian, Czech, Danish, Dutch,
-            English, English (US), Esperanto, Estonian, Finnish, French,
-            Georgian, German, Greek, Hindi, Hungarian, Indonesian, Italian,
-            Kannada, Korean, Latin, Latvian, Macedonian, Malay, Malayalam,
-            Norwegian, Persian (Farsi), Polish, Portuguese, Romanian, Russian,
-            Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Turkish, Urdu,
-            Vietnamese, Welsh
-          </p>
-
-          <p>
-            Freestyle Rap is powered by <a href="https://double-rhyme.com/"
-              >Double Rhyme</a
-            >, the rapper’s reference for complex rhyme generation. Rhymes are
-            generated by Double Rhyme and are sometimes created and reviewed by
-            users.
-          </p>
-
-          <p>
-            If you found a bug or a content error, please report it to{" "}
-            <a href="mailto:khonsu.development@gmail.com"
-              >khonsu.development@gmail.com</a
-            >.
-          </p>
-        </article>
-
-        <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <a
-            class="btn btn-primary"
-            href="https://play.google.com/store/apps/details?id=com.lyricspiration.freestyle"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Get it on Google Play
-          </a>
-          <a class="btn btn-secondary" href="/apps">
-            Explore all apps
-          </a>
-        </div>
-
-        <div class="mt-10 text-sm text-zinc-400">
-          <a
-            class="underline decoration-white/20 underline-offset-4 hover:text-white"
-            href="/freestyle-rap/terms-and-conditions-for-freestyle-rap"
-          >
-            Terms &amp; Conditions for Freestyle Rap
-          </a>
-          {" · "}
-          <a
-            class="underline decoration-white/20 underline-offset-4 hover:text-white"
-            href="/freestyle-rap/privacy-policy-for-freestyle-rap"
-          >
-            Privacy Policy for Freestyle Rap
-          </a>
-        </div>
-      </div>
-    </Container>
-  </section>
-</BaseLayout>
+  title="Freestyle Rap | Khonsu Development"
+  description="Train freestyle rap with beats, tempo control, bilingual rhyme prompts, and recording, powered by Double Rhyme."
+  themeColor="app-freestyle"
+  appName="Freestyle Rap"
+  logoSrc="/apps/freestyle/freestyle.png"
+  eyebrow="Practice studio in your pocket"
+  headline="Freestyle more. Freeze less."
+  subhead="Pick a beat, set the tempo, and get on‑beat prompts that keep you generating lines, so flow becomes a habit."
+  googlePlayUrl="https://play.google.com/store/apps/details?id=com.lyricspiration.freestyle"
+  screenshots={["/apps/freestyle/framed-1.png", "/apps/freestyle/framed-2.png"]}
+  coverImage="/stock/apps/freestyle/cover.jpg"
+  coverImageAlt="A rapper performing on stage with a microphone under warm lights."
+  stats={stats}
+  features={features}
+  faqs={[
+    {
+      q: "Is this for beginners?",
+      a: "Yes. Start slow, use prompts, and build confidence. The whole point is to reduce friction so you can practice consistently.",
+    },
+    {
+      q: "Do I need to write first?",
+      a: "No. Freestyling is a different skill. Use the beat + timed prompts to train real-time generation and comfort.",
+    },
+    {
+      q: "Where do the rhymes come from?",
+      a: "The app is powered by Double Rhyme for richer rhyme material than basic lists. Some rhymes are also created and reviewed by users.",
+    },
+  ]}
+  termsUrl="/freestyle-rap/terms-and-conditions-for-freestyle-rap"
+  privacyUrl="/freestyle-rap/privacy-policy-for-freestyle-rap"
+/>
