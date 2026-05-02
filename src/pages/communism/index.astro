@@ -4,41 +4,57 @@ import AppLandingAerium from "../../components/AppLandingAerium.astro";
 const stats = [
   { label: "Key thinkers", value: "140+" },
   { label: "Study modes", value: "Browse + quiz" },
-  { label: "Learning style", value: "Structured" },
+  { label: "Topics", value: "Maps + music" },
 ];
 
 const features = [
   {
+    title: "Treasure trove of information",
+    body: "Discover key personalities, movements, and writings—neatly organized for fast browsing and deeper study.",
+    imageSrc: "/apps/communism/features/main-menu-2.png",
+    imageAlt: "Screenshot of the main menu in World of Communism.",
+  },
+  {
     title: "Thinkers with context",
-    body: "Explore philosophers, artists, and political figures, understand ideas, lives, and influence without the jargon fog.",
-  },
-  {
-    title: "Movements & definitions",
-    body: "From ethical socialism to green anarchism, navigate labels and distinctions with clean explanations.",
-  },
-  {
-    title: "Writings & references",
-    body: "A curated library of texts and themes, so reading recommendations feel actionable rather than overwhelming.",
+    body: "Explore philosophers, artists, and political figures—from Marx to Goldman—with ideas, struggles, and impact made readable.",
+    imageSrc: "/apps/communism/features/person-detail.png",
+    imageAlt: "Screenshot of a person profile in World of Communism.",
   },
   {
     title: "Interactive map",
-    body: "See how countries intersected with communist and anarchist histories through a browsable map view.",
+    body: "See how countries intersect with communist and anarchist histories through a browsable map.",
+    imageSrc: "/apps/communism/features/locations.png",
+    imageAlt: "Screenshot of the interactive locations map.",
+  },
+  {
+    title: "Navigate movements",
+    body: "Understand distinctions between movements—from ethical socialism to green anarchism—with clear explanations.",
+    imageSrc: "/apps/communism/features/movements.png",
+    imageAlt: "Screenshot of movements browsing in World of Communism.",
   },
   {
     title: "Songs & hymns",
-    body: "Discover left-wing music from around the world, with lyrics for exploration and cultural context.",
+    body: "Discover left-wing music from around the world, with lyrics for cultural context.",
+    imageSrc: "/apps/communism/features/music.png",
+    imageAlt: "Screenshot of the music library in World of Communism.",
   },
   {
     title: "Quizzes that reinforce vocabulary",
-    body: "Category quizzes and tailored sets help you turn reading into memory, great for beginners and enthusiasts.",
+    body: "Category quizzes help you turn reading into memory—great for beginners, enthusiasts, and exam-style review.",
+    imageSrc: "/apps/communism/features/quiz.png",
+    imageAlt: "Screenshot of a quiz in World of Communism.",
   },
   {
-    title: "Built for calm reading",
-    body: "A polished dark UI designed for long sessions and focused study.",
+    title: "Tailored quizzes",
+    body: "Design quizzes around what you’re studying. Focus movements, figures, songs, or books.",
+    imageSrc: "/apps/communism/features/quiz-menu.png",
+    imageAlt: "Screenshot of tailored quiz setup in World of Communism.",
   },
   {
-    title: "Learn end‑to‑end",
-    body: "Ideas → people → movements → places → culture. The app is designed as a cohesive learning journey.",
+    title: "Dark theme",
+    body: "Comfortable reading with a sleek dark UI built for long sessions.",
+    imageSrc: "/apps/communism/features/main-menu-dark.png",
+    imageAlt: "Screenshot of World of Communism in dark theme.",
   },
 ];
 ---
@@ -53,11 +69,20 @@ const features = [
   headline="Understand the left, clearly"
   subhead="A structured guide to communist, socialist, and anarchist ideas: key thinkers, movements, writings, maps, songs, and quizzes."
   googlePlayUrl="https://play.google.com/store/apps/details?id=eu.khonsu.communism"
-  screenshots={["/apps/communism/framed-1.png", "/apps/communism/framed-2.png"]}
+  screenshots={["/apps/communism/features/person-detail.png", "/apps/communism/features/locations.png"]}
+  centerScreenshot="/apps/communism/features/main-menu.png"
   coverImage="/stock/apps/communism/cover.jpg"
   coverImageAlt="A crowd holding flags during a May Day demonstration."
+  introBlurbTitle="Structured browsing, serious clarity"
+  introBlurbBody="Move between ideas, people, and places without losing the thread. It’s built for focused sessions—whether you’re skimming or studying."
+  stockImages={[
+    { src: "/stock/knowledge.jpg", alt: "" },
+    { src: "/stock/stuttgart-library.jpeg", alt: "" },
+  ]}
   stats={stats}
   features={features}
+  featuresSectionTitle="Features"
+  featuresSectionSubtitle="Thinkers, movements, maps, music, and quizzes—organized so you can learn without the jargon fog."
   faqs={[
     {
       q: "Is this propaganda?",

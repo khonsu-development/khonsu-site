@@ -2,43 +2,59 @@
 import AppLandingAerium from "../../components/AppLandingAerium.astro";
 
 const stats = [
-  { label: "Practice modes", value: "Beats + prompts" },
-  { label: "Tempo control", value: "Adjustable" },
   { label: "Languages", value: "50+" },
+  { label: "Rhyme engine", value: "Double Rhyme" },
+  { label: "Practice flow", value: "Beats + prompts" },
 ];
 
 const features = [
   {
+    title: "Your practice hub",
+    body: "Jump in fast: beats, languages, and sessions are one tap away—designed to reduce friction before you rhyme.",
+    imageSrc: "/apps/freestyle/features/01_main_screen.png",
+    imageAlt: "Screenshot of the Freestyle Rap main screen.",
+  },
+  {
     title: "Beats that keep you moving",
-    body: "Pick a beat, hit record, and stay in flow. It’s designed to remove friction so you can generate lines fast.",
+    body: "Browse and purchase beats from a large library, then save your go-to set for daily reps.",
+    imageSrc: "/apps/freestyle/features/02_beat_store_screen.png",
+    imageAlt: "Screenshot of the beat store in Freestyle Rap.",
   },
   {
-    title: "Timed rhyme + image prompts",
-    body: "On-beat prompts nudge your brain into motion, so you don’t freeze or overthink between bars.",
+    title: "Count in, then go",
+    body: "Pick a language, beat, and tempo—then start with a clean countdown so you’re ready when the bar drops.",
+    imageSrc: "/apps/freestyle/features/03_play_screen_countdown.png",
+    imageAlt: "Screenshot of the session countdown in Freestyle Rap.",
   },
   {
-    title: "Adjustable tempo",
-    body: "Slow it down to build control, then speed up as you get comfortable. Train the skill, not just the vibe.",
+    title: "Timed rhyme & image prompts",
+    body: "On-beat prompts nudge your brain into motion so you don’t freeze between bars.",
+    imageSrc: "/apps/freestyle/features/04_play_screen_recording_1.png",
+    imageAlt: "Screenshot of a freestyle session with rhyme prompts.",
   },
   {
-    title: "Record & review",
-    body: "Listen back, spot what works, and share takes, or keep everything private while you improve.",
+    title: "Stay in the pocket",
+    body: "Keep flowing through longer takes—prompts update on tempo so you can chase ideas without losing the groove.",
+    imageSrc: "/apps/freestyle/features/05_play_screen_recording_2.png",
+    imageAlt: "Screenshot of an active freestyle recording session.",
   },
   {
     title: "Powered by Double Rhyme",
     body: "Complex rhyme generation and bilingual prompts give you richer material than basic end-rhyme lists.",
+    imageSrc: "/apps/freestyle/features/06_play_screen_recording_3.png",
+    imageAlt: "Screenshot of rhyme prompts during a Freestyle Rap session.",
   },
   {
-    title: "Built for consistency",
-    body: "Five minutes a day is enough to build confidence. The app is structured to help you show up and improve.",
+    title: "Train in any language you choose",
+    body: "Switch languages to build flexibility and discover new rhythms in how different languages rhyme.",
+    imageSrc: "/apps/freestyle/features/07_play_screen_recording_4.png",
+    imageAlt: "Screenshot of bilingual freestyle practice in Freestyle Rap.",
   },
   {
-    title: "Bilingual practice",
-    body: "Switch languages to train flexibility and discover new rhythms in how different languages rhyme.",
-  },
-  {
-    title: "From warm‑up to performance",
-    body: "Use it as a daily drill, a pre-session warm-up, or a full freestyle challenge with friends.",
+    title: "Record & review",
+    body: "Listen back, spot what works, and share takes—or keep everything private while you improve.",
+    imageSrc: "/apps/freestyle/features/08_freestyles_library_screen.png",
+    imageAlt: "Screenshot of the saved freestyles library.",
   },
 ];
 ---
@@ -53,11 +69,20 @@ const features = [
   headline="Freestyle more. Freeze less."
   subhead="Pick a beat, set the tempo, and get on‑beat prompts that keep you generating lines, so flow becomes a habit."
   googlePlayUrl="https://play.google.com/store/apps/details?id=com.lyricspiration.freestyle"
-  screenshots={["/apps/freestyle/framed-1.png", "/apps/freestyle/framed-2.png"]}
+  screenshots={["/apps/freestyle/features/02_beat_store_screen.png", "/apps/freestyle/features/04_play_screen_recording_1.png"]}
+  centerScreenshot="/apps/freestyle/features/01_main_screen.png"
   coverImage="/stock/apps/freestyle/cover.jpg"
   coverImageAlt="A rapper performing on stage with a microphone under warm lights."
+  introBlurbTitle="Built for reps, not perfection"
+  introBlurbBody="Pick a beat, shorten the warmup, and practice freestyling like a skill: short sessions that compound into real confidence."
+  stockImages={[
+    { src: "/stock/landscape/sky.jpg", alt: "" },
+    { src: "/stock/landscape/forest2.jpg", alt: "" },
+  ]}
   stats={stats}
   features={features}
+  featuresSectionTitle="Features"
+  featuresSectionSubtitle="Beats, tempo, bilingual prompts, and recording—everything tuned for consistent practice."
   faqs={[
     {
       q: "Is this for beginners?",

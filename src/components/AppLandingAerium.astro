@@ -29,6 +29,9 @@ type Props = {
   centerScreenshot?: string;
   coverImage?: string;
   coverImageAlt?: string;
+  /** Copy for the section below the hero (defaults match Alphabets). */
+  introBlurbTitle?: string;
+  introBlurbBody?: string;
   stockImages?: StockImage[];
   stats: Stat[];
   /** Shown above the stat grid (e.g. Google Play rating & downloads with Palme-style framing). */
@@ -68,6 +71,8 @@ const {
   screenshots,
   centerScreenshot,
   coverImage,
+  introBlurbTitle,
+  introBlurbBody,
   stockImages,
   stats,
   heroSpotlightStats,
@@ -347,8 +352,9 @@ const youtubeEmbedQuery = youtubeVideoId
     ) : null}
 
     <StockBlurbSection
-      title="Designed for quick curiosity and deep rabbit holes"
-      body="Open it for a minute, stay for an hour. The experience is structured, calm, and satisfying, so learning feels effortless."
+      title={introBlurbTitle ?? "Designed for quick curiosity and deep rabbit holes"}
+      body={introBlurbBody ??
+        "Open it for a minute, stay for an hour. The experience is structured, calm, and satisfying, so learning feels effortless."}
       stockImages={stockImages}
     />
 
@@ -378,23 +384,13 @@ const youtubeEmbedQuery = youtubeVideoId
                     class:list={[
                       "relative md:w-5/12",
                       i === 0 ? "" : "md:-mt-14 lg:-mt-20",
-                      isAlphabetsTheme ? "overflow-visible" : "card overflow-hidden p-2 sm:p-3",
+                      "overflow-visible",
                     ]}
                   >
-                    {!isAlphabetsTheme ? (
-                      <div
-                        aria-hidden="true"
-                        class="pointer-events-none absolute inset-0 opacity-45"
-                        style={`background: radial-gradient(520px circle at 28% 22%, color-mix(in oklab, var(--app-primary) 18%, transparent), transparent 56%);`}
-                      />
-                    ) : null}
                     <img
                       src={f.imageSrc}
                       alt={f.imageAlt ?? f.title}
-                      class:list={[
-                        "mx-auto w-full max-w-[520px] object-contain max-h-[420px] sm:max-h-[520px]",
-                        isAlphabetsTheme ? "relative rounded-none" : "relative rounded-xl",
-                      ]}
+                      class="relative mx-auto w-full max-w-[520px] rounded-none object-contain max-h-[420px] sm:max-h-[520px]"
                       loading="lazy"
                       decoding="async"
                     />

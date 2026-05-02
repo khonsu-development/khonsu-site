@@ -3,42 +3,58 @@ import AppLandingAerium from "../../components/AppLandingAerium.astro";
 
 const stats = [
   { label: "Prehistoric animals", value: "1900+" },
-  { label: "Discovery sites", value: "Worldwide" },
-  { label: "Time scale", value: "Interactive" },
+  { label: "Discovery sites", value: "Global map" },
+  { label: "Learning modes", value: "Browse + quiz" },
 ];
 
 const features = [
   {
     title: "A massive bestiary",
-    body: "Explore dinosaurs, pterosaurs, ocean giants, and Cenozoic mammals, organized so you can actually find what you want.",
+    body: "Explore dinosaurs, pterosaurs, ocean giants, and Cenozoic mammals—organized so you can actually find what you want.",
+    imageSrc: "/apps/dinosaurs/features/animals.png",
+    imageAlt: "Screenshot of the prehistoric animals list in World of Dinosaurs.",
   },
   {
     title: "Rich, readable profiles",
     body: "Clear descriptions, lifelike illustrations, size comparisons, habitats, and memorable trivia that sticks.",
+    imageSrc: "/apps/dinosaurs/features/animal-detail.png",
+    imageAlt: "Screenshot of an animal profile in World of Dinosaurs.",
   },
   {
     title: "Geological Time Scale",
     body: "Travel across deep time with an interactive scale that puts every creature in context.",
+    imageSrc: "/apps/dinosaurs/features/geological-time-scale.png",
+    imageAlt: "Screenshot of the interactive geological time scale.",
   },
   {
     title: "Articles worth binge-reading",
-    body: "Fossils, extinctions, new research, and big questions, perfect for quick curiosity or deep rabbit holes.",
+    body: "Fossils, extinctions, new research, and big questions—perfect for quick curiosity or deep rabbit holes.",
+    imageSrc: "/apps/dinosaurs/features/articles.png",
+    imageAlt: "Screenshot of in-app articles in World of Dinosaurs.",
   },
   {
     title: "Quizzes that actually teach",
     body: "Beginner-friendly and surprisingly challenging. Recognize images, learn names, and lock in facts fast.",
+    imageSrc: "/apps/dinosaurs/features/quiz.png",
+    imageAlt: "Screenshot of a quiz in World of Dinosaurs.",
   },
   {
     title: "Discovery sites map",
     body: "Explore fossil sites around the world, and see what was discovered near you.",
+    imageSrc: "/apps/dinosaurs/features/locations.png",
+    imageAlt: "Screenshot of the fossil discovery locations map.",
   },
   {
     title: "Tailored quiz modes",
     body: "Customize quizzes to match your current obsession: names, images, categories, or bite-sized trivia.",
+    imageSrc: "/apps/dinosaurs/features/quiz-menu.png",
+    imageAlt: "Screenshot of tailored quiz options in World of Dinosaurs.",
   },
   {
     title: "Polished dark mode",
     body: "A calm interface designed for long reading sessions, day or night.",
+    imageSrc: "/apps/dinosaurs/features/animal-detail-dark.png",
+    imageAlt: "Screenshot of World of Dinosaurs in dark mode.",
   },
 ];
 ---
@@ -53,11 +69,20 @@ const features = [
   headline="Meet the giants of deep time"
   subhead="Discover 1900+ prehistoric animals, read rich profiles, explore discovery sites, and learn with quizzes that actually stick."
   googlePlayUrl="https://play.google.com/store/apps/details?id=eu.khonsu.dinosaurs"
-  screenshots={["/apps/dinosaurs/framed-1.png", "/apps/dinosaurs/framed-2.png"]}
+  screenshots={["/apps/dinosaurs/features/animals.png", "/apps/dinosaurs/features/locations.png"]}
+  centerScreenshot="/apps/dinosaurs/features/main-menu.png"
   coverImage="/stock/apps/dinosaurs/cover.jpg"
   coverImageAlt="A dinosaur skeleton on display in a natural history museum."
+  introBlurbTitle="From quick lookups to deep-time rabbit holes"
+  introBlurbBody="Browse species in minutes or fall into articles, quizzes, and maps for hours. The layout stays calm so the science stays front and center."
+  stockImages={[
+    { src: "/stock/landscape/forest.jpg", alt: "" },
+    { src: "/stock/landscape/lake.jpg", alt: "" },
+  ]}
   stats={stats}
   features={features}
+  featuresSectionTitle="Features"
+  featuresSectionSubtitle="Profiles, deep time, articles, maps, and quizzes—everything wrapped in a clean interface."
   faqs={[
     {
       q: "Is this an encyclopedia or a game?",
