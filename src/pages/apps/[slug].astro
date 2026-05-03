@@ -15,7 +15,11 @@ const { app } = Astro.props;
 const slug = app.id.replace(/\.(md|mdx)$/, "");
 const { Content } = await render(app);
 
-if (app.data.websiteUrl && app.data.websiteUrl.startsWith("/") && !app.data.websiteUrl.startsWith("/apps/")) {
+if (
+  app.data.websiteUrl &&
+  app.data.websiteUrl.startsWith("/") &&
+  !app.data.websiteUrl.startsWith("/apps/")
+) {
   return Astro.redirect(app.data.websiteUrl, 301);
 }
 
@@ -37,7 +41,11 @@ const schemaOrg = {
   operatingSystem: (app.data.platforms ?? [])
     .map((p) => (p === "android" ? "Android" : p === "ios" ? "iOS" : "Web"))
     .join(", "),
-  image: ogImage ? (ogImage.startsWith("http") ? ogImage : `https://www.khonsu.eu${ogImage}`) : undefined,
+  image: ogImage
+    ? ogImage.startsWith("http")
+      ? ogImage
+      : `https://www.khonsu.eu${ogImage}`
+    : undefined,
   url: `https://www.khonsu.eu/apps/${slug}`,
   downloadUrl: app.data.googlePlayUrl ?? app.data.appStoreUrl,
 };
@@ -61,29 +69,31 @@ const schemaOrg = {
 
         <div class="card mt-6 overflow-hidden" style={themeStyle}>
           <div class="relative">
-            {app.data.coverImage ? (
-              <div class="relative aspect-[16/8] overflow-hidden">
-                <img
-                  src={app.data.coverImage}
-                  alt={app.data.coverImageAlt ?? `${app.data.name} cover image`}
-                  class="h-full w-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
+            {
+              app.data.coverImage ? (
+                <div class="relative aspect-[16/8] overflow-hidden">
+                  <img
+                    src={app.data.coverImage}
+                    alt={
+                      app.data.coverImageAlt ?? `${app.data.name} cover image`
+                    }
+                    class="h-full w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div
+                    aria-hidden="true"
+                    class="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/50 to-transparent"
+                  />
+                </div>
+              ) : (
                 <div
                   aria-hidden="true"
-                  class="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/50 to-transparent"
-                >
-                </div>
-              </div>
-            ) : (
-              <div
-                aria-hidden="true"
-                class="aspect-[16/8]"
-                style={`background: radial-gradient(900px circle at 30% 25%, color-mix(in oklab, var(--app-primary) 38%, transparent), transparent 55%), linear-gradient(135deg, color-mix(in oklab, var(--app-primary) 22%, black), color-mix(in oklab, var(--app-secondary) 16%, black));`}
-              >
-              </div>
-            )}
+                  class="aspect-[16/8]"
+                  style={`background: radial-gradient(900px circle at 30% 25%, color-mix(in oklab, var(--app-primary) 38%, transparent), transparent 55%), linear-gradient(135deg, color-mix(in oklab, var(--app-primary) 22%, black), color-mix(in oklab, var(--app-secondary) 16%, black));`}
+                />
+              )
+            }
 
             <div class="relative -mt-10 p-6 sm:p-8">
               <div class="flex items-start gap-4">
@@ -91,92 +101,117 @@ const schemaOrg = {
                   class="h-14 w-14 shrink-0 overflow-hidden rounded-2xl ring-1 ring-white/10"
                   style={`background: color-mix(in oklab, var(--app-primary) 55%, black);`}
                 >
-                  {app.data.icon ? (
-                    <img
-                      src={app.data.icon}
-                      alt={`${app.data.name} app icon`}
-                      class="h-full w-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : (
-                    <div class="h-full w-full bg-white/5" />
-                  )}
+                  {
+                    app.data.icon ? (
+                      <img
+                        src={app.data.icon}
+                        alt={`${app.data.name} app icon`}
+                        class="h-full w-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : (
+                      <div class="h-full w-full bg-white/5" />
+                    )
+                  }
                 </div>
                 <div class="min-w-0">
-                  <h1 class="text-balance text-3xl font-black tracking-tight text-white sm:text-5xl">
+                  <h1
+                    class="text-3xl font-black tracking-tight text-balance text-white sm:text-5xl"
+                  >
                     {app.data.name}
                   </h1>
-                  <p class="mt-3 text-pretty text-lg text-zinc-200">{app.data.tagline}</p>
+                  <p class="mt-3 text-lg text-pretty text-zinc-200">
+                    {app.data.tagline}
+                  </p>
 
-                  {(app.data.topics?.length || app.data.platforms?.length) && (
-                    <div class="mt-5 flex flex-wrap gap-2">
-                      {(app.data.topics ?? []).slice(0, 4).map((t) => (
-                        <span class="rounded-full bg-white/5 px-3 py-1.5 text-xs font-medium text-white ring-1 ring-white/10">
-                          {t}
-                        </span>
-                      ))}
-                      {(app.data.platforms ?? []).map((p) => (
-                        <span
-                          class="rounded-full px-3 py-1.5 text-xs font-semibold ring-1 ring-white/10"
-                          style={`background: color-mix(in oklab, var(--app-primary) 18%, black); color: white;`}
-                        >
-                          {p}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  {
+                    (app.data.topics?.length || app.data.platforms?.length) && (
+                      <div class="mt-5 flex flex-wrap gap-2">
+                        {(app.data.topics ?? []).slice(0, 4).map((t) => (
+                          <span class="rounded-full bg-white/5 px-3 py-1.5 text-xs font-medium text-white ring-1 ring-white/10">
+                            {t}
+                          </span>
+                        ))}
+                        {(app.data.platforms ?? []).map((p) => (
+                          <span
+                            class="rounded-full px-3 py-1.5 text-xs font-semibold ring-1 ring-white/10"
+                            style={`background: color-mix(in oklab, var(--app-primary) 18%, black); color: white;`}
+                          >
+                            {p}
+                          </span>
+                        ))}
+                      </div>
+                    )
+                  }
                 </div>
               </div>
 
               <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-                {app.data.googlePlayUrl ? (
-                  <a
-                    class="inline-flex focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
-                    href={app.data.googlePlayUrl}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    aria-label="Get it on Google Play"
-                  >
-                    <img
-                      src="/google-play-badges/GetItOnGooglePlay_Badge_Web_color_English.svg"
-                      alt="Get it on Google Play"
-                      class="h-14 w-auto sm:h-16"
-                      decoding="async"
-                    />
-                  </a>
-                ) : null}
-                {app.data.appStoreUrl ? (
-                  <a
-                    class="btn btn-secondary"
-                    href={app.data.appStoreUrl}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    Download on the App Store
-                  </a>
-                ) : null}
+                {
+                  app.data.googlePlayUrl ? (
+                    <a
+                      class="inline-flex focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
+                      href={app.data.googlePlayUrl}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      aria-label="Get it on Google Play"
+                    >
+                      <img
+                        src="/google-play-badges/GetItOnGooglePlay_Badge_Web_color_English.svg"
+                        alt="Get it on Google Play"
+                        class="h-14 w-auto sm:h-16"
+                        decoding="async"
+                      />
+                    </a>
+                  ) : null
+                }
+                {
+                  app.data.appStoreUrl ? (
+                    <a
+                      class="btn btn-secondary"
+                      href={app.data.appStoreUrl}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Download on the App Store
+                    </a>
+                  ) : null
+                }
               </div>
 
-              {app.data.privacyUrl || app.data.termsUrl || app.data.websiteUrl ? (
-                <div class="mt-6 flex flex-col gap-2 text-sm text-zinc-300 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
-                  {app.data.websiteUrl ? (
-                    <a class="font-semibold text-white hover:underline" href={app.data.websiteUrl}>
-                      App microsite
-                    </a>
-                  ) : null}
-                  {app.data.privacyUrl ? (
-                    <a class="font-semibold text-white hover:underline" href={app.data.privacyUrl}>
-                      App privacy policy
-                    </a>
-                  ) : null}
-                  {app.data.termsUrl ? (
-                    <a class="font-semibold text-white hover:underline" href={app.data.termsUrl}>
-                      App terms &amp; conditions
-                    </a>
-                  ) : null}
-                </div>
-              ) : null}
+              {
+                app.data.privacyUrl ||
+                app.data.termsUrl ||
+                app.data.websiteUrl ? (
+                  <div class="mt-6 flex flex-col gap-2 text-sm text-zinc-300 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
+                    {app.data.websiteUrl ? (
+                      <a
+                        class="font-semibold text-white hover:underline"
+                        href={app.data.websiteUrl}
+                      >
+                        App microsite
+                      </a>
+                    ) : null}
+                    {app.data.privacyUrl ? (
+                      <a
+                        class="font-semibold text-white hover:underline"
+                        href={app.data.privacyUrl}
+                      >
+                        App privacy policy
+                      </a>
+                    ) : null}
+                    {app.data.termsUrl ? (
+                      <a
+                        class="font-semibold text-white hover:underline"
+                        href={app.data.termsUrl}
+                      >
+                        App terms &amp; conditions
+                      </a>
+                    ) : null}
+                  </div>
+                ) : null
+              }
             </div>
           </div>
         </div>

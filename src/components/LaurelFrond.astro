@@ -1,6 +1,6 @@
 ---
 /**
- * Left laurel from `/images/laurels/left-laurel.svg`; set `mirrored` for the right side (horizontal flip).
+ * Left laurel, set `mirrored` for the right side (horizontal flip).
  */
 export interface Props {
   mirrored?: boolean;
@@ -17,7 +17,7 @@ const LAUREL_PATH =
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 22 59"
   fill="none"
-  class:list={[className, mirrored && "-scale-x-100 origin-center"]}
+  class:list={[className, mirrored && "origin-center -scale-x-100"]}
   aria-hidden="true"
 >
   <path fill="currentColor" d={LAUREL_PATH}></path>

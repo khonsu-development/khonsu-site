@@ -25,7 +25,11 @@ const n = testimonials.length;
   </div>
 
   <div class="carousel-viewport overflow-hidden" data-carousel-viewport>
-    <div class="carousel-track flex" style="transform: translate3d(0, 0, 0)" data-carousel-track>
+    <div
+      class="carousel-track flex"
+      style="transform: translate3d(0, 0, 0)"
+      data-carousel-track
+    >
       {
         n === 1 ? (
           <div
@@ -39,8 +43,12 @@ const n = testimonials.length;
                 class="pointer-events-none absolute inset-0 opacity-50"
                 style={`background: radial-gradient(420px circle at 15% 15%, color-mix(in oklab, var(--app-primary) 14%, transparent), transparent 58%);`}
               />
-              <p class="relative text-sm leading-relaxed text-zinc-200">{testimonials[0].quote}</p>
-              <footer class="relative mt-4 text-xs font-medium text-zinc-400">{testimonials[0].author}</footer>
+              <p class="relative text-sm leading-relaxed text-zinc-200">
+                {testimonials[0].quote}
+              </p>
+              <footer class="relative mt-4 text-xs font-medium text-zinc-400">
+                {testimonials[0].author}
+              </footer>
             </blockquote>
           </div>
         ) : (
@@ -59,8 +67,12 @@ const n = testimonials.length;
                       class="pointer-events-none absolute inset-0 opacity-50"
                       style={`background: radial-gradient(420px circle at 15% 15%, color-mix(in oklab, var(--app-primary) 14%, transparent), transparent 58%);`}
                     />
-                    <p class="relative text-xs leading-relaxed text-zinc-200 sm:text-sm">{t.quote}</p>
-                    <footer class="relative mt-3 text-xs font-medium text-zinc-400">{t.author}</footer>
+                    <p class="relative text-xs leading-relaxed text-zinc-200 sm:text-sm">
+                      {t.quote}
+                    </p>
+                    <footer class="relative mt-3 text-xs font-medium text-zinc-400">
+                      {t.author}
+                    </footer>
                   </blockquote>
                 );
               })}
@@ -80,7 +92,12 @@ const n = testimonials.length;
           data-carousel-prev
           aria-label="Previous testimonials"
         >
-          <svg class="h-5 w-5 shrink-0 sm:h-6 sm:w-6" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <svg
+            class="h-5 w-5 shrink-0 sm:h-6 sm:w-6"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
             <path
               fill-rule="evenodd"
               d="M12.707 14.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L8.414 10l4.293 4.293a1 1 0 010 1.414z"
@@ -89,13 +106,18 @@ const n = testimonials.length;
           </svg>
         </button>
 
-        <nav class="flex max-w-[16rem] flex-wrap justify-center gap-2 px-2" aria-label="Testimonial pagination">
+        <nav
+          class="flex max-w-[16rem] flex-wrap justify-center gap-2 px-2"
+          aria-label="Testimonial pagination"
+        >
           {testimonials.map((_, dotIndex) => (
             <button
               type="button"
               class:list={[
                 "h-2.5 w-2.5 rounded-full transition hover:bg-white/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50",
-                dotIndex === 0 ? "carousel-dot-is-active bg-white" : "bg-white/25",
+                dotIndex === 0
+                  ? "carousel-dot-is-active bg-white"
+                  : "bg-white/25",
               ]}
               data-carousel-dot={dotIndex}
               aria-label={`Show reviews starting at ${dotIndex + 1}`}
@@ -109,7 +131,12 @@ const n = testimonials.length;
           data-carousel-next
           aria-label="Next testimonials"
         >
-          <svg class="h-5 w-5 shrink-0 sm:h-6 sm:w-6" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <svg
+            class="h-5 w-5 shrink-0 sm:h-6 sm:w-6"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
             <path
               fill-rule="evenodd"
               d="M7.293 14.707a1 1 0 010-1.414L11.586 10 7.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
@@ -125,23 +152,34 @@ const n = testimonials.length;
 <script>
   const AUTOPLAY_MS = 5500;
 
-  const roots = document.querySelectorAll<HTMLElement>("[data-testimonials-carousel]");
+  const roots = document.querySelectorAll<HTMLElement>(
+    "[data-testimonials-carousel]",
+  );
 
   function setupCarousel(root: HTMLElement): void {
-    const viewport = root.querySelector<HTMLElement>("[data-carousel-viewport]");
+    const viewport = root.querySelector<HTMLElement>(
+      "[data-carousel-viewport]",
+    );
     const track = root.querySelector<HTMLElement>("[data-carousel-track]");
-    const frames = [...root.querySelectorAll<HTMLElement>("[data-carousel-frame]")];
+    const frames = [
+      ...root.querySelectorAll<HTMLElement>("[data-carousel-frame]"),
+    ];
     const prevBtn = root.querySelector<HTMLElement>("[data-carousel-prev]");
     const nextBtn = root.querySelector<HTMLElement>("[data-carousel-next]");
-    const announce = root.querySelector<HTMLElement>("[data-carousel-announce]");
-    const dotButtons = [...root.querySelectorAll<HTMLElement>("[data-carousel-dot]")];
+    const announce = root.querySelector<HTMLElement>(
+      "[data-carousel-announce]",
+    );
+    const dotButtons = [
+      ...root.querySelectorAll<HTMLElement>("[data-carousel-dot]"),
+    ];
 
     if (!viewport || !track || frames.length === 0) return;
 
     const total = frames.length;
     let index = 0;
     let reducedMotion =
-      typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let autoplayTimer: ReturnType<typeof setInterval> | null = null;
 
@@ -163,7 +201,8 @@ const n = testimonials.length;
       if (reducedMotion || !enabled) {
         track.style.transition = "none";
       } else {
-        track.style.transition = "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)";
+        track.style.transition =
+          "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)";
       }
     }
 
@@ -233,12 +272,14 @@ const n = testimonials.length;
     ro.observe(viewport);
     initLayout();
 
-    window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", (e) => {
-      reducedMotion = e.matches;
-      stopAutoplay();
-      initLayout();
-      if (!reducedMotion && total >= 2) startAutoplay();
-    });
+    window
+      .matchMedia("(prefers-reduced-motion: reduce)")
+      .addEventListener("change", (e) => {
+        reducedMotion = e.matches;
+        stopAutoplay();
+        initLayout();
+        if (!reducedMotion && total >= 2) startAutoplay();
+      });
 
     prevBtn?.addEventListener("click", () => {
       step(-1);

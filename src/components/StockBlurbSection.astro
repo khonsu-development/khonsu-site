@@ -28,15 +28,25 @@ const STOCK_POLAROID_SLOTS = [
     <div class="grid gap-8 lg:grid-cols-12 lg:items-center">
       <div
         class:list={[
-          mirror ? "order-1 lg:order-2 lg:col-span-5 lg:col-start-8" : "lg:col-span-5",
+          mirror
+            ? "order-1 lg:order-2 lg:col-span-5 lg:col-start-8"
+            : "lg:col-span-5",
         ]}
       >
-        <h2 class="text-balance text-2xl font-semibold tracking-tight text-white sm:text-3xl">{title}</h2>
-        <p class="mt-4 text-pretty text-sm leading-relaxed text-zinc-300">{body}</p>
+        <h2
+          class="text-2xl font-semibold tracking-tight text-balance text-white sm:text-3xl"
+        >
+          {title}
+        </h2>
+        <p class="mt-4 text-sm leading-relaxed text-pretty text-zinc-300">
+          {body}
+        </p>
       </div>
       <div
         class:list={[
-          mirror ? "order-2 lg:order-1 lg:col-span-7 lg:col-start-1" : "lg:col-span-7",
+          mirror
+            ? "order-2 lg:order-1 lg:col-span-7 lg:col-start-1"
+            : "lg:col-span-7",
         ]}
       >
         {
@@ -46,10 +56,9 @@ const STOCK_POLAROID_SLOTS = [
                 aria-hidden="true"
                 class="pointer-events-none absolute -inset-10 opacity-65"
                 style={`background: radial-gradient(700px circle at 40% 25%, color-mix(in oklab, var(--app-primary) 16%, transparent), transparent 60%);`}
-              >
-              </div>
+              />
               <div class="relative mx-auto h-[14rem] max-w-xl sm:h-[16rem]">
-                <div class="card absolute left-1/2 top-1/2 w-[70%] -translate-x-[60%] -translate-y-[55%] -rotate-6 overflow-hidden">
+                <div class="card absolute top-1/2 left-1/2 w-[70%] -translate-x-[60%] -translate-y-[55%] -rotate-6 overflow-hidden">
                   <img
                     src={stockImages[0].src}
                     alt={stockImages[0].alt}
@@ -58,7 +67,7 @@ const STOCK_POLAROID_SLOTS = [
                     decoding="async"
                   />
                 </div>
-                <div class="card absolute left-1/2 top-1/2 w-[72%] -translate-x-[35%] -translate-y-[40%] rotate-4 overflow-hidden">
+                <div class="card absolute top-1/2 left-1/2 w-[72%] -translate-x-[35%] -translate-y-[40%] rotate-4 overflow-hidden">
                   <img
                     src={stockImages[1].src}
                     alt={stockImages[1].alt}
@@ -72,34 +81,36 @@ const STOCK_POLAROID_SLOTS = [
           ) : stockImages && stockImages.length >= 3 ? (
             <div class="relative mt-6 sm:mt-7">
               <p class="sr-only">
-                Decorative stock photographs of manuscripts and inscriptions; not screenshots of the app.
+                Decorative stock photographs of manuscripts and inscriptions;
+                not screenshots of the app.
               </p>
               <div
                 aria-hidden="true"
                 class="pointer-events-none absolute -inset-x-8 -inset-y-10 opacity-70 sm:-inset-x-12"
                 style={`background: radial-gradient(780px ellipse at 55% 35%, color-mix(in oklab, var(--app-primary) 12%, transparent), transparent 58%);`}
-              >
-              </div>
+              />
               <div
                 aria-hidden="true"
                 class="relative mx-auto min-h-[min(72vw,360px)] w-full max-w-xl sm:min-h-[380px] lg:max-w-2xl"
               >
-                {stockImages.slice(0, STOCK_POLAROID_SLOTS.length).map((img, i) => (
-                  <div
-                    class:list={[
-                      "absolute origin-center overflow-hidden rounded-lg motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out",
-                      STOCK_POLAROID_SLOTS[i] ?? STOCK_POLAROID_SLOTS[0],
-                    ]}
-                  >
-                    <img
-                      src={img.src}
-                      alt=""
-                      class="block h-full w-full border-0 object-cover outline-none"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                ))}
+                {stockImages
+                  .slice(0, STOCK_POLAROID_SLOTS.length)
+                  .map((img, i) => (
+                    <div
+                      class:list={[
+                        "absolute origin-center overflow-hidden rounded-lg motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out",
+                        STOCK_POLAROID_SLOTS[i] ?? STOCK_POLAROID_SLOTS[0],
+                      ]}
+                    >
+                      <img
+                        src={img.src}
+                        alt=""
+                        class="block h-full w-full border-0 object-cover outline-none"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  ))}
               </div>
             </div>
           ) : stockImages?.length ? (
