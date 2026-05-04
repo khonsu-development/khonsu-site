@@ -185,10 +185,6 @@ const STOCK_POLAROID_LAYERS = [
 </section>
 
 <script>
-  function clamp(n: number, min: number, max: number): number {
-    return Math.min(max, Math.max(min, n));
-  }
-
   function initStockImageScrollDepth(): void {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
@@ -196,6 +192,12 @@ const STOCK_POLAROID_LAYERS = [
 
     let rafId = 0;
 
+    /**
+     * Frames slide past each other at different rates (depth parallax).
+     * Uses panel position in the viewport so layers line up when centered and
+     * separate as you scroll — not a permanent offset from page top.
+     * Images are not transformed; only each frame wrapper moves.
+     */
     function apply(): void {
       rafId = 0;
       const vh = window.innerHeight || 1;
@@ -208,14 +210,20 @@ const STOCK_POLAROID_LAYERS = [
       for (const panel of panels) {
         const pr = panel.getBoundingClientRect();
         const centerY = pr.top + pr.height * 0.5;
-        /** Tight divisor so norm reacts clearly to normal scroll steps. */
-        const norm = clamp((centerY - viewportMid) / (vh * 0.22), -1, 1);
-
-        const layers = panel.querySelectorAll<HTMLElement>(
-          "[data-stock-depth-layer]",
+        const norm = Math.max(
+          -1,
+          Math.min(1, (centerY - viewportMid) / (vh * 0.36)),
         );
 
-        layers.forEach((layer) => {
+        const layers = [
+          ...panel.querySelectorAll<HTMLElement>("[data-stock-depth-layer]"),
+        ];
+        const n = layers.length;
+        if (n === 0) continue;
+
+        const mid = (n - 1) / 2;
+
+        for (const layer of layers) {
           const idx = Number.parseInt(
             layer.dataset.depthIndex ??
               layer.getAttribute("data-depth-index") ??
@@ -227,20 +235,14 @@ const STOCK_POLAROID_LAYERS = [
               layer.getAttribute("data-base-rotate") ??
               "0",
           );
-          if (Number.isNaN(base)) return;
+          if (Number.isNaN(base)) continue;
 
-          const w = 1 + idx * 0.14;
-          const ty = norm * 16 * w;
-          const tz = norm * 12 * w;
-          const rx = norm * -4 * w;
-          layer.style.transform = `rotate(${base}deg) translate3d(0, ${ty.toFixed(2)}px, ${tz.toFixed(2)}px) rotateX(${rx.toFixed(2)}deg)`;
+          const depth = idx - mid;
+          const parallaxY = norm * 24 * depth;
+          const zDepth = depth * 16;
 
-          const img = layer.querySelector<HTMLImageElement>("img");
-          if (img) {
-            const slip = norm * -18 * (1 + idx * 0.1);
-            img.style.transform = `translate3d(0, ${slip.toFixed(2)}px, 0) scale(1.09)`;
-          }
-        });
+          layer.style.transform = `rotate(${base}deg) translate3d(0, ${parallaxY.toFixed(2)}px, ${zDepth}px)`;
+        }
       }
     }
 
