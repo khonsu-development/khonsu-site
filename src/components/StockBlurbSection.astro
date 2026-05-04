@@ -9,9 +9,20 @@ type Props = {
   stockImages?: StockImage[];
   /** Desktop: collage on the left, copy on the right. Mobile keeps headline first. */
   mirror?: boolean;
+  /**
+   * Use `eager` (default) so collage images start loading with the page instead of
+   * waiting until scroll (`lazy` defers until near viewport).
+   */
+  imageLoading?: "eager" | "lazy";
 };
 
-const { title, body, stockImages, mirror = false } = Astro.props;
+const {
+  title,
+  body,
+  stockImages,
+  mirror = false,
+  imageLoading = "eager",
+} = Astro.props;
 
 /** Decorative overlapping rounded tiles; max 5 (placement + base rotation on inner layer for scroll depth). */
 const STOCK_POLAROID_LAYERS = [
@@ -89,8 +100,9 @@ const STOCK_POLAROID_LAYERS = [
                       src={stockImages[0].src}
                       alt={stockImages[0].alt}
                       class="h-44 w-full object-cover sm:h-52"
-                      loading="lazy"
+                      loading={imageLoading}
                       decoding="async"
+                      fetchpriority={imageLoading === "eager" ? "high" : undefined}
                     />
                   </div>
                 </div>
@@ -106,7 +118,7 @@ const STOCK_POLAROID_LAYERS = [
                       src={stockImages[1].src}
                       alt={stockImages[1].alt}
                       class="h-44 w-full object-cover sm:h-52"
-                      loading="lazy"
+                      loading={imageLoading}
                       decoding="async"
                     />
                   </div>
@@ -146,8 +158,13 @@ const STOCK_POLAROID_LAYERS = [
                             src={img.src}
                             alt=""
                             class="block h-full w-full border-0 object-cover outline-none"
-                            loading="lazy"
+                            loading={imageLoading}
                             decoding="async"
+                            fetchpriority={
+                              i === 0 && imageLoading === "eager"
+                                ? "high"
+                                : undefined
+                            }
                           />
                         </div>
                       </div>
@@ -171,8 +188,11 @@ const STOCK_POLAROID_LAYERS = [
                     src={img.src}
                     alt={img.alt}
                     class="h-28 w-full object-cover sm:h-32"
-                    loading="lazy"
+                    loading={imageLoading}
                     decoding="async"
+                    fetchpriority={
+                      i === 0 && imageLoading === "eager" ? "high" : undefined
+                    }
                   />
                 </div>
               ))}
