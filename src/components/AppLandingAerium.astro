@@ -1,4 +1,6 @@
 ---
+import "photoswipe/style.css";
+
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "./Container.astro";
 import HeroGooglePlaySpotlight from "./HeroGooglePlaySpotlight.astro";
@@ -127,6 +129,35 @@ const heroGlowTopOrbClass = isAlphabetsTheme
 
 const featuresAreRich = features.some((f) => Boolean(f.imageSrc));
 const reviewsHeadingId = `reviews-heading-${themeColor}`;
+
+type FeatureForRich = Feature & {
+  featurePswpIndex?: number;
+  featurePswpId?: string;
+};
+
+type FeaturePswpSlide = {
+  pid: string;
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+};
+
+const featurePswpSlides: FeaturePswpSlide[] = [];
+const featuresForRichLayout: FeatureForRich[] = features.map((f) => {
+  if (!f.imageSrc) return f;
+  const idx = featurePswpSlides.length;
+  const pid = `feature-pswp-${idx}`;
+  featurePswpSlides.push({
+    pid,
+    src: f.imageSrc,
+    /** Placeholder ratio for phone screenshots; PhotoSwipe fits to viewport. */
+    width: 1170,
+    height: 2532,
+    alt: f.imageAlt ?? f.title,
+  });
+  return { ...f, featurePswpIndex: idx, featurePswpId: pid };
+});
 
 /** Embed params: fewer on-screen controls where YouTube honours them (often still shows minimal UI on tap). */
 const youtubeEmbedQuery = youtubeVideoId
@@ -441,8 +472,11 @@ const youtubeEmbedQuery = youtubeVideoId
 
           {
             featuresAreRich ? (
-              <div class="mx-auto mt-10 max-w-5xl space-y-12 sm:space-y-16">
-                {features.map((f, i) => (
+              <div
+                class="mx-auto mt-10 max-w-5xl space-y-12 sm:space-y-16"
+                data-app-feature-pswp-root
+              >
+                {featuresForRichLayout.map((f, i) => (
                   <div
                     class:list={[
                       "flex flex-col gap-4 md:items-center lg:gap-8",
@@ -452,18 +486,38 @@ const youtubeEmbedQuery = youtubeVideoId
                     {f.imageSrc ? (
                       <div
                         class:list={[
-                          "relative md:w-5/12",
+                          "relative z-20 flex justify-center md:block md:w-5/12",
                           i === 0 ? "" : "md:-mt-14 lg:-mt-20",
                           "overflow-visible",
                         ]}
                       >
-                        <img
-                          src={f.imageSrc}
-                          alt={f.imageAlt ?? f.title}
-                          class="relative mx-auto max-h-[420px] w-full max-w-[520px] rounded-none object-contain sm:max-h-[520px]"
-                          loading="lazy"
-                          decoding="async"
-                        />
+                        <button
+                          type="button"
+                          class="group relative z-10 inline-block max-w-[520px] cursor-zoom-in border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
+                          aria-label={`Browse screenshots (opens gallery): ${f.imageAlt ?? f.title}`}
+                          data-app-feature-pswp-trigger
+                          data-app-feature-pswp-index={String(f.featurePswpIndex ?? 0)}
+                          data-app-feature-pswp-id={f.featurePswpId ?? ""}
+                        >
+                          <img
+                            src={f.imageSrc}
+                            alt={f.imageAlt ?? f.title}
+                            class="relative block h-auto max-h-[420px] w-auto max-w-full rounded-none object-contain sm:max-h-[520px]"
+                            loading="lazy"
+                            decoding="async"
+                            draggable="false"
+                          />
+                          <span
+                            aria-hidden="true"
+                            class="pointer-events-none absolute inset-0 ring-1 ring-transparent transition group-hover:ring-white/15"
+                          />
+                          <span
+                            aria-hidden="true"
+                            class="pointer-events-none absolute right-2 bottom-2 inline-flex max-w-[calc(100%-1rem)] items-center rounded-full bg-black/55 px-2.5 py-1 text-[11px] font-medium text-white/90 ring-1 ring-white/10 opacity-0 shadow-sm backdrop-blur transition group-hover:opacity-100"
+                          >
+                            Click to browse
+                          </span>
+                        </button>
                       </div>
                     ) : null}
                     <div class="md:flex md:w-7/12 md:flex-col md:justify-center">
@@ -689,7 +743,22 @@ const youtubeEmbedQuery = youtubeVideoId
     </div>
   </div>
 
+  {
+    featuresAreRich && featurePswpSlides.length > 0 ? (
+      <script
+        id="app-feature-pswp-slides"
+        type="application/json"
+        set:html={JSON.stringify(featurePswpSlides).replaceAll("<", "\\u003c")}
+      />
+    ) : null
+  }
+
   <script>
+    import PhotoSwipe from "photoswipe";
+
+    /** Owns the open gallery; avoid `window.pswp` (PhotoSwipe/Lightbox use it internally). */
+    let activeFeaturePswp: PhotoSwipe | null = null;
+
     function initFixedGlowParallax(): void {
       const parallaxEl = document.querySelector<HTMLElement>(
         "[data-app-landing-glow-parallax]",
@@ -738,6 +807,108 @@ const youtubeEmbedQuery = youtubeVideoId
     }
 
     initFaqWholeCardToggle();
+
+    type FeaturePswpSlideSeed = {
+      pid: string;
+      src: string;
+      width: number;
+      height: number;
+      alt: string;
+    };
+
+    function readFeaturePswpSlides(): FeaturePswpSlideSeed[] {
+      const el = document.getElementById("app-feature-pswp-slides");
+      if (!el?.textContent) return [];
+      try {
+        const parsed: unknown = JSON.parse(el.textContent);
+        return Array.isArray(parsed) ? (parsed as FeaturePswpSlideSeed[]) : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function closeStaleFeaturePhotoSwipe(): void {
+      if (!activeFeaturePswp) return;
+      try {
+        activeFeaturePswp.destroy();
+        // `destroy()` may only schedule `close()` on the first call; call again if needed.
+        if (activeFeaturePswp) activeFeaturePswp.destroy();
+      } catch {
+        /* ignore */
+      }
+    }
+
+    function initFeaturePhotoSwipeCarousel(): void {
+      const slides = readFeaturePswpSlides();
+      const root = document.querySelector("[data-app-feature-pswp-root]");
+      if (!root || !slides.length) return;
+
+      const dataSource = slides.map((s) => ({
+        src: s.src,
+        width: s.width,
+        height: s.height,
+        alt: s.alt,
+        pid: s.pid,
+      }));
+
+      root.querySelectorAll<HTMLButtonElement>("[data-app-feature-pswp-trigger]").forEach((btn) => {
+        btn.addEventListener("click", (event) => {
+          const raw = btn.getAttribute("data-app-feature-pswp-index");
+          const idx = raw == null || raw === "" ? Number.NaN : Number(raw);
+          if (!Number.isFinite(idx) || idx < 0) return;
+
+          closeStaleFeaturePhotoSwipe();
+
+          const ev = event as MouseEvent;
+          const initialPointerPos =
+            ev.clientX || ev.clientY
+              ? { x: ev.clientX, y: ev.clientY }
+              : null;
+
+          const pswp = new PhotoSwipe({
+            dataSource,
+            index: idx,
+            loop: slides.length >= 3,
+            bgOpacity: 0.92,
+            padding: { top: 20, bottom: 20, left: 16, right: 16 },
+            initialPointerPos,
+            /** Avoid thumb-zoom pipeline issues; opens reliably without waiting on opener timing. */
+            showHideAnimationType: "none",
+            showHideOpacity: false,
+          });
+
+          pswp.addFilter("thumbEl", (thumbEl, itemData) => {
+            const pid = typeof itemData.pid === "string" ? itemData.pid : "";
+            if (!pid) return thumbEl ?? document.createElement("div");
+            const trigger = root.querySelector(
+              `button[data-app-feature-pswp-id="${pid}"]`,
+            );
+            const img = trigger?.querySelector("img");
+            return img ?? thumbEl ?? document.createElement("div");
+          });
+
+          pswp.addFilter("placeholderSrc", (placeholderSrc, content) => {
+            const pid =
+              typeof content.data.pid === "string" ? content.data.pid : "";
+            if (!pid) return placeholderSrc;
+            const trigger = root.querySelector(
+              `button[data-app-feature-pswp-id="${pid}"]`,
+            );
+            const img = trigger?.querySelector("img");
+            const src = img?.currentSrc || img?.src;
+            return src || placeholderSrc;
+          });
+
+          activeFeaturePswp = pswp;
+          pswp.on("destroy", () => {
+            if (activeFeaturePswp === pswp) activeFeaturePswp = null;
+          });
+          pswp.init();
+        });
+      });
+    }
+
+    initFeaturePhotoSwipeCarousel();
   </script>
 
   <style>
