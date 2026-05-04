@@ -13,13 +13,29 @@ type Props = {
 
 const { title, body, stockImages, mirror = false } = Astro.props;
 
-/** Decorative overlapping rounded tiles; max 5 (indices map to preset slots). */
-const STOCK_POLAROID_SLOTS = [
-  "left-[3%] top-[10%] z-[2] h-[58%] max-h-[248px] w-[54%] -rotate-[5deg] sm:top-[12%]",
-  "right-[0%] top-[4%] z-[4] h-[52%] max-h-[228px] w-[46%] rotate-[8deg]",
-  "left-[12%] bottom-[2%] z-[6] h-[48%] max-h-[210px] w-[42%] -rotate-[6deg]",
-  "right-[10%] bottom-[10%] z-[5] h-[42%] max-h-[190px] w-[38%] rotate-[6deg]",
-  "left-[34%] top-[34%] z-[8] h-[38%] max-h-[168px] w-[34%] rotate-[3deg]",
+/** Decorative overlapping rounded tiles; max 5 (placement + base rotation on inner layer for scroll depth). */
+const STOCK_POLAROID_LAYERS = [
+  {
+    place:
+      "left-[3%] top-[10%] z-[2] h-[58%] max-h-[248px] w-[54%] sm:top-[12%]",
+    rotateDeg: -5,
+  },
+  {
+    place: "right-[0%] top-[4%] z-[4] h-[52%] max-h-[228px] w-[46%]",
+    rotateDeg: 8,
+  },
+  {
+    place: "left-[12%] bottom-[2%] z-[6] h-[48%] max-h-[210px] w-[42%]",
+    rotateDeg: -6,
+  },
+  {
+    place: "right-[10%] bottom-[10%] z-[5] h-[42%] max-h-[190px] w-[38%]",
+    rotateDeg: 6,
+  },
+  {
+    place: "left-[34%] top-[34%] z-[8] h-[38%] max-h-[168px] w-[34%]",
+    rotateDeg: 3,
+  },
 ] as const;
 ---
 
@@ -57,24 +73,43 @@ const STOCK_POLAROID_SLOTS = [
                 class="pointer-events-none absolute -inset-10 opacity-65"
                 style={`background: radial-gradient(700px circle at 40% 25%, color-mix(in oklab, var(--app-primary) 16%, transparent), transparent 60%);`}
               />
-              <div class="relative mx-auto h-[14rem] max-w-xl sm:h-[16rem]">
-                <div class="card absolute top-1/2 left-1/2 w-[70%] -translate-x-[60%] -translate-y-[55%] -rotate-6 overflow-hidden">
-                  <img
-                    src={stockImages[0].src}
-                    alt={stockImages[0].alt}
-                    class="h-44 w-full object-cover sm:h-52"
-                    loading="lazy"
-                    decoding="async"
-                  />
+              <div
+                class="relative mx-auto h-[14rem] max-w-xl perspective-[1100px] [transform-style:preserve-3d] sm:h-[16rem]"
+                data-stock-depth-panel
+              >
+                <div class="absolute top-1/2 left-1/2 w-[70%] -translate-x-[60%] -translate-y-[55%]">
+                  <div
+                    class="card overflow-hidden motion-safe:will-change-transform"
+                    data-stock-depth-layer
+                    data-base-rotate="-6"
+                    data-depth-index="0"
+                    style="transform: rotate(-6deg);"
+                  >
+                    <img
+                      src={stockImages[0].src}
+                      alt={stockImages[0].alt}
+                      class="h-44 w-full object-cover sm:h-52"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
                 </div>
-                <div class="card absolute top-1/2 left-1/2 w-[72%] -translate-x-[35%] -translate-y-[40%] rotate-4 overflow-hidden">
-                  <img
-                    src={stockImages[1].src}
-                    alt={stockImages[1].alt}
-                    class="h-44 w-full object-cover sm:h-52"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                <div class="absolute top-1/2 left-1/2 w-[72%] -translate-x-[35%] -translate-y-[40%]">
+                  <div
+                    class="card overflow-hidden motion-safe:will-change-transform"
+                    data-stock-depth-layer
+                    data-base-rotate="4"
+                    data-depth-index="1"
+                    style="transform: rotate(4deg);"
+                  >
+                    <img
+                      src={stockImages[1].src}
+                      alt={stockImages[1].alt}
+                      class="h-44 w-full object-cover sm:h-52"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -91,32 +126,47 @@ const STOCK_POLAROID_SLOTS = [
               />
               <div
                 aria-hidden="true"
-                class="relative mx-auto min-h-[min(72vw,360px)] w-full max-w-xl sm:min-h-[380px] lg:max-w-2xl"
+                class="relative mx-auto min-h-[min(72vw,360px)] w-full max-w-xl perspective-[1200px] sm:min-h-[380px] lg:max-w-2xl [transform-style:preserve-3d]"
+                data-stock-depth-panel
               >
                 {stockImages
-                  .slice(0, STOCK_POLAROID_SLOTS.length)
-                  .map((img, i) => (
-                    <div
-                      class:list={[
-                        "absolute origin-center overflow-hidden rounded-lg motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out",
-                        STOCK_POLAROID_SLOTS[i] ?? STOCK_POLAROID_SLOTS[0],
-                      ]}
-                    >
-                      <img
-                        src={img.src}
-                        alt=""
-                        class="block h-full w-full border-0 object-cover outline-none"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
-                  ))}
+                  .slice(0, STOCK_POLAROID_LAYERS.length)
+                  .map((img, i) => {
+                    const layer = STOCK_POLAROID_LAYERS[i] ?? STOCK_POLAROID_LAYERS[0];
+                    return (
+                      <div class:list={["absolute", layer.place]}>
+                        <div
+                          class="origin-center h-full w-full overflow-hidden rounded-lg motion-safe:will-change-transform"
+                          data-stock-depth-layer
+                          data-base-rotate={layer.rotateDeg}
+                          data-depth-index={i}
+                          style={`transform: rotate(${layer.rotateDeg}deg);`}
+                        >
+                          <img
+                            src={img.src}
+                            alt=""
+                            class="block h-full w-full border-0 object-cover outline-none"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           ) : stockImages?.length ? (
-            <div class="mt-4 grid gap-3 sm:mt-5 sm:grid-cols-3">
-              {stockImages.slice(0, 3).map((img) => (
-                <div class="card overflow-hidden">
+            <div
+              class="mt-4 grid gap-3 perspective-[1000px] [transform-style:preserve-3d] sm:mt-5 sm:grid-cols-3"
+              data-stock-depth-panel
+            >
+              {stockImages.slice(0, 3).map((img, i) => (
+                <div
+                  class="card overflow-hidden motion-safe:will-change-transform"
+                  data-stock-depth-layer
+                  data-base-rotate="0"
+                  data-depth-index={i}
+                >
                   <img
                     src={img.src}
                     alt={img.alt}
@@ -133,3 +183,80 @@ const STOCK_POLAROID_SLOTS = [
     </div>
   </Container>
 </section>
+
+<script>
+  function clamp(n: number, min: number, max: number): number {
+    return Math.min(max, Math.max(min, n));
+  }
+
+  function initStockImageScrollDepth(): void {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    let rafId = 0;
+
+    function apply(): void {
+      rafId = 0;
+      const vh = window.innerHeight || 1;
+      const viewportMid = vh * 0.5;
+
+      const panels = document.querySelectorAll<HTMLElement>(
+        "[data-stock-depth-panel]",
+      );
+
+      for (const panel of panels) {
+        const pr = panel.getBoundingClientRect();
+        const centerY = pr.top + pr.height * 0.5;
+        /** Tight divisor so norm reacts clearly to normal scroll steps. */
+        const norm = clamp((centerY - viewportMid) / (vh * 0.22), -1, 1);
+
+        const layers = panel.querySelectorAll<HTMLElement>(
+          "[data-stock-depth-layer]",
+        );
+
+        layers.forEach((layer) => {
+          const idx = Number.parseInt(
+            layer.dataset.depthIndex ??
+              layer.getAttribute("data-depth-index") ??
+              "0",
+            10,
+          );
+          const base = Number.parseFloat(
+            layer.dataset.baseRotate ??
+              layer.getAttribute("data-base-rotate") ??
+              "0",
+          );
+          if (Number.isNaN(base)) return;
+
+          const w = 1 + idx * 0.14;
+          const ty = norm * 16 * w;
+          const tz = norm * 12 * w;
+          const rx = norm * -4 * w;
+          layer.style.transform = `rotate(${base}deg) translate3d(0, ${ty.toFixed(2)}px, ${tz.toFixed(2)}px) rotateX(${rx.toFixed(2)}deg)`;
+
+          const img = layer.querySelector<HTMLImageElement>("img");
+          if (img) {
+            const slip = norm * -18 * (1 + idx * 0.1);
+            img.style.transform = `translate3d(0, ${slip.toFixed(2)}px, 0) scale(1.09)`;
+          }
+        });
+      }
+    }
+
+    function onScrollOrResize(): void {
+      if (rafId !== 0) return;
+      rafId = window.requestAnimationFrame(apply);
+    }
+
+    apply();
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
+    window.visualViewport?.addEventListener("scroll", onScrollOrResize, {
+      passive: true,
+    });
+    window.visualViewport?.addEventListener("resize", onScrollOrResize);
+  }
+
+  initStockImageScrollDepth();
+</script>
