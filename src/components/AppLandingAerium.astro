@@ -484,7 +484,9 @@ const youtubeEmbedQuery = youtubeVideoId
                           class="group relative z-10 inline-block max-w-[520px] cursor-zoom-in border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
                           aria-label={`Browse screenshots (opens gallery): ${f.imageAlt ?? f.title}`}
                           data-app-feature-pswp-trigger
-                          data-app-feature-pswp-index={String(f.featurePswpIndex ?? 0)}
+                          data-app-feature-pswp-index={String(
+                            f.featurePswpIndex ?? 0,
+                          )}
                           data-app-feature-pswp-id={f.featurePswpId ?? ""}
                         >
                           <img
@@ -501,7 +503,7 @@ const youtubeEmbedQuery = youtubeVideoId
                           />
                           <span
                             aria-hidden="true"
-                            class="pointer-events-none absolute right-2 bottom-2 inline-flex max-w-[calc(100%-1rem)] items-center rounded-full bg-black/55 px-2.5 py-1 text-[11px] font-medium text-white/90 ring-1 ring-white/10 opacity-0 shadow-sm backdrop-blur transition group-hover:opacity-100"
+                            class="pointer-events-none absolute right-2 bottom-2 inline-flex max-w-[calc(100%-1rem)] items-center rounded-full bg-black/55 px-2.5 py-1 text-[11px] font-medium text-white/90 opacity-0 shadow-sm ring-1 ring-white/10 backdrop-blur transition group-hover:opacity-100"
                           >
                             Click to browse
                           </span>
@@ -839,61 +841,63 @@ const youtubeEmbedQuery = youtubeVideoId
         pid: s.pid,
       }));
 
-      root.querySelectorAll<HTMLButtonElement>("[data-app-feature-pswp-trigger]").forEach((btn) => {
-        btn.addEventListener("click", (event) => {
-          const raw = btn.getAttribute("data-app-feature-pswp-index");
-          const idx = raw == null || raw === "" ? Number.NaN : Number(raw);
-          if (!Number.isFinite(idx) || idx < 0) return;
+      root
+        .querySelectorAll<HTMLButtonElement>("[data-app-feature-pswp-trigger]")
+        .forEach((btn) => {
+          btn.addEventListener("click", (event) => {
+            const raw = btn.getAttribute("data-app-feature-pswp-index");
+            const idx = raw == null || raw === "" ? Number.NaN : Number(raw);
+            if (!Number.isFinite(idx) || idx < 0) return;
 
-          closeStaleFeaturePhotoSwipe();
+            closeStaleFeaturePhotoSwipe();
 
-          const ev = event as MouseEvent;
-          const initialPointerPos =
-            ev.clientX || ev.clientY
-              ? { x: ev.clientX, y: ev.clientY }
-              : null;
+            const ev = event as MouseEvent;
+            const initialPointerPos =
+              ev.clientX || ev.clientY
+                ? { x: ev.clientX, y: ev.clientY }
+                : null;
 
-          const pswp = new PhotoSwipe({
-            dataSource,
-            index: idx,
-            loop: slides.length >= 3,
-            bgOpacity: 0.92,
-            padding: { top: 20, bottom: 20, left: 16, right: 16 },
-            initialPointerPos,
-            /** Avoid thumb-zoom pipeline issues; opens reliably without waiting on opener timing. */
-            showHideAnimationType: "none",
-            showHideOpacity: false,
+            const pswp = new PhotoSwipe({
+              dataSource,
+              index: idx,
+              loop: slides.length >= 3,
+              bgOpacity: 0.92,
+              padding: { top: 20, bottom: 20, left: 16, right: 16 },
+              initialPointerPos,
+              /** Avoid thumb-zoom pipeline issues; opens reliably without waiting on opener timing. */
+              showHideAnimationType: "none",
+              showHideOpacity: false,
+            });
+
+            pswp.addFilter("thumbEl", (thumbEl, itemData) => {
+              const pid = typeof itemData.pid === "string" ? itemData.pid : "";
+              if (!pid) return thumbEl ?? document.createElement("div");
+              const trigger = root.querySelector(
+                `button[data-app-feature-pswp-id="${pid}"]`,
+              );
+              const img = trigger?.querySelector("img");
+              return img ?? thumbEl ?? document.createElement("div");
+            });
+
+            pswp.addFilter("placeholderSrc", (placeholderSrc, content) => {
+              const pid =
+                typeof content.data.pid === "string" ? content.data.pid : "";
+              if (!pid) return placeholderSrc;
+              const trigger = root.querySelector(
+                `button[data-app-feature-pswp-id="${pid}"]`,
+              );
+              const img = trigger?.querySelector("img");
+              const src = img?.currentSrc || img?.src;
+              return src || placeholderSrc;
+            });
+
+            activeFeaturePswp = pswp;
+            pswp.on("destroy", () => {
+              if (activeFeaturePswp === pswp) activeFeaturePswp = null;
+            });
+            pswp.init();
           });
-
-          pswp.addFilter("thumbEl", (thumbEl, itemData) => {
-            const pid = typeof itemData.pid === "string" ? itemData.pid : "";
-            if (!pid) return thumbEl ?? document.createElement("div");
-            const trigger = root.querySelector(
-              `button[data-app-feature-pswp-id="${pid}"]`,
-            );
-            const img = trigger?.querySelector("img");
-            return img ?? thumbEl ?? document.createElement("div");
-          });
-
-          pswp.addFilter("placeholderSrc", (placeholderSrc, content) => {
-            const pid =
-              typeof content.data.pid === "string" ? content.data.pid : "";
-            if (!pid) return placeholderSrc;
-            const trigger = root.querySelector(
-              `button[data-app-feature-pswp-id="${pid}"]`,
-            );
-            const img = trigger?.querySelector("img");
-            const src = img?.currentSrc || img?.src;
-            return src || placeholderSrc;
-          });
-
-          activeFeaturePswp = pswp;
-          pswp.on("destroy", () => {
-            if (activeFeaturePswp === pswp) activeFeaturePswp = null;
-          });
-          pswp.init();
         });
-      });
     }
 
     initFeaturePhotoSwipeCarousel();

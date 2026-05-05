@@ -103,7 +103,9 @@ const STOCK_POLAROID_LAYERS = [
                       class="h-44 w-full object-cover sm:h-52"
                       loading={imageLoading}
                       decoding="async"
-                      fetchpriority={imageLoading === "eager" ? "high" : undefined}
+                      fetchpriority={
+                        imageLoading === "eager" ? "high" : undefined
+                      }
                     />
                   </div>
                 </div>
@@ -139,17 +141,18 @@ const STOCK_POLAROID_LAYERS = [
               />
               <div
                 aria-hidden="true"
-                class="relative mx-auto min-h-[min(72vw,360px)] w-full max-w-xl perspective-[1200px] sm:min-h-[380px] lg:max-w-2xl [transform-style:preserve-3d]"
+                class="relative mx-auto min-h-[min(72vw,360px)] w-full max-w-xl [transform-style:preserve-3d] perspective-[1200px] sm:min-h-[380px] lg:max-w-2xl"
                 data-stock-depth-panel
               >
                 {stockImages
                   .slice(0, STOCK_POLAROID_LAYERS.length)
                   .map((img, i) => {
-                    const layer = STOCK_POLAROID_LAYERS[i] ?? STOCK_POLAROID_LAYERS[0];
+                    const layer =
+                      STOCK_POLAROID_LAYERS[i] ?? STOCK_POLAROID_LAYERS[0];
                     return (
                       <div class:list={["absolute", layer.place]}>
                         <div
-                          class="origin-center h-full w-full overflow-hidden rounded-lg motion-safe:will-change-transform"
+                          class="h-full w-full origin-center overflow-hidden rounded-lg motion-safe:will-change-transform"
                           data-stock-depth-layer
                           data-base-rotate={layer.rotateDeg}
                           data-depth-index={i}
@@ -175,7 +178,7 @@ const STOCK_POLAROID_LAYERS = [
             </div>
           ) : stockImages?.length ? (
             <div
-              class="mt-4 grid gap-3 perspective-[1000px] [transform-style:preserve-3d] sm:mt-5 sm:grid-cols-3"
+              class="mt-4 grid gap-3 [transform-style:preserve-3d] perspective-[1000px] sm:mt-5 sm:grid-cols-3"
               data-stock-depth-panel
             >
               {stockImages.slice(0, 3).map((img, i) => (
@@ -243,9 +246,7 @@ const STOCK_POLAROID_LAYERS = [
         if (n === 0) continue;
 
         const mid = (n - 1) / 2;
-        const isTwoCardPanel = panel.hasAttribute(
-          "data-stock-depth-panel-two",
-        );
+        const isTwoCardPanel = panel.hasAttribute("data-stock-depth-panel-two");
 
         for (const layer of layers) {
           const idx = Number.parseInt(
