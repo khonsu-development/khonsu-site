@@ -1,10 +1,66 @@
 ---
 import AppLandingAerium from "../../components/AppLandingAerium.astro";
 
+const heroSpotlightStats = [{ label: "Google Play downloads", value: "400k+" }];
+
 const stats = [
   { label: "Languages", value: "50+" },
   { label: "Rhyme engine", value: "Double Rhyme" },
   { label: "Practice flow", value: "Beats + prompts" },
+];
+
+const testimonials = [
+  {
+    quote:
+      "Thank you, it is very helpful for me. I make music myself and it's not easy to think of lyrics, but the app takes a lot away from you! I am positively convinced.",
+    author: "Google Play user",
+  },
+  {
+    quote:
+      "This app is awesome! Absolutely fire! Hope more beats and rhymes get added. This app will definitely help with your freestyle and spontaneous creativity and being on beat and much more!",
+    author: "Google Play user",
+  },
+  {
+    quote:
+      "This is the best App for any level of rappers....... if there are 10 stars I will gladly give it to them.... such an exciting app ❤️❤️❤️❤️❤️❤️ It has increased my skill in freestyling and I hope y'all keep on getting better... the sky is the limit. 🖖🖖🤫",
+    author: "Ademola Praise billy",
+  },
+  {
+    quote:
+      "It's really nice, it's useful for rapping. I'm in the Red Bull Battle thanks to this.",
+    author: "Robert Bust",
+  },
+  {
+    quote: "Very good",
+    author: "Nabi Mardan",
+  },
+  {
+    quote: "It is the best with respect to quality",
+    author: "Fanele MaMkhize",
+  },
+  {
+    quote:
+      "Very useful for battle MCs to practice at home, and the recording option is very helpful.",
+    author: "Denis Timoteo Teixeira",
+  },
+  {
+    quote:
+      "Very nice app and suitable for training also thanks to the performance recording,",
+    author: "Riccardo Romanin",
+  },
+  {
+    quote: "Awesome 😁😁",
+    author: "Didier Bombeke",
+  },
+  {
+    quote: "Wow, miraculous!",
+    author: "Sara Izabela Stetcu",
+  },
+  {
+    quote:
+      "This app is cool, you can even create your own sounds, so cool! 🤩🤩",
+    author: "Rachete Ngabiziemi",
+  },
 ];
 
 const features = [
@@ -83,7 +139,9 @@ const features = [
     { src: "/stock/landscape/sky.jpg", alt: "" },
     { src: "/stock/landscape/forest2.jpg", alt: "" },
   ]}
+  heroSpotlightStats={heroSpotlightStats}
   stats={stats}
+  testimonials={testimonials}
   features={features}
   featuresSectionTitle="Features"
   featuresSectionSubtitle="Beats, tempo, bilingual prompts, and recording—everything tuned for consistent practice."
