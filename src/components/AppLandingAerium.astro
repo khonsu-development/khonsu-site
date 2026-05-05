@@ -196,14 +196,7 @@ const youtubeEmbedQuery = youtubeVideoId
     </div>
 
     <div class="relative z-10">
-      <section
-        class:list={[
-          isAlphabetsTheme
-            ? "relative overflow-visible"
-            : "relative overflow-hidden",
-          "pt-12 sm:pt-16",
-        ]}
-      >
+      <section class="relative overflow-visible pt-12 sm:pt-16">
         <div
           aria-hidden="true"
           class="pointer-events-none absolute inset-0 -z-10"
@@ -255,12 +248,7 @@ const youtubeEmbedQuery = youtubeVideoId
             )
           }
           <div
-            class:list={[
-              "absolute inset-0 bg-gradient-to-b from-white/0",
-              isAlphabetsTheme
-                ? "via-white/0 to-transparent"
-                : "via-white/0 to-zinc-950",
-            ]}
+            class="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-transparent"
           >
           </div>
         </div>

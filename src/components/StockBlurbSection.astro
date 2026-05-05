@@ -78,19 +78,20 @@ const STOCK_POLAROID_LAYERS = [
       >
         {
           stockImages?.length === 2 ? (
-            <div class="relative mt-5 sm:mt-6">
+            <div class="relative isolate mt-5 sm:mt-6">
               <div
                 aria-hidden="true"
-                class="pointer-events-none absolute -inset-10 opacity-65"
-                style={`background: radial-gradient(700px circle at 40% 25%, color-mix(in oklab, var(--app-primary) 16%, transparent), transparent 60%);`}
+                class="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[min(110%,44rem)] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-65 blur-3xl"
+                style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) 22%, transparent), transparent);`}
               />
               <div
-                class="relative mx-auto h-[14rem] max-w-xl perspective-[1100px] [transform-style:preserve-3d] sm:h-[16rem]"
+                class="relative mx-auto h-[14rem] max-w-xl sm:h-[16rem]"
                 data-stock-depth-panel
+                data-stock-depth-panel-two
               >
                 <div class="absolute top-1/2 left-1/2 w-[70%] -translate-x-[60%] -translate-y-[55%]">
                   <div
-                    class="card overflow-hidden motion-safe:will-change-transform"
+                    class="overflow-hidden rounded-lg backface-hidden"
                     data-stock-depth-layer
                     data-base-rotate="-6"
                     data-depth-index="0"
@@ -108,7 +109,7 @@ const STOCK_POLAROID_LAYERS = [
                 </div>
                 <div class="absolute top-1/2 left-1/2 w-[72%] -translate-x-[35%] -translate-y-[40%]">
                   <div
-                    class="card overflow-hidden motion-safe:will-change-transform"
+                    class="overflow-hidden rounded-lg backface-hidden"
                     data-stock-depth-layer
                     data-base-rotate="4"
                     data-depth-index="1"
@@ -179,7 +180,7 @@ const STOCK_POLAROID_LAYERS = [
             >
               {stockImages.slice(0, 3).map((img, i) => (
                 <div
-                  class="card overflow-hidden motion-safe:will-change-transform"
+                  class="overflow-hidden rounded-lg motion-safe:will-change-transform"
                   data-stock-depth-layer
                   data-base-rotate="0"
                   data-depth-index={i}
@@ -242,6 +243,9 @@ const STOCK_POLAROID_LAYERS = [
         if (n === 0) continue;
 
         const mid = (n - 1) / 2;
+        const isTwoCardPanel = panel.hasAttribute(
+          "data-stock-depth-panel-two",
+        );
 
         for (const layer of layers) {
           const idx = Number.parseInt(
@@ -259,7 +263,8 @@ const STOCK_POLAROID_LAYERS = [
 
           const depth = idx - mid;
           const parallaxY = norm * 24 * depth;
-          const zDepth = depth * 16;
+          /** Two overlapping cards: skip translateZ to avoid GPU compositor dark fringe behind rounded clips. */
+          const zDepth = isTwoCardPanel ? 0 : depth * 16;
 
           layer.style.transform = `rotate(${base}deg) translate3d(0, ${parallaxY.toFixed(2)}px, ${zDepth}px)`;
         }

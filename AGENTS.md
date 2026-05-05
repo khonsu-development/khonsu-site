@@ -23,6 +23,7 @@ Cloudflare Pages settings:
 ## How to work in this repo
 
 - Prefer **small, focused changes** with a clear purpose.
+- **Do not use em dashes** (`—`) in user-facing copy. Prefer commas, colons, parentheses, or separate sentences.
 - Match existing formatting and file organization (Astro components, Tailwind utility conventions).
 - Avoid introducing new dependencies unless necessary; if you do, explain why and keep them minimal.
 - Don’t commit secrets (tokens, Cloudflare credentials, `.env` files, etc.).
