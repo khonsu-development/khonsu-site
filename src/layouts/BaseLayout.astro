@@ -2,6 +2,10 @@
 import "../styles/global.css";
 import Container from "../components/Container.astro";
 import Logo from "../components/Logo.astro";
+import FacebookIcon from "../components/icons/FacebookIcon.astro";
+import GitHubIcon from "../components/icons/GitHubIcon.astro";
+import GooglePlayIcon from "../components/icons/GooglePlayIcon.astro";
+import YouTubeIcon from "../components/icons/YouTubeIcon.astro";
 
 type Props = {
   title: string;
@@ -29,6 +33,9 @@ const ogImageUrl = ogImage
     ? ogImage
     : `${site.url}${ogImage}`
   : `${site.url}/og.svg`;
+
+const pathname = Astro.url?.pathname ?? "";
+const showAlphabetsFacebook = pathname.startsWith("/alphabets");
 ---
 
 <!doctype html>
@@ -124,11 +131,58 @@ const ogImageUrl = ogImage
           </div>
 
           <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
-            <a class="hover:text-white" href="/privacy-policy">
-              Website Privacy
+            <a
+              class="inline-flex items-center justify-center text-zinc-300 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60"
+              href="https://www.youtube.com/@khonsudevelopment"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+              title="YouTube"
+            >
+              <YouTubeIcon class="h-5 w-5" />
+            </a>
+
+            <a
+              class="inline-flex items-center justify-center text-zinc-300 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60"
+              href="https://github.com/khonsu-development"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              title="GitHub"
+            >
+              <GitHubIcon class="h-5 w-5" />
+            </a>
+
+            {
+              showAlphabetsFacebook ? (
+                <a
+                  class="inline-flex items-center justify-center text-zinc-300 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60"
+                  href="https://www.facebook.com/alphabetsapp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook (World of Alphabets)"
+                  title="Facebook"
+                >
+                  <FacebookIcon class="h-5 w-5" />
+                </a>
+              ) : null
+            }
+
+            <a
+              class="inline-flex items-center justify-center text-zinc-300 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60"
+              href="https://play.google.com/store/apps/dev?id=5635874583313520174"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Google Play"
+              title="Google Play"
+            >
+              <GooglePlayIcon class="h-5 w-5" />
             </a>
             <a class="hover:text-white" href="/terms-and-conditions-for-khonsu">
               Website Terms
+            </a>
+            <a class="hover:text-white" href="/privacy-policy">
+              Website Privacy
             </a>
           </div>
         </div>
