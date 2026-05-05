@@ -343,8 +343,20 @@ const youtubeEmbedQuery = youtubeVideoId
             </div>
 
             <div class="relative grid place-items-center">
+              <div class="w-full sm:hidden">
+                <div class="mx-auto max-w-[22rem]">
+                  <img
+                    src={centerScreenshot ?? screenshots[0]}
+                    alt={`${appName} app screenshot`}
+                    class="block h-auto w-full object-contain"
+                    loading="lazy"
+                    decoding="async"
+                    draggable="false"
+                  />
+                </div>
+              </div>
               <div
-                class="relative h-[26rem] w-full sm:h-[34rem]"
+                class="relative hidden h-[34rem] w-full sm:block"
                 data-app-landing-hero-depth-panel
               >
                 <div

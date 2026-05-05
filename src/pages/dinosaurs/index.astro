@@ -1,6 +1,8 @@
 ---
 import AppLandingAerium from "../../components/AppLandingAerium.astro";
 
+const heroSpotlightStats = [{ label: "Google Play rating", value: "4.9★" }];
+
 const stats = [
   { label: "Prehistoric animals", value: "1900+" },
   { label: "Discovery sites", value: "Global map" },
@@ -152,6 +154,7 @@ const features = [
     { src: "/stock/landscape/forest.jpg", alt: "" },
     { src: "/stock/landscape/lake.jpg", alt: "" },
   ]}
+  heroSpotlightStats={heroSpotlightStats}
   stats={stats}
   testimonials={testimonials}
   features={features}
