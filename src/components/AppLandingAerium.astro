@@ -343,15 +343,34 @@ const youtubeEmbedQuery = youtubeVideoId
             </div>
 
             <div class="relative grid place-items-center">
-              <div class="relative h-[26rem] w-full sm:h-[34rem]">
-                <div class="device device-left">
+              <div
+                class="relative h-[26rem] w-full sm:h-[34rem]"
+                data-app-landing-hero-depth-panel
+              >
+                <div
+                  class="device device-left"
+                  data-app-landing-hero-depth-layer
+                  data-side="left"
+                  data-base-rotate="-10"
+                  data-base-y="22"
+                  data-parallax-mult="1"
+                  style="transform: rotate(-10deg);"
+                >
                   <img
                     src={screenshots[0]}
                     alt={`${appName} app screenshot`}
                     class="h-full w-full object-contain"
                   />
                 </div>
-                <div class="device device-right">
+                <div
+                  class="device device-right"
+                  data-app-landing-hero-depth-layer
+                  data-side="right"
+                  data-base-rotate="10"
+                  data-base-y="22"
+                  data-parallax-mult="1"
+                  style="transform: rotate(10deg);"
+                >
                   <img
                     src={screenshots[1]}
                     alt={`${appName} app screenshot`}
@@ -359,7 +378,14 @@ const youtubeEmbedQuery = youtubeVideoId
                   />
                 </div>
 
-                <div class="device device-center hidden sm:block">
+                <div
+                  class="device device-center hidden sm:block"
+                  data-app-landing-hero-depth-layer
+                  data-base-transform="translateX(-50%)"
+                  data-base-y="0"
+                  data-parallax-mult="0.85"
+                  style="transform: translateX(-50%);"
+                >
                   {
                     centerScreenshot ? (
                       <img
@@ -782,6 +808,65 @@ const youtubeEmbedQuery = youtubeVideoId
 
     initFixedGlowParallax();
 
+    function initHeroScreenshotScrollDepth(): void {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+      }
+
+      let rafId = 0;
+
+      function apply(): void {
+        rafId = 0;
+        const layers = document.querySelectorAll<HTMLElement>(
+          "[data-app-landing-hero-depth-layer]",
+        );
+        if (!layers.length) return;
+
+        const maxPx = 128;
+        const strength = 0.14;
+        const travel = Math.min(window.scrollY * strength, maxPx);
+        const progress = maxPx > 0 ? Math.max(0, Math.min(1, travel / maxPx)) : 0;
+        const fanX = 64;
+        const fanRot = 14;
+
+        for (const layer of layers) {
+          const baseY = Number.parseFloat(layer.getAttribute("data-base-y") ?? "0");
+          const mult = Number.parseFloat(layer.getAttribute("data-parallax-mult") ?? "1");
+          const y = baseY - travel * mult;
+          const z = mult >= 1 ? 18 : 10;
+
+          const side = layer.getAttribute("data-side");
+          if (side === "left" || side === "right") {
+            const baseRotate = Number.parseFloat(layer.getAttribute("data-base-rotate") ?? "0");
+            const dir = side === "left" ? -1 : 1;
+            const x = dir * fanX * progress;
+            const rot = baseRotate + dir * fanRot * progress;
+            layer.style.transform = `rotate(${rot.toFixed(2)}deg) translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, ${z}px)`;
+            continue;
+          }
+
+          const baseTransform = layer.getAttribute("data-base-transform") ?? "";
+          if (!baseTransform) continue;
+          layer.style.transform = `${baseTransform} translate3d(0, ${y.toFixed(2)}px, ${z}px)`;
+        }
+      }
+
+      function onScrollOrResize(): void {
+        if (rafId !== 0) return;
+        rafId = window.requestAnimationFrame(apply);
+      }
+
+      apply();
+      window.addEventListener("scroll", onScrollOrResize, { passive: true });
+      window.addEventListener("resize", onScrollOrResize);
+      window.visualViewport?.addEventListener("scroll", onScrollOrResize, {
+        passive: true,
+      });
+      window.visualViewport?.addEventListener("resize", onScrollOrResize);
+    }
+
+    initHeroScreenshotScrollDepth();
+
     function initFaqWholeCardToggle(): void {
       document
         .querySelectorAll<HTMLDetailsElement>("[data-app-faq-details]")
@@ -918,21 +1003,18 @@ const youtubeEmbedQuery = youtubeVideoId
       top: 10%;
       width: 52%;
       height: 86%;
-      transform: rotate(-10deg);
     }
     .device-right {
       right: 2%;
       top: 10%;
       width: 52%;
       height: 86%;
-      transform: rotate(10deg);
     }
     .device-center {
       left: 50%;
       top: 3%;
       width: 42%;
       height: 94%;
-      transform: translateX(-50%);
     }
   </style>
 </BaseLayout>
