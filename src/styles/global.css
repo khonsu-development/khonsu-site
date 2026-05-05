@@ -90,6 +90,18 @@
     --color-app-freestyle-black: #000000;
   }
 
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+  }
+
+  body {
+    touch-action: pan-y;
+  }
+
   body {
     font-family: var(--font-sans);
   }

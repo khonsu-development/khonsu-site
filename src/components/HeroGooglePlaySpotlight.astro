@@ -8,6 +8,7 @@ export interface Props {
 }
 
 const { stats } = Astro.props;
+const isTwoUpMobile = stats.length === 2;
 
 const isRatingStat = (s: Stat) =>
   /\b(rating|stars?)\b/i.test(s.label) || /★|⭐|star/i.test(s.value);
@@ -27,13 +28,28 @@ const starIconClass = "size-[0.7rem] shrink-0 sm:size-[0.875rem]";
   class="relative mx-auto mt-8 max-w-4xl px-4 sm:mt-10 sm:px-8"
 >
   <div
-    class="flex flex-col items-stretch gap-10 sm:flex-row sm:justify-center sm:gap-6 lg:gap-14"
+    class:list={[
+      isTwoUpMobile ? "grid grid-cols-2 gap-4" : "flex flex-col gap-10",
+      "items-stretch sm:flex sm:flex-row sm:justify-center sm:gap-6 lg:gap-14",
+    ]}
   >
     {
       stats.map((s, rowIndex) => (
         <div class="flex min-w-0 flex-1 items-center justify-center gap-1 sm:gap-2">
-          <LaurelFrond class="h-[4.25rem] w-auto shrink-0 text-white/90 sm:h-[5.5rem]" />
-          <div class="min-w-0 px-1 text-center sm:px-2">
+          <LaurelFrond
+            class:list={[
+              "w-auto shrink-0 text-white/90",
+              isTwoUpMobile ? "h-[3.25rem]" : "h-[4.25rem]",
+              "sm:h-[5.5rem]",
+            ]}
+          />
+          <div
+            class:list={[
+              "min-w-0 text-center",
+              isTwoUpMobile ? "px-0.5" : "px-1",
+              "sm:px-2",
+            ]}
+          >
             {isRatingStat(s) ? (
               <div
                 class="mb-2 flex justify-center gap-px text-amber-300 sm:gap-[2px]"
@@ -71,16 +87,32 @@ const starIconClass = "size-[0.7rem] shrink-0 sm:size-[0.875rem]";
                 </svg>
               </div>
             ) : null}
-            <p class="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+            <p
+              class:list={[
+                "font-semibold tracking-tight text-white",
+                isTwoUpMobile ? "text-2xl" : "text-3xl",
+                "sm:text-4xl",
+              ]}
+            >
               {displayValue(s)}
             </p>
-            <p class="mt-2 text-xs leading-snug font-medium text-pretty text-zinc-300 sm:text-sm">
+            <p
+              class:list={[
+                "mt-2 leading-snug font-medium text-pretty text-zinc-300",
+                isTwoUpMobile ? "text-[11px]" : "text-xs",
+                "sm:text-sm",
+              ]}
+            >
               {s.label}
             </p>
           </div>
           <LaurelFrond
             mirrored
-            class="h-[4.25rem] w-auto shrink-0 text-white/90 sm:h-[5.5rem]"
+            class:list={[
+              "w-auto shrink-0 text-white/90",
+              isTwoUpMobile ? "h-[3.25rem]" : "h-[4.25rem]",
+              "sm:h-[5.5rem]",
+            ]}
           />
         </div>
       ))
