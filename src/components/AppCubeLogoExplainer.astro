@@ -14,10 +14,22 @@ type Props = {
   intro?: string;
   /** Stable id for SVG defs (avoid SSR randomness). */
   instanceId?: string;
+  /** Tailwind size utilities for the logo image (default matches app landing cubes). */
+  logoImgClass?: string;
   faces: CubeFace[];
 };
 
-const { logoSrc, logoAlt, heading, intro, instanceId = "cube-explainer", faces } = Astro.props;
+const {
+  logoSrc,
+  logoAlt,
+  heading,
+  intro,
+  instanceId = "cube-explainer",
+  logoImgClass: logoImgClassProp,
+  faces,
+} = Astro.props;
+
+const logoImgClass = logoImgClassProp ?? "h-28 w-28 sm:h-36 sm:w-36";
 
 const byPosition = Object.fromEntries(faces.map((f) => [f.position, f])) as Record<
   CubeFacePosition,
@@ -26,13 +38,22 @@ const byPosition = Object.fromEntries(faces.map((f) => [f.position, f])) as Reco
 const top = byPosition.top;
 const left = byPosition.left;
 const right = byPosition.right;
-const complete = top && left && right;
+
+const positionsUnique = new Set(faces.map((f) => f.position));
+const facesValid = Boolean(logoSrc) && faces.length > 0 && faces.length === positionsUnique.size;
+
+/** Three visible faces (app cube artwork). */
+const threeFaceMode = Boolean(top && left && right);
+/** Logo plus a single callout on the right (e.g. Khonsu mark). */
+const rightOnlyMode = Boolean(right && !top && !left && faces.length === 1);
+
+const render = facesValid && (threeFaceMode || rightOnlyMode);
 
 const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
 ---
 
 {
-  complete ? (
+  render ? (
     <div class="mb-0" data-app-cube-explainer aria-labelledby={heading ? `${figureId}-heading` : undefined}>
       {(heading || intro) && (
         <div class="mx-auto mb-6 max-w-xl text-center">
@@ -61,9 +82,121 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
           />
         </div>
 
-        <div class="relative min-h-[14rem] py-2 sm:min-h-[19rem] sm:py-4" data-app-cube-explainer-stage>
-          <div class="relative isolate grid grid-cols-1 gap-6 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:grid-rows-[auto_1fr] sm:gap-x-2 sm:gap-y-3">
-            {/* SVG above the cube layer (z-12 vs z-11) so strokes are not covered by the white PNG */}
+        {threeFaceMode ? (
+          <div class="relative min-h-[14rem] py-2 sm:min-h-[19rem] sm:py-4" data-app-cube-explainer-stage>
+            <div class="relative isolate grid grid-cols-1 gap-6 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:grid-rows-[auto_1fr] sm:gap-x-2 sm:gap-y-3">
+              {/* SVG above the cube layer (z-12 vs z-11) so strokes are not covered by the white PNG */}
+              <svg
+                class="pointer-events-none absolute inset-0 z-[12] h-full w-full overflow-visible"
+                data-app-cube-explainer-svg
+                aria-hidden="true"
+              >
+                <defs>
+                  <filter
+                    id={`${figureId}-line-shadow`}
+                    x="-35%"
+                    y="-35%"
+                    width="170%"
+                    height="170%"
+                    color-interpolation-filters="sRGB"
+                  >
+                    <feDropShadow dx="0" dy="1" stdDeviation="1.25" flood-color="#000000" flood-opacity="0.55" />
+                  </filter>
+                </defs>
+                <path
+                  data-cube-connector="top"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="1"
+                  vector-effect="non-scaling-stroke"
+                  stroke-linecap="butt"
+                  stroke-linejoin="miter"
+                  filter={`url(#${figureId}-line-shadow)`}
+                  d=""
+                />
+                <path
+                  data-cube-connector="left"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="1"
+                  vector-effect="non-scaling-stroke"
+                  stroke-linecap="butt"
+                  stroke-linejoin="miter"
+                  filter={`url(#${figureId}-line-shadow)`}
+                  d=""
+                />
+                <path
+                  data-cube-connector="right"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="1"
+                  vector-effect="non-scaling-stroke"
+                  stroke-linecap="butt"
+                  stroke-linejoin="miter"
+                  filter={`url(#${figureId}-line-shadow)`}
+                  d=""
+                />
+                <circle data-cube-dot="top" r="2.5" fill="white" filter={`url(#${figureId}-line-shadow)`} />
+                <circle data-cube-dot="left" r="2.5" fill="white" filter={`url(#${figureId}-line-shadow)`} />
+                <circle data-cube-dot="right" r="2.5" fill="white" filter={`url(#${figureId}-line-shadow)`} />
+              </svg>
+
+              <div class="relative z-[20] order-2 flex -translate-y-2 justify-center sm:order-none sm:col-span-3 sm:row-start-1 sm:-translate-y-4 sm:justify-center sm:pb-0">
+                <p
+                  class="max-w-[12rem] text-center text-sm leading-snug text-pretty text-zinc-300 sm:max-w-[13rem] [&_em]:italic"
+                  data-cube-key="top"
+                  set:html={top!.body}
+                />
+              </div>
+
+              <div class="relative z-[20] order-3 flex justify-center sm:order-none sm:col-start-1 sm:row-start-2 sm:items-center sm:justify-end sm:pr-1">
+                <p
+                  class="max-w-[12rem] text-center text-sm leading-snug text-pretty text-zinc-300 sm:max-w-[13rem] sm:text-right [&_em]:italic"
+                  data-cube-key="left"
+                  set:html={left!.body}
+                />
+              </div>
+
+              <div class="relative z-[11] order-1 flex justify-center sm:order-none sm:col-start-2 sm:row-start-2 sm:self-center">
+                <div class="relative inline-block drop-shadow-[0_28px_64px_rgba(0,0,0,0.55)]" data-cube-image-wrap>
+                  <img
+                    src={logoSrc}
+                    alt={logoAlt}
+                    class:list={["relative block object-contain", logoImgClass]}
+                    data-cube-logo-img
+                    loading="eager"
+                    decoding="async"
+                  />
+                  {/* Face anchor points (% of logo box): top = upper apex of top face; left/right = outer bottom corners of side faces (Alphabets cube artwork). */}
+                  <span
+                    aria-hidden="true"
+                    class="absolute top-[19%] left-[50%] size-0 -translate-x-1/2 -translate-y-1/2"
+                    data-cube-face-anchor="top"
+                  />
+                  <span
+                    aria-hidden="true"
+                    class="absolute top-[64%] left-[21%] size-0 -translate-x-1/2 -translate-y-1/2"
+                    data-cube-face-anchor="left"
+                  />
+                  <span
+                    aria-hidden="true"
+                    class="absolute top-[64%] left-[79%] size-0 -translate-x-1/2 -translate-y-1/2"
+                    data-cube-face-anchor="right"
+                  />
+                </div>
+              </div>
+
+              <div class="relative z-[20] order-4 flex justify-center sm:order-none sm:col-start-3 sm:row-start-2 sm:items-center sm:justify-start sm:pl-1">
+                <p
+                  class="max-w-[12rem] text-center text-sm leading-snug text-pretty text-zinc-300 sm:max-w-[13rem] sm:text-left [&_em]:italic"
+                  data-cube-key="right"
+                  set:html={right!.body}
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div class="relative min-h-[11rem] py-2 sm:min-h-[13rem] sm:py-4" data-app-cube-explainer-stage>
             <svg
               class="pointer-events-none absolute inset-0 z-[12] h-full w-full overflow-visible"
               data-app-cube-explainer-svg
@@ -82,28 +215,6 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
                 </filter>
               </defs>
               <path
-                data-cube-connector="top"
-                fill="none"
-                stroke="white"
-                stroke-width="1"
-                vector-effect="non-scaling-stroke"
-                stroke-linecap="butt"
-                stroke-linejoin="miter"
-                filter={`url(#${figureId}-line-shadow)`}
-                d=""
-              />
-              <path
-                data-cube-connector="left"
-                fill="none"
-                stroke="white"
-                stroke-width="1"
-                vector-effect="non-scaling-stroke"
-                stroke-linecap="butt"
-                stroke-linejoin="miter"
-                filter={`url(#${figureId}-line-shadow)`}
-                d=""
-              />
-              <path
                 data-cube-connector="right"
                 fill="none"
                 stroke="white"
@@ -114,65 +225,41 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
                 filter={`url(#${figureId}-line-shadow)`}
                 d=""
               />
-              <circle data-cube-dot="top" r="2.5" fill="white" filter={`url(#${figureId}-line-shadow)`} />
-              <circle data-cube-dot="left" r="2.5" fill="white" filter={`url(#${figureId}-line-shadow)`} />
               <circle data-cube-dot="right" r="2.5" fill="white" filter={`url(#${figureId}-line-shadow)`} />
             </svg>
 
-            <div class="relative z-[20] order-2 flex -translate-y-2 justify-center sm:order-none sm:col-span-3 sm:row-start-1 sm:-translate-y-4 sm:justify-center sm:pb-0">
-              <p
-                class="max-w-[12rem] text-center text-sm leading-snug text-pretty text-zinc-300 sm:max-w-[13rem] [&_em]:italic"
-                data-cube-key="top"
-                set:html={top.body}
-              />
-            </div>
+            {/* 1fr | auto (logo) | 1fr: logo column stays viewport-centered; key only in the right track. */}
+            <div class="relative isolate z-[10] grid grid-cols-1 gap-6 sm:grid-cols-[1fr_auto_minmax(0,1fr)] sm:items-center sm:gap-x-4">
+              <div class="hidden sm:block" aria-hidden="true" />
 
-            <div class="relative z-[20] order-3 flex justify-center sm:order-none sm:col-start-1 sm:row-start-2 sm:items-center sm:justify-end sm:pr-1">
-              <p
-                class="max-w-[12rem] text-center text-sm leading-snug text-pretty text-zinc-300 sm:max-w-[13rem] sm:text-right [&_em]:italic"
-                data-cube-key="left"
-                set:html={left.body}
-              />
-            </div>
+              <div class="relative z-[11] order-1 flex justify-center sm:order-none sm:justify-center">
+                <div class="relative inline-block drop-shadow-[0_28px_64px_rgba(0,0,0,0.55)]" data-cube-image-wrap>
+                  <img
+                    src={logoSrc}
+                    alt={logoAlt}
+                    class:list={["relative block object-contain", logoImgClass]}
+                    data-cube-logo-img
+                    loading="eager"
+                    decoding="async"
+                  />
+                  <span
+                    aria-hidden="true"
+                    class="absolute top-[64%] left-[79%] size-0 -translate-x-1/2 -translate-y-1/2"
+                    data-cube-face-anchor="right"
+                  />
+                </div>
+              </div>
 
-            <div class="relative z-[11] order-1 flex justify-center sm:order-none sm:col-start-2 sm:row-start-2 sm:self-center">
-              <div class="relative inline-block drop-shadow-[0_28px_64px_rgba(0,0,0,0.55)]" data-cube-image-wrap>
-                <img
-                  src={logoSrc}
-                  alt={logoAlt}
-                  class="relative block h-28 w-28 object-contain sm:h-36 sm:w-36"
-                  data-cube-logo-img
-                  loading="eager"
-                  decoding="async"
-                />
-                {/* Face anchor points (% of logo box): top = upper apex of top face; left/right = outer bottom corners of side faces (Alphabets cube artwork). */}
-                <span
-                  aria-hidden="true"
-                  class="absolute top-[19%] left-[50%] size-0 -translate-x-1/2 -translate-y-1/2"
-                  data-cube-face-anchor="top"
-                />
-                <span
-                  aria-hidden="true"
-                  class="absolute top-[64%] left-[21%] size-0 -translate-x-1/2 -translate-y-1/2"
-                  data-cube-face-anchor="left"
-                />
-                <span
-                  aria-hidden="true"
-                  class="absolute top-[64%] left-[79%] size-0 -translate-x-1/2 -translate-y-1/2"
-                  data-cube-face-anchor="right"
+              <div class="relative z-[20] order-2 flex justify-center sm:order-none sm:items-center sm:justify-start">
+                <p
+                  class="max-w-[14rem] text-center text-sm leading-snug text-pretty text-zinc-300 sm:max-w-[16rem] sm:min-w-0 sm:text-left [&_em]:italic"
+                  data-cube-key="right"
+                  set:html={right!.body}
                 />
               </div>
             </div>
-
-            <div class="relative z-[20] order-4 flex justify-center sm:order-none sm:col-start-3 sm:row-start-2 sm:items-center sm:justify-start sm:pl-1">
-              <p
-                class="max-w-[12rem] text-center text-sm leading-snug text-pretty text-zinc-300 sm:max-w-[13rem] sm:text-left [&_em]:italic"
-                data-cube-key="right"
-                set:html={right.body}
-              />
-            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   ) : null
@@ -247,25 +334,46 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
     return `M ${aSvg.x} ${aSvg.y} L ${rightSvg.x} ${rightSvg.y} L ${leftSvg.x} ${leftSvg.y}`;
   }
 
-  function initCubeExplainer(): void {
-    const stage = document.querySelector<HTMLElement>("[data-app-cube-explainer-stage]");
-    const svg = document.querySelector<SVGSVGElement>("[data-app-cube-explainer-svg]");
+  type CubeKey = "top" | "left" | "right";
+
+  const cubeExplainerTicks = new Set<() => void>();
+  let cubeExplainerGlobalListenersAttached = false;
+  let cubeExplainerRafScheduled = false;
+
+  function scheduleAllCubeExplainers(): void {
+    if (cubeExplainerRafScheduled) return;
+    cubeExplainerRafScheduled = true;
+    window.requestAnimationFrame(() => {
+      cubeExplainerRafScheduled = false;
+      for (const tick of cubeExplainerTicks) tick();
+    });
+  }
+
+  function attachCubeExplainerGlobalListenersOnce(): void {
+    if (cubeExplainerGlobalListenersAttached) return;
+    cubeExplainerGlobalListenersAttached = true;
+    window.addEventListener("scroll", scheduleAllCubeExplainers, { passive: true });
+    window.addEventListener("resize", scheduleAllCubeExplainers);
+    window.visualViewport?.addEventListener("scroll", scheduleAllCubeExplainers, { passive: true });
+    window.visualViewport?.addEventListener("resize", scheduleAllCubeExplainers);
+  }
+
+  function initOneCubeExplainer(root: HTMLElement): void {
+    const stage = root.querySelector<HTMLElement>("[data-app-cube-explainer-stage]");
+    const svg = root.querySelector<SVGSVGElement>("[data-app-cube-explainer-svg]");
     if (!stage || !svg) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const positions = ["top", "left", "right"] as const;
-
-    let rafId = 0;
 
     function apply(): void {
-      rafId = 0;
-
-      for (const pos of positions) {
+      const connectors = svg.querySelectorAll<SVGPathElement>("[data-cube-connector]");
+      connectors.forEach((path) => {
+        const pos = path.getAttribute("data-cube-connector");
+        if (!pos) return;
         const anchor = stage.querySelector<HTMLElement>(`[data-cube-face-anchor="${pos}"]`);
         const keyEl = stage.querySelector<HTMLElement>(`[data-cube-key="${pos}"]`);
-        const path = svg.querySelector<SVGPathElement>(`[data-cube-connector="${pos}"]`);
         const dot = svg.querySelector<SVGCircleElement>(`[data-cube-dot="${pos}"]`);
-        if (!anchor || !keyEl || !path) continue;
+        if (!anchor || !keyEl) return;
 
         const ar = anchor.getBoundingClientRect();
         const ax = ar.left + ar.width / 2;
@@ -278,7 +386,7 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
           dot.setAttribute("cx", String(aSvg.x));
           dot.setAttribute("cy", String(aSvg.y));
         }
-      }
+      });
     }
 
     function parallaxKeys(): void {
@@ -290,16 +398,16 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
       const norm = (center - vh / 2) / (vh / 2);
 
       const cubeWrap = stage.querySelector<HTMLElement>("[data-cube-image-wrap]");
-      const rates = { top: -22, left: -18, right: -24 } as const;
+      const rates: Record<CubeKey, number> = { top: -22, left: -18, right: -24 };
       const cubeShift = norm * 10;
 
-      for (const pos of positions) {
-        const keyEl = stage.querySelector<HTMLElement>(`[data-cube-key="${pos}"]`);
-        if (!keyEl) continue;
+      stage.querySelectorAll<HTMLElement>("[data-cube-key]").forEach((keyEl) => {
+        const pos = keyEl.getAttribute("data-cube-key") as CubeKey | null;
+        if (pos !== "top" && pos !== "left" && pos !== "right") return;
         const base = rates[pos];
         keyEl.style.transform = `translate3d(0, ${(norm * base).toFixed(2)}px, 0)`;
         keyEl.style.willChange = "transform";
-      }
+      });
 
       if (cubeWrap) {
         cubeWrap.style.transform = `translate3d(0, ${cubeShift.toFixed(2)}px, 0)`;
@@ -312,24 +420,19 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
       apply();
     }
 
-    function onScrollOrResize(): void {
-      if (rafId !== 0) return;
-      rafId = window.requestAnimationFrame(tick);
-    }
-
+    cubeExplainerTicks.add(tick);
+    attachCubeExplainerGlobalListenersOnce();
     tick();
-    window.addEventListener("scroll", onScrollOrResize, { passive: true });
-    window.addEventListener("resize", onScrollOrResize);
-    if (!reduced) {
-      window.visualViewport?.addEventListener("scroll", onScrollOrResize, { passive: true });
-      window.visualViewport?.addEventListener("resize", onScrollOrResize);
-    }
 
-    const ro = new ResizeObserver(() => onScrollOrResize());
+    const ro = new ResizeObserver(() => scheduleAllCubeExplainers());
     ro.observe(stage);
     const img = stage.querySelector("img[data-cube-logo-img]");
     if (img) ro.observe(img);
   }
 
-  initCubeExplainer();
+  function initCubeExplainers(): void {
+    document.querySelectorAll<HTMLElement>("[data-app-cube-explainer]").forEach((root) => initOneCubeExplainer(root));
+  }
+
+  initCubeExplainers();
 </script>
