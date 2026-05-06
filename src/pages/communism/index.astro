@@ -1,9 +1,13 @@
 ---
 import AppLandingAerium from "../../components/AppLandingAerium.astro";
 
+const heroSpotlightStats = [{ label: "Google Play rating", value: "4.7★" }];
+
 const stats = [
-  { label: "Key thinkers", value: "150+" },
+  { label: "Key thinkers introduced", value: "150+" },
   { label: "Movements explained", value: "49" },
+  { label: "Writings presented", value: "50+" },
+  { label: "National experiences uncovered", value: "120+" },
 ];
 
 const testimonials = [
@@ -99,6 +103,7 @@ const features = [
     { src: "/apps/communism/prop/wall.jpg", alt: "" },
     { src: "/apps/communism/prop/demo.jpg", alt: "" },
   ]}
+  heroSpotlightStats={heroSpotlightStats}
   stats={stats}
   testimonials={testimonials}
   features={features}
