@@ -9,6 +9,14 @@ export default [
     ignores: ["dist/**", "node_modules/**", ".astro/**"],
   },
   js.configs.recommended,
+  {
+    files: ["astro.config.mjs"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
   ...astro.configs.recommended,
   {
     files: ["**/*.astro"],

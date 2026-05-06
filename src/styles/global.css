@@ -114,18 +114,17 @@
   }
 
   [data-app-theme="app-dinosaurs"] :where(h1, h2, h3, summary) {
+    font-family: "Alegreya Sans SC", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  [data-app-theme="app-communism"] :where(h1, h2, h3, summary) {
     font-family: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
     font-optical-sizing: auto;
   }
 
-  [data-app-theme="app-communism"] :where(h1, h2, h3, summary) {
-    font-family: "Newsreader", ui-serif, Georgia, "Times New Roman", serif;
-    font-optical-sizing: auto;
-  }
-
   [data-app-theme="app-freestyle"] :where(h1, h2, h3, summary) {
-    font-family: "Unbounded", ui-sans-serif, system-ui, sans-serif;
-    letter-spacing: -0.02em;
+    font-family: "Urbanist", ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.025em;
   }
 
   [data-app-theme="app-alphabets"] .prose :where(h1, h2, h3, h4) {
@@ -133,18 +132,17 @@
   }
 
   [data-app-theme="app-dinosaurs"] .prose :where(h1, h2, h3, h4) {
+    font-family: "Alegreya Sans SC", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  [data-app-theme="app-communism"] .prose :where(h1, h2, h3, h4) {
     font-family: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
     font-optical-sizing: auto;
   }
 
-  [data-app-theme="app-communism"] .prose :where(h1, h2, h3, h4) {
-    font-family: "Newsreader", ui-serif, Georgia, "Times New Roman", serif;
-    font-optical-sizing: auto;
-  }
-
   [data-app-theme="app-freestyle"] .prose :where(h1, h2, h3, h4) {
-    font-family: "Unbounded", ui-sans-serif, system-ui, sans-serif;
-    letter-spacing: -0.02em;
+    font-family: "Urbanist", ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.025em;
   }
 
   ::selection {
