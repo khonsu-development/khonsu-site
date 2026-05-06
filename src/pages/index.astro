@@ -17,8 +17,24 @@ const apps = order
   description="Khonsu Development builds educational apps for curious minds: beautiful, structured deep dives into niche topics, made for quick sessions or long rabbit holes."
   canonicalPath="/"
 >
-  <section class="relative overflow-hidden">
-    <div class="pointer-events-none absolute inset-0 opacity-70">
+  <section class="hero-with-stars relative overflow-hidden">
+    <div class="hero-video-wrap absolute inset-0 z-0">
+      <video
+        class="h-full min-h-full w-full object-cover object-center"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster="/videos/stars-hero-poster.jpg"
+        aria-hidden="true"
+      >
+        <source src="/videos/stars-hero-vp9.webm" type="video/webm" />
+        <source src="/videos/stars-hero-h264.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="pointer-events-none absolute inset-0 z-[1] bg-zinc-950/45"></div>
+    <div class="pointer-events-none absolute inset-0 z-[2] opacity-70">
       <div
         class="absolute -top-32 left-1/2 h-[520px] w-[920px] -translate-x-1/2 rounded-full bg-gradient-to-tr from-indigo-500/20 via-fuchsia-500/20 to-amber-400/10 blur-3xl"
       >
@@ -29,7 +45,7 @@ const apps = order
       </div>
     </div>
 
-    <div class="mx-auto w-full max-w-6xl px-5 py-16 sm:py-24">
+    <div class="relative z-[3] mx-auto w-full max-w-6xl px-5 py-16 sm:py-24">
       <div class="max-w-2xl">
         <p class="text-sm font-semibold tracking-wide text-zinc-300">Learned anything fun today?</p>
         <h1 class="mt-4 text-4xl font-black tracking-tight text-white sm:text-6xl">
@@ -95,4 +111,18 @@ const apps = order
       </div>
     </Container>
   </section>
+
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      .hero-video-wrap {
+        display: none;
+      }
+
+      .hero-with-stars {
+        background-image: url("/videos/stars-hero-poster.jpg");
+        background-position: center;
+        background-size: cover;
+      }
+    }
+  </style>
 </BaseLayout>
