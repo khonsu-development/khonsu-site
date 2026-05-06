@@ -121,8 +121,8 @@ const statSectionClass =
   displayStats.length >= 5
     ? "mx-auto mt-6 grid max-w-5xl gap-4 sm:mt-8 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5"
     : displayStats.length >= 4
-      ? "mx-auto mt-6 grid max-w-4xl gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4"
-      : "mx-auto mt-6 grid max-w-3xl gap-4 sm:mt-8 sm:grid-cols-3";
+      ? "mx-auto mt-6 grid max-w-4xl gap-4 sm:mt-8 grid-cols-2 lg:grid-cols-4"
+      : "mx-auto mt-6 grid max-w-3xl gap-4 sm:mt-8 grid-cols-2 sm:grid-cols-3";
 
 const secondaryVar =
   themeColor === "app-freestyle" ? "var(--color-app-freestyle-orange)" : `var(--color-${themeColor}-secondary)`;
@@ -382,8 +382,13 @@ const youtubeEmbedQuery = youtubeVideoId
 
           <div class={statSectionClass}>
             {
-              displayStats.map((s) => (
-                <div class="card relative overflow-hidden p-5 text-center">
+              displayStats.map((s, index) => (
+                <div
+                  class:list={[
+                    "card relative overflow-hidden p-5 text-center",
+                    displayStats.length === 3 && index === 2 && "max-sm:col-span-2",
+                  ]}
+                >
                   <div
                     aria-hidden="true"
                     class="pointer-events-none absolute inset-0 opacity-60"
@@ -627,11 +632,7 @@ const youtubeEmbedQuery = youtubeVideoId
         ) : null
       }
 
-      <section
-        class:list={[
-          cubeExplainerComplete && cubeExplainer ? "pb-12 pt-5 sm:pb-16 sm:pt-6" : "py-12 sm:py-16",
-        ]}
-      >
+      <section class:list={[cubeExplainerComplete && cubeExplainer ? "pt-5 pb-12 sm:pt-6 sm:pb-16" : "py-12 sm:py-16"]}>
         <Container>
           <div class="card relative overflow-hidden p-6 sm:p-10">
             <div
