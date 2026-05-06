@@ -14,5 +14,21 @@ export default defineConfig({
   },
 
   site: "https://www.khonsu.eu",
-  integrations: [sitemap(), mdx()],
+  integrations: [
+    sitemap({
+      filter: (page) => {
+        const path = new URL(page).pathname;
+        // Legacy legal URLs redirect to shorter paths and use noindex; omit from sitemap.
+        if (
+          path === "/privacy-policy/" ||
+          path === "/privacy-policy" ||
+          path.includes("/privacy-policy-for-") ||
+          path.includes("/terms-and-conditions-for-")
+        )
+          return false;
+        return true;
+      },
+    }),
+    mdx(),
+  ],
 });
