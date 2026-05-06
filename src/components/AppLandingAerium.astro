@@ -709,7 +709,20 @@ const youtubeEmbedQuery = youtubeVideoId
             <div
               class="relative flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:text-left"
             >
-              <div>
+              <div class="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row sm:items-start sm:gap-5">
+                {
+                  logoSrc ? (
+                    <img
+                      src={logoSrc}
+                      alt={logoAlt ?? `${appName} app logo`}
+                      class="h-16 w-16 shrink-0 object-contain sm:h-20 sm:w-20"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null
+                }
+
+                <div>
                 <h2
                   class="text-2xl font-semibold tracking-tight text-balance text-white sm:text-3xl"
                 >
@@ -718,6 +731,7 @@ const youtubeEmbedQuery = youtubeVideoId
                 <p class="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-200">
                   {description}
                 </p>
+                </div>
               </div>
               {
                 googlePlayUrl ? (

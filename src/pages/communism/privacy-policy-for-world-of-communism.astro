@@ -1,17 +1,13 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Container from "../../components/Container.astro";
+import LegalPage from "../../components/LegalPage.astro";
 ---
 
 <BaseLayout
   title="Privacy Policy | World of Communism"
   canonicalPath="/communism/privacy-policy-for-world-of-communism"
 >
-  <section class="py-12 sm:py-16">
-    <Container>
-      <article
-        class="prose prose-invert prose-p:text-zinc-200 prose-li:text-zinc-200 max-w-none"
-      >
+  <LegalPage eyebrow="World of Communism" themeColor="app-communism">
         <h1>Privacy Policy for World of Communism</h1>
         <p>
           This privacy policy is applicable to the World of Communism app
@@ -195,7 +191,5 @@ import Container from "../../components/Container.astro";
             App Privacy Policy Generator
           </a>.
         </p>
-      </article>
-    </Container>
-  </section>
+  </LegalPage>
 </BaseLayout>

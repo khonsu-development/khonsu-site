@@ -1,17 +1,13 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Container from "../../components/Container.astro";
+import LegalPage from "../../components/LegalPage.astro";
 ---
 
 <BaseLayout
   title="Terms & Conditions | Freestyle Rap"
   canonicalPath="/freestyle-rap/terms-and-conditions-for-freestyle-rap"
 >
-  <section class="py-12 sm:py-16">
-    <Container>
-      <article
-        class="prose prose-invert prose-p:text-zinc-200 prose-li:text-zinc-200 max-w-none"
-      >
+  <LegalPage eyebrow="Freestyle Rap" themeColor="app-freestyle">
         <h1>Terms &amp; Conditions for Freestyle Rap</h1>
         <p>
           These terms and conditions applies to the Freestyle Rap app (hereby
@@ -144,7 +140,5 @@ import Container from "../../components/Container.astro";
             >App Privacy Policy Generator</a
           >.
         </p>
-      </article>
-    </Container>
-  </section>
+  </LegalPage>
 </BaseLayout>

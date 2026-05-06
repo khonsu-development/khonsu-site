@@ -1,14 +1,10 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Container from "../components/Container.astro";
+import LegalPage from "../components/LegalPage.astro";
 ---
 
 <BaseLayout title="Privacy Policy | khonsu.eu" canonicalPath="/privacy-policy">
-  <section class="py-12 sm:py-16">
-    <Container>
-      <article
-        class="prose prose-invert prose-p:text-zinc-200 prose-li:text-zinc-200 max-w-none"
-      >
+  <LegalPage eyebrow="Website">
         <h1>Privacy Policy for khonsu.eu</h1>
         <p>
           Terms and Conditions for Khonsu Development&apos;s website,
@@ -296,7 +292,5 @@ import Container from "../components/Container.astro";
         </ul>
 
         <p>Generated using TermsFeed Privacy Policy Generator.</p>
-      </article>
-    </Container>
-  </section>
+  </LegalPage>
 </BaseLayout>

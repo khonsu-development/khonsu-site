@@ -1,0 +1,80 @@
+---
+import Container from "./Container.astro";
+
+type Props = {
+  /**
+   * Optional eyebrow above the article.
+   * Keep short, for example: "Legal".
+   */
+  eyebrow?: string;
+  /**
+   * App theme token (matches global.css variables), for example: "app-alphabets".
+   * When set, the top gradient uses the app palette and headings inherit the app font.
+   */
+  themeColor?: string;
+};
+
+const { eyebrow = "Legal", themeColor } = Astro.props;
+
+const secondaryVar =
+  themeColor === "app-freestyle"
+    ? "var(--color-app-freestyle-orange)"
+    : themeColor
+      ? `var(--color-${themeColor}-secondary)`
+      : "var(--color-brand2)";
+
+const themeStyle = themeColor
+  ? `--app-primary: var(--color-${themeColor}-primary); --app-secondary: ${secondaryVar};`
+  : `--app-primary: var(--color-brand); --app-secondary: ${secondaryVar};`;
+---
+
+<section
+  class="relative overflow-hidden py-12 sm:py-16"
+  style={themeStyle}
+  data-app-theme={themeColor}
+>
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+    <div
+      class="absolute -top-24 left-1/2 h-80 w-[56rem] -translate-x-1/2 rounded-full blur-3xl"
+      style={`background: linear-gradient(90deg, color-mix(in oklab, var(--app-primary) 26%, transparent), color-mix(in oklab, var(--app-secondary) 22%, transparent), color-mix(in oklab, var(--app-primary) 18%, transparent));`}
+    />
+    <div
+      class="absolute bottom-0 left-0 h-64 w-64 rounded-full blur-3xl"
+      style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) 16%, transparent), transparent);`}
+    />
+    <div
+      class="absolute bottom-0 right-0 h-64 w-64 rounded-full blur-3xl"
+      style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-secondary) 16%, transparent), transparent);`}
+    />
+  </div>
+
+  <Container>
+    <div class="mx-auto max-w-4xl">
+      <div class="mb-6 text-xs font-medium uppercase tracking-wider text-zinc-400">
+        {eyebrow}
+      </div>
+
+      <div class="rounded-2xl border border-white/10 bg-zinc-950/60 p-6 shadow-2xl shadow-black/30 ring-1 ring-white/10 backdrop-blur sm:p-10">
+        <article
+          class="prose prose-invert max-w-none
+            prose-headings:scroll-mt-24
+            prose-headings:font-semibold prose-headings:text-white
+            prose-h1:mb-4 prose-h1:text-3xl sm:prose-h1:text-4xl
+            prose-h2:mt-10 prose-h2:border-b prose-h2:border-white/10 prose-h2:pb-2
+            prose-h3:mt-8 prose-h3:text-zinc-100
+            prose-h4:text-zinc-200
+            prose-p:leading-relaxed prose-p:text-zinc-200
+            prose-a:text-sky-300 hover:prose-a:text-sky-200
+            prose-strong:text-zinc-50
+            prose-ul:my-6 prose-ol:my-6
+            prose-li:my-2 prose-li:text-zinc-200
+            prose-li:marker:text-white/30
+            prose-hr:border-white/10"
+        >
+          <slot />
+        </article>
+      </div>
+    </div>
+  </Container>
+</section>
+
