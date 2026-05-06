@@ -112,9 +112,7 @@ const statSectionClass =
       : "mx-auto mt-6 grid max-w-3xl gap-4 sm:mt-8 sm:grid-cols-3";
 
 const secondaryVar =
-  themeColor === "app-freestyle"
-    ? "var(--color-app-freestyle-orange)"
-    : `var(--color-${themeColor}-secondary)`;
+  themeColor === "app-freestyle" ? "var(--color-app-freestyle-orange)" : `var(--color-${themeColor}-secondary)`;
 
 const themeStyle = `--app-primary: var(--color-${themeColor}-primary); --app-secondary: ${secondaryVar};`;
 
@@ -123,9 +121,7 @@ const isAlphabetsTheme = themeColor === "app-alphabets";
 const heroGlowTopPrimaryPct = isAlphabetsTheme ? 52 : 22;
 const heroGlowBottomSecondaryPct = isAlphabetsTheme ? 24 : 16;
 const heroGlowScreenshotPrimaryPct = isAlphabetsTheme ? 48 : 18;
-const heroGlowTopOrbClass = isAlphabetsTheme
-  ? "h-[48rem] w-[80rem]"
-  : "h-[42rem] w-[72rem]";
+const heroGlowTopOrbClass = isAlphabetsTheme ? "h-[48rem] w-[80rem]" : "h-[42rem] w-[72rem]";
 
 const featuresAreRich = features.some((f) => Boolean(f.imageSrc));
 const reviewsHeadingId = `reviews-heading-${themeColor}`;
@@ -169,18 +165,9 @@ const youtubeEmbedQuery = youtubeVideoId
   : "";
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  canonicalPath={canonicalPath}
-  ogImage={ogImage ?? coverImage}
->
+<BaseLayout title={title} description={description} canonicalPath={canonicalPath} ogImage={ogImage ?? coverImage}>
   <div style={themeStyle} class="relative" data-app-theme={themeColor}>
-    <div
-      aria-hidden="true"
-      class="pointer-events-none fixed inset-0 z-0 overflow-hidden"
-      data-app-landing-fixed-glow
-    >
+    <div aria-hidden="true" class="pointer-events-none fixed inset-0 z-0 overflow-hidden" data-app-landing-fixed-glow>
       <div class="absolute inset-[-12%]" data-app-landing-glow-parallax>
         <div
           class="absolute top-[36%] left-1/2 h-[48rem] w-[min(94vw,88rem)] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
@@ -197,18 +184,10 @@ const youtubeEmbedQuery = youtubeVideoId
 
     <div class="relative z-10">
       <section class="relative overflow-visible pt-12 sm:pt-16">
-        <div
-          aria-hidden="true"
-          class="pointer-events-none absolute inset-0 -z-10"
-        >
+        <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
           {
             isAlphabetsTheme ? (
-              <div
-                class:list={[
-                  "absolute -top-56 left-1/2 flex -translate-x-1/2 justify-center",
-                  heroGlowTopOrbClass,
-                ]}
-              >
+              <div class:list={["absolute -top-56 left-1/2 flex -translate-x-1/2 justify-center", heroGlowTopOrbClass]}>
                 <div
                   class="h-full w-full rounded-full blur-3xl"
                   style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) ${heroGlowTopPrimaryPct}%, transparent), transparent);`}
@@ -216,10 +195,7 @@ const youtubeEmbedQuery = youtubeVideoId
               </div>
             ) : (
               <div
-                class:list={[
-                  "absolute -top-56 left-1/2 -translate-x-1/2 rounded-full blur-3xl",
-                  heroGlowTopOrbClass,
-                ]}
+                class:list={["absolute -top-56 left-1/2 -translate-x-1/2 rounded-full blur-3xl", heroGlowTopOrbClass]}
                 style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) ${heroGlowTopPrimaryPct}%, transparent), transparent);`}
               />
             )
@@ -247,10 +223,7 @@ const youtubeEmbedQuery = youtubeVideoId
               />
             )
           }
-          <div
-            class="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-transparent"
-          >
-          </div>
+          <div class="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-transparent"></div>
         </div>
 
         <Container>
@@ -276,20 +249,14 @@ const youtubeEmbedQuery = youtubeVideoId
               ) : null
             }
 
-            <h1
-              class="mt-5 text-4xl font-semibold tracking-tight text-balance text-white sm:text-6xl"
-            >
+            <h1 class="mt-5 text-4xl font-semibold tracking-tight text-balance text-white sm:text-6xl">
               {headline}
             </h1>
-            <p
-              class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-pretty text-zinc-200 sm:text-xl"
-            >
+            <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-pretty text-zinc-200 sm:text-xl">
               {subhead}
             </p>
 
-            <div
-              class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
-            >
+            <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               {
                 googlePlayUrl ? (
                   <a
@@ -310,12 +277,7 @@ const youtubeEmbedQuery = youtubeVideoId
               }
               {
                 appStoreUrl ? (
-                  <a
-                    class="btn btn-secondary"
-                    href={appStoreUrl}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
+                  <a class="btn btn-secondary" href={appStoreUrl} rel="noopener noreferrer" target="_blank">
                     Download on the App Store
                   </a>
                 ) : null
@@ -324,16 +286,11 @@ const youtubeEmbedQuery = youtubeVideoId
           </div>
 
           <div class="relative mx-auto mt-12 max-w-5xl pb-10 sm:mt-16 sm:pb-14">
-            <div
-              aria-hidden="true"
-              class="pointer-events-none absolute inset-0 -z-10"
-            >
+            <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
               <div
                 class:list={[
                   "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl",
-                  isAlphabetsTheme
-                    ? "h-[33rem] w-[33rem] sm:h-[38rem] sm:w-[38rem]"
-                    : "h-[26rem] w-[26rem]",
+                  isAlphabetsTheme ? "h-[33rem] w-[33rem] sm:h-[38rem] sm:w-[38rem]" : "h-[26rem] w-[26rem]",
                 ]}
                 style={isAlphabetsTheme
                   ? `background: radial-gradient(ellipse 68% 66% at 50% 44%, color-mix(in oklab, var(--app-primary) ${heroGlowScreenshotPrimaryPct}%, transparent) 50%, transparent 76%);`
@@ -355,10 +312,7 @@ const youtubeEmbedQuery = youtubeVideoId
                   />
                 </div>
               </div>
-              <div
-                class="relative hidden h-[34rem] w-full sm:block"
-                data-app-landing-hero-depth-panel
-              >
+              <div class="relative hidden h-[34rem] w-full sm:block" data-app-landing-hero-depth-panel>
                 <div
                   class="device device-left"
                   data-app-landing-hero-depth-layer
@@ -368,11 +322,7 @@ const youtubeEmbedQuery = youtubeVideoId
                   data-parallax-mult="1"
                   style="transform: rotate(-10deg);"
                 >
-                  <img
-                    src={screenshots[0]}
-                    alt={`${appName} app screenshot`}
-                    class="h-full w-full object-contain"
-                  />
+                  <img src={screenshots[0]} alt={`${appName} app screenshot`} class="h-full w-full object-contain" />
                 </div>
                 <div
                   class="device device-right"
@@ -383,11 +333,7 @@ const youtubeEmbedQuery = youtubeVideoId
                   data-parallax-mult="1"
                   style="transform: rotate(10deg);"
                 >
-                  <img
-                    src={screenshots[1]}
-                    alt={`${appName} app screenshot`}
-                    class="h-full w-full object-contain"
-                  />
+                  <img src={screenshots[1]} alt={`${appName} app screenshot`} class="h-full w-full object-contain" />
                 </div>
 
                 <div
@@ -419,11 +365,7 @@ const youtubeEmbedQuery = youtubeVideoId
             </div>
           </div>
 
-          {
-            heroSpotlightStats?.length ? (
-              <HeroGooglePlaySpotlight stats={heroSpotlightStats} />
-            ) : null
-          }
+          {heroSpotlightStats?.length ? <HeroGooglePlaySpotlight stats={heroSpotlightStats} /> : null}
 
           <div class={statSectionClass}>
             {
@@ -435,12 +377,8 @@ const youtubeEmbedQuery = youtubeVideoId
                     style={`background: radial-gradient(350px circle at 50% 25%, color-mix(in oklab, var(--app-primary) 18%, transparent), transparent 60%);`}
                   />
                   <div class="relative">
-                    <div class="text-xs font-semibold text-zinc-300">
-                      {s.label}
-                    </div>
-                    <div class="mt-2 text-2xl font-semibold tracking-tight text-white">
-                      {s.value}
-                    </div>
+                    <div class="text-xs font-semibold text-zinc-300">{s.label}</div>
+                    <div class="mt-2 text-2xl font-semibold tracking-tight text-white">{s.value}</div>
                   </div>
                 </div>
               ))
@@ -458,9 +396,7 @@ const youtubeEmbedQuery = youtubeVideoId
                   <iframe
                     class="absolute inset-0 h-full w-full"
                     src={`https://www.youtube-nocookie.com/embed/${youtubeVideoId}${youtubeEmbedQuery}`}
-                    title={
-                      youtubeVideoTitle ?? `${appName} app preview on YouTube`
-                    }
+                    title={youtubeVideoTitle ?? `${appName} app preview on YouTube`}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowfullscreen
                     loading="lazy"
@@ -473,8 +409,7 @@ const youtubeEmbedQuery = youtubeVideoId
       }
 
       <StockBlurbSection
-        title={introBlurbTitle ??
-          "Designed for quick curiosity and deep rabbit holes"}
+        title={introBlurbTitle ?? "Designed for quick curiosity and deep rabbit holes"}
         body={introBlurbBody ??
           "Open it for a minute, stay for an hour. The experience is structured, calm, and satisfying, so learning feels effortless."}
         stockImages={stockImages}
@@ -483,25 +418,17 @@ const youtubeEmbedQuery = youtubeVideoId
       <section class="py-12 sm:py-16">
         <Container>
           <div class="mx-auto max-w-2xl text-center">
-            <h2
-              class="text-2xl font-semibold tracking-tight text-balance text-white sm:text-3xl"
-            >
+            <h2 class="text-2xl font-semibold tracking-tight text-balance text-white sm:text-3xl">
               {featuresSectionTitle ?? "Everything you need"}
             </h2>
             <p class="mt-3 text-sm leading-relaxed text-zinc-300">
-              {
-                featuresSectionSubtitle ??
-                  "Built to be readable, interactive, and genuinely useful, not just pretty."
-              }
+              {featuresSectionSubtitle ?? "Built to be readable, interactive, and genuinely useful, not just pretty."}
             </p>
           </div>
 
           {
             featuresAreRich ? (
-              <div
-                class="mx-auto mt-10 max-w-5xl space-y-12 sm:space-y-16"
-                data-app-feature-pswp-root
-              >
+              <div class="mx-auto mt-10 max-w-5xl space-y-12 sm:space-y-16" data-app-feature-pswp-root>
                 {featuresForRichLayout.map((f, i) => (
                   <div
                     class:list={[
@@ -522,9 +449,7 @@ const youtubeEmbedQuery = youtubeVideoId
                           class="group relative z-10 inline-block max-w-[520px] cursor-zoom-in border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
                           aria-label={`Browse screenshots (opens gallery): ${f.imageAlt ?? f.title}`}
                           data-app-feature-pswp-trigger
-                          data-app-feature-pswp-index={String(
-                            f.featurePswpIndex ?? 0,
-                          )}
+                          data-app-feature-pswp-index={String(f.featurePswpIndex ?? 0)}
                           data-app-feature-pswp-id={f.featurePswpId ?? ""}
                         >
                           <img
@@ -549,12 +474,8 @@ const youtubeEmbedQuery = youtubeVideoId
                       </div>
                     ) : null}
                     <div class="md:flex md:w-7/12 md:flex-col md:justify-center">
-                      <h3 class="text-lg font-semibold text-white sm:text-xl">
-                        {f.title}
-                      </h3>
-                      <p class="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">
-                        {f.body}
-                      </p>
+                      <h3 class="text-lg font-semibold text-white sm:text-xl">{f.title}</h3>
+                      <p class="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">{f.body}</p>
                     </div>
                   </div>
                 ))}
@@ -569,12 +490,8 @@ const youtubeEmbedQuery = youtubeVideoId
                       style={`background: radial-gradient(450px circle at 20% 20%, color-mix(in oklab, var(--app-primary) 16%, transparent), transparent 55%);`}
                     />
                     <div class="relative">
-                      <h3 class="text-sm font-semibold text-white">
-                        {f.title}
-                      </h3>
-                      <p class="mt-2 text-sm leading-relaxed text-zinc-300">
-                        {f.body}
-                      </p>
+                      <h3 class="text-sm font-semibold text-white">{f.title}</h3>
+                      <p class="mt-2 text-sm leading-relaxed text-zinc-300">{f.body}</p>
                     </div>
                   </div>
                 ))}
@@ -599,10 +516,7 @@ const youtubeEmbedQuery = youtubeVideoId
               </div>
 
               <div class="relative isolate mx-auto mt-10 w-full">
-                <div
-                  aria-hidden="true"
-                  class="pointer-events-none absolute inset-x-0 -inset-y-32 z-0 opacity-70"
-                >
+                <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -inset-y-32 z-0 opacity-70">
                   <div
                     class="absolute top-1/2 left-1/2 h-[46rem] w-[min(110vw,88rem)] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
                     style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) 26%, transparent), transparent);`}
@@ -632,15 +546,10 @@ const youtubeEmbedQuery = youtubeVideoId
                 >
                   What people are saying
                 </h2>
-                <p class="mt-3 text-sm leading-relaxed text-zinc-300">
-                  Reviews from Google Play.
-                </p>
+                <p class="mt-3 text-sm leading-relaxed text-zinc-300">Reviews from Google Play.</p>
               </div>
 
-              <TestimonialsCarousel
-                testimonials={testimonials}
-                labelledBy={reviewsHeadingId}
-              />
+              <TestimonialsCarousel testimonials={testimonials} labelledBy={reviewsHeadingId} />
             </Container>
           </section>
         ) : null
@@ -663,20 +572,13 @@ const youtubeEmbedQuery = youtubeVideoId
           <section class="py-12 sm:py-16">
             <Container>
               <div class="mx-auto max-w-2xl text-center">
-                <h2 class="text-2xl font-semibold tracking-tight text-balance text-white sm:text-3xl">
-                  FAQ
-                </h2>
-                <p class="mt-3 text-sm leading-relaxed text-zinc-300">
-                  A few quick answers.
-                </p>
+                <h2 class="text-2xl font-semibold tracking-tight text-balance text-white sm:text-3xl">FAQ</h2>
+                <p class="mt-3 text-sm leading-relaxed text-zinc-300">A few quick answers.</p>
               </div>
 
               <div class="mx-auto mt-10 max-w-3xl space-y-3">
                 {faqs.map((f) => (
-                  <details
-                    class="card group cursor-pointer overflow-hidden p-5"
-                    data-app-faq-details
-                  >
+                  <details class="card group cursor-pointer overflow-hidden p-5" data-app-faq-details>
                     <summary class="cursor-pointer list-none text-sm font-semibold text-white">
                       <span class="inline-flex items-center gap-2">
                         <span
@@ -686,9 +588,7 @@ const youtubeEmbedQuery = youtubeVideoId
                         {f.q}
                       </span>
                     </summary>
-                    <p class="mt-3 text-sm leading-relaxed text-zinc-300">
-                      {f.a}
-                    </p>
+                    <p class="mt-3 text-sm leading-relaxed text-zinc-300">{f.a}</p>
                   </details>
                 ))}
               </div>
@@ -706,12 +606,8 @@ const youtubeEmbedQuery = youtubeVideoId
               style={`background: radial-gradient(1000px circle at 20% 20%, color-mix(in oklab, var(--app-primary) 22%, transparent), transparent 60%), radial-gradient(1000px circle at 80% 60%, color-mix(in oklab, var(--app-secondary) 18%, transparent), transparent 62%);`}
             >
             </div>
-            <div
-              class="relative flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:text-left"
-            >
-              <div
-                class="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row sm:items-start sm:gap-5"
-              >
+            <div class="relative flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:text-left">
+              <div class="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row sm:items-start sm:gap-5">
                 {
                   logoSrc ? (
                     <img
@@ -725,14 +621,10 @@ const youtubeEmbedQuery = youtubeVideoId
                 }
 
                 <div>
-                  <h2
-                    class="text-2xl font-semibold tracking-tight text-balance text-white sm:text-3xl"
-                  >
+                  <h2 class="text-2xl font-semibold tracking-tight text-balance text-white sm:text-3xl">
                     Explore {appName}
                   </h2>
-                  <p
-                    class="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-200"
-                  >
+                  <p class="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-200">
                     {description}
                   </p>
                 </div>
@@ -765,19 +657,13 @@ const youtubeEmbedQuery = youtubeVideoId
             (termsUrl || privacyUrl) && (
               <div class="mt-8 text-center text-sm text-zinc-400">
                 {termsUrl ? (
-                  <a
-                    class="underline decoration-white/20 underline-offset-4 hover:text-white"
-                    href={termsUrl}
-                  >
+                  <a class="underline decoration-white/20 underline-offset-4 hover:text-white" href={termsUrl}>
                     Terms
                   </a>
                 ) : null}
                 {termsUrl && privacyUrl ? " · " : null}
                 {privacyUrl ? (
-                  <a
-                    class="underline decoration-white/20 underline-offset-4 hover:text-white"
-                    href={privacyUrl}
-                  >
+                  <a class="underline decoration-white/20 underline-offset-4 hover:text-white" href={privacyUrl}>
                     Privacy
                   </a>
                 ) : null}
@@ -806,9 +692,7 @@ const youtubeEmbedQuery = youtubeVideoId
     let activeFeaturePswp: PhotoSwipe | null = null;
 
     function initFixedGlowParallax(): void {
-      const parallaxEl = document.querySelector<HTMLElement>(
-        "[data-app-landing-glow-parallax]",
-      );
+      const parallaxEl = document.querySelector<HTMLElement>("[data-app-landing-glow-parallax]");
       if (!parallaxEl) return;
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -847,34 +731,25 @@ const youtubeEmbedQuery = youtubeVideoId
 
       function apply(): void {
         rafId = 0;
-        const layers = document.querySelectorAll<HTMLElement>(
-          "[data-app-landing-hero-depth-layer]",
-        );
+        const layers = document.querySelectorAll<HTMLElement>("[data-app-landing-hero-depth-layer]");
         if (!layers.length) return;
 
         const maxPx = 128;
         const strength = 0.14;
         const travel = Math.min(window.scrollY * strength, maxPx);
-        const progress =
-          maxPx > 0 ? Math.max(0, Math.min(1, travel / maxPx)) : 0;
+        const progress = maxPx > 0 ? Math.max(0, Math.min(1, travel / maxPx)) : 0;
         const fanX = 64;
         const fanRot = 14;
 
         for (const layer of layers) {
-          const baseY = Number.parseFloat(
-            layer.getAttribute("data-base-y") ?? "0",
-          );
-          const mult = Number.parseFloat(
-            layer.getAttribute("data-parallax-mult") ?? "1",
-          );
+          const baseY = Number.parseFloat(layer.getAttribute("data-base-y") ?? "0");
+          const mult = Number.parseFloat(layer.getAttribute("data-parallax-mult") ?? "1");
           const y = baseY - travel * mult;
           const z = mult >= 1 ? 18 : 10;
 
           const side = layer.getAttribute("data-side");
           if (side === "left" || side === "right") {
-            const baseRotate = Number.parseFloat(
-              layer.getAttribute("data-base-rotate") ?? "0",
-            );
+            const baseRotate = Number.parseFloat(layer.getAttribute("data-base-rotate") ?? "0");
             const dir = side === "left" ? -1 : 1;
             const x = dir * fanX * progress;
             const rot = baseRotate + dir * fanRot * progress;
@@ -905,17 +780,15 @@ const youtubeEmbedQuery = youtubeVideoId
     initHeroScreenshotScrollDepth();
 
     function initFaqWholeCardToggle(): void {
-      document
-        .querySelectorAll<HTMLDetailsElement>("[data-app-faq-details]")
-        .forEach((el) => {
-          el.addEventListener("click", (e) => {
-            const target = e.target;
-            if (!(target instanceof Element)) return;
-            if (target.closest("summary")) return;
-            if (target.closest("a, button, input, textarea, select")) return;
-            el.open = !el.open;
-          });
+      document.querySelectorAll<HTMLDetailsElement>("[data-app-faq-details]").forEach((el) => {
+        el.addEventListener("click", (e) => {
+          const target = e.target;
+          if (!(target instanceof Element)) return;
+          if (target.closest("summary")) return;
+          if (target.closest("a, button, input, textarea, select")) return;
+          el.open = !el.open;
         });
+      });
     }
 
     initFaqWholeCardToggle();
@@ -963,63 +836,53 @@ const youtubeEmbedQuery = youtubeVideoId
         pid: s.pid,
       }));
 
-      root
-        .querySelectorAll<HTMLButtonElement>("[data-app-feature-pswp-trigger]")
-        .forEach((btn) => {
-          btn.addEventListener("click", (event) => {
-            const raw = btn.getAttribute("data-app-feature-pswp-index");
-            const idx = raw == null || raw === "" ? Number.NaN : Number(raw);
-            if (!Number.isFinite(idx) || idx < 0) return;
+      root.querySelectorAll<HTMLButtonElement>("[data-app-feature-pswp-trigger]").forEach((btn) => {
+        btn.addEventListener("click", (event) => {
+          const raw = btn.getAttribute("data-app-feature-pswp-index");
+          const idx = raw == null || raw === "" ? Number.NaN : Number(raw);
+          if (!Number.isFinite(idx) || idx < 0) return;
 
-            closeStaleFeaturePhotoSwipe();
+          closeStaleFeaturePhotoSwipe();
 
-            const ev = event as MouseEvent;
-            const initialPointerPos =
-              ev.clientX || ev.clientY
-                ? { x: ev.clientX, y: ev.clientY }
-                : null;
+          const ev = event as MouseEvent;
+          const initialPointerPos = ev.clientX || ev.clientY ? { x: ev.clientX, y: ev.clientY } : null;
 
-            const pswp = new PhotoSwipe({
-              dataSource,
-              index: idx,
-              loop: slides.length >= 3,
-              bgOpacity: 0.92,
-              padding: { top: 20, bottom: 20, left: 16, right: 16 },
-              initialPointerPos,
-              /** Avoid thumb-zoom pipeline issues; opens reliably without waiting on opener timing. */
-              showHideAnimationType: "none",
-              showHideOpacity: false,
-            });
-
-            pswp.addFilter("thumbEl", (thumbEl, itemData) => {
-              const pid = typeof itemData.pid === "string" ? itemData.pid : "";
-              if (!pid) return thumbEl ?? document.createElement("div");
-              const trigger = root.querySelector(
-                `button[data-app-feature-pswp-id="${pid}"]`,
-              );
-              const img = trigger?.querySelector("img");
-              return img ?? thumbEl ?? document.createElement("div");
-            });
-
-            pswp.addFilter("placeholderSrc", (placeholderSrc, content) => {
-              const pid =
-                typeof content.data.pid === "string" ? content.data.pid : "";
-              if (!pid) return placeholderSrc;
-              const trigger = root.querySelector(
-                `button[data-app-feature-pswp-id="${pid}"]`,
-              );
-              const img = trigger?.querySelector("img");
-              const src = img?.currentSrc || img?.src;
-              return src || placeholderSrc;
-            });
-
-            activeFeaturePswp = pswp;
-            pswp.on("destroy", () => {
-              if (activeFeaturePswp === pswp) activeFeaturePswp = null;
-            });
-            pswp.init();
+          const pswp = new PhotoSwipe({
+            dataSource,
+            index: idx,
+            loop: slides.length >= 3,
+            bgOpacity: 0.92,
+            padding: { top: 20, bottom: 20, left: 16, right: 16 },
+            initialPointerPos,
+            /** Avoid thumb-zoom pipeline issues; opens reliably without waiting on opener timing. */
+            showHideAnimationType: "none",
+            showHideOpacity: false,
           });
+
+          pswp.addFilter("thumbEl", (thumbEl, itemData) => {
+            const pid = typeof itemData.pid === "string" ? itemData.pid : "";
+            if (!pid) return thumbEl ?? document.createElement("div");
+            const trigger = root.querySelector(`button[data-app-feature-pswp-id="${pid}"]`);
+            const img = trigger?.querySelector("img");
+            return img ?? thumbEl ?? document.createElement("div");
+          });
+
+          pswp.addFilter("placeholderSrc", (placeholderSrc, content) => {
+            const pid = typeof content.data.pid === "string" ? content.data.pid : "";
+            if (!pid) return placeholderSrc;
+            const trigger = root.querySelector(`button[data-app-feature-pswp-id="${pid}"]`);
+            const img = trigger?.querySelector("img");
+            const src = img?.currentSrc || img?.src;
+            return src || placeholderSrc;
+          });
+
+          activeFeaturePswp = pswp;
+          pswp.on("destroy", () => {
+            if (activeFeaturePswp === pswp) activeFeaturePswp = null;
+          });
+          pswp.init();
         });
+      });
     }
 
     initFeaturePhotoSwipeCarousel();

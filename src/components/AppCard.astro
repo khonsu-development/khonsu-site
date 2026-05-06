@@ -22,10 +22,7 @@ const platforms = app.data.platforms ?? [];
   class="card group relative overflow-hidden transition hover:bg-white/7 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
   style={style}
 >
-  <div
-    aria-hidden="true"
-    class="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100"
-  >
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100">
     <div
       class="absolute inset-0"
       style={`background: radial-gradient(600px circle at 30% 20%, color-mix(in oklab, var(--app-primary) 30%, transparent), transparent 55%);`}
@@ -109,9 +106,7 @@ const platforms = app.data.platforms ?? [];
         </div>
       </div>
 
-      <div
-        class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/90"
-      >
+      <div class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/90">
         Explore{" "}
         <span class="transition group-hover:translate-x-0.5">→</span>
       </div>

@@ -5,12 +5,7 @@ import Container from "../components/Container.astro";
 import AppCard from "../components/AppCard.astro";
 
 const allApps = await getCollection("apps");
-const order = [
-  "world-of-alphabets",
-  "world-of-dinosaurs",
-  "world-of-communism",
-  "freestyle-rap",
-] as const;
+const order = ["world-of-alphabets", "world-of-dinosaurs", "world-of-communism", "freestyle-rap"] as const;
 
 const apps = order
   .map((id) => allApps.find((a) => a.id === `${id}.mdx`))
@@ -36,17 +31,13 @@ const apps = order
 
     <div class="mx-auto w-full max-w-6xl px-5 py-16 sm:py-24">
       <div class="max-w-2xl">
-        <p class="text-sm font-semibold tracking-wide text-zinc-300">
-          Learned anything fun today?
-        </p>
-        <h1
-          class="mt-4 text-4xl font-black tracking-tight text-white sm:text-6xl"
-        >
+        <p class="text-sm font-semibold tracking-wide text-zinc-300">Learned anything fun today?</p>
+        <h1 class="mt-4 text-4xl font-black tracking-tight text-white sm:text-6xl">
           Educational apps for deep dives into niche worlds.
         </h1>
         <p class="mt-5 text-base leading-relaxed text-zinc-200 sm:text-lg">
-          From ancient alphabets to prehistoric giants and political history,
-          Khonsu apps turn curiosity into a clean, satisfying learning flow.
+          From ancient alphabets to prehistoric giants and political history, Khonsu apps turn curiosity into a clean,
+          satisfying learning flow.
         </p>
 
         <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -62,20 +53,12 @@ const apps = order
             </div>
           </div>
           <div class="card p-5">
-            <div class="text-sm font-semibold text-white">
-              Learn at your pace
-            </div>
-            <div class="mt-2 text-sm text-zinc-300">
-              Five minutes or fifty, the experience fits your day.
-            </div>
+            <div class="text-sm font-semibold text-white">Learn at your pace</div>
+            <div class="mt-2 text-sm text-zinc-300">Five minutes or fifty, the experience fits your day.</div>
           </div>
           <div class="card p-5">
-            <div class="text-sm font-semibold text-white">
-              Interactive and fun
-            </div>
-            <div class="mt-2 text-sm text-zinc-300">
-              Quizzes, exploration, and a sense of progress.
-            </div>
+            <div class="text-sm font-semibold text-white">Interactive and fun</div>
+            <div class="mt-2 text-sm text-zinc-300">Quizzes, exploration, and a sense of progress.</div>
           </div>
         </div>
       </div>
@@ -85,12 +68,10 @@ const apps = order
   <section class="border-t border-white/10 py-16 sm:py-20">
     <Container>
       <div class="max-w-2xl">
-        <h2 class="text-2xl font-black tracking-tight sm:text-4xl">
-          Discover our apps
-        </h2>
+        <h2 class="text-2xl font-black tracking-tight sm:text-4xl">Discover our apps</h2>
         <p class="mt-4 text-zinc-300">
-          A growing “World of Apps”, one focused topic at a time. Each app is
-          designed for clarity, momentum, and that “just one more page” feeling.
+          A growing “World of Apps”, one focused topic at a time. Each app is designed for clarity, momentum, and that
+          “just one more page” feeling.
         </p>
       </div>
 

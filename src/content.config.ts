@@ -1,11 +1,9 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
-const absoluteOrSitePathUrl = z
-  .string()
-  .refine((value) => value.startsWith("/") || /^https?:\/\//i.test(value), {
-    message: "Must be an absolute URL or a root-relative site path.",
-  });
+const absoluteOrSitePathUrl = z.string().refine((value) => value.startsWith("/") || /^https?:\/\//i.test(value), {
+  message: "Must be an absolute URL or a root-relative site path.",
+});
 
 const apps = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/apps" }),
@@ -26,15 +24,10 @@ const apps = defineCollection({
     ogImage: absoluteOrSitePathUrl.optional(),
     themeColor: z
       .string()
-      .regex(
-        /^app-[a-z0-9-]+$/i,
-        "themeColor must be a color token key like app-alphabets",
-      )
+      .regex(/^app-[a-z0-9-]+$/i, "themeColor must be a color token key like app-alphabets")
       .optional(),
     screenshots: z.array(z.string()).default([]),
-    releaseStatus: z
-      .enum(["released", "beta", "coming_soon"])
-      .default("released"),
+    releaseStatus: z.enum(["released", "beta", "coming_soon"]).default("released"),
     lastUpdated: z.string().optional(),
     privacyUrl: absoluteOrSitePathUrl.optional(),
     termsUrl: absoluteOrSitePathUrl.optional(),

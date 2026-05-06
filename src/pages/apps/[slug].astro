@@ -15,11 +15,7 @@ const { app } = Astro.props;
 const slug = app.id.replace(/\.(md|mdx)$/, "");
 const { Content } = await render(app);
 
-if (
-  app.data.websiteUrl &&
-  app.data.websiteUrl.startsWith("/") &&
-  !app.data.websiteUrl.startsWith("/apps/")
-) {
+if (app.data.websiteUrl && app.data.websiteUrl.startsWith("/") && !app.data.websiteUrl.startsWith("/apps/")) {
   return Astro.redirect(app.data.websiteUrl, 301);
 }
 
@@ -41,31 +37,19 @@ const schemaOrg = {
   operatingSystem: (app.data.platforms ?? [])
     .map((p) => (p === "android" ? "Android" : p === "ios" ? "iOS" : "Web"))
     .join(", "),
-  image: ogImage
-    ? ogImage.startsWith("http")
-      ? ogImage
-      : `https://www.khonsu.eu${ogImage}`
-    : undefined,
+  image: ogImage ? (ogImage.startsWith("http") ? ogImage : `https://www.khonsu.eu${ogImage}`) : undefined,
   url: `https://www.khonsu.eu/apps/${slug}`,
   downloadUrl: app.data.googlePlayUrl ?? app.data.appStoreUrl,
 };
 ---
 
-<BaseLayout
-  title={pageTitle}
-  description={pageDescription}
-  canonicalPath={`/apps/${slug}`}
-  ogImage={ogImage}
->
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath={`/apps/${slug}`} ogImage={ogImage}>
   <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
 
   <section class="py-12 sm:py-16">
     <Container>
       <div class="max-w-3xl" data-app-theme={app.data.themeColor}>
-        <a
-          class="text-sm font-semibold text-zinc-300 hover:text-white"
-          href="/apps">← All apps</a
-        >
+        <a class="text-sm font-semibold text-zinc-300 hover:text-white" href="/apps">← All apps</a>
 
         <div class="card mt-6 overflow-hidden" style={themeStyle}>
           <div class="relative">
@@ -74,9 +58,7 @@ const schemaOrg = {
                 <div class="relative aspect-[16/8] overflow-hidden">
                   <img
                     src={app.data.coverImage}
-                    alt={
-                      app.data.coverImageAlt ?? `${app.data.name} cover image`
-                    }
+                    alt={app.data.coverImageAlt ?? `${app.data.name} cover image`}
                     class="h-full w-full object-cover"
                     loading="lazy"
                     decoding="async"
@@ -116,9 +98,7 @@ const schemaOrg = {
                   }
                 </div>
                 <div class="min-w-0">
-                  <h1
-                    class="text-3xl font-black tracking-tight text-balance text-white sm:text-5xl"
-                  >
+                  <h1 class="text-3xl font-black tracking-tight text-balance text-white sm:text-5xl">
                     {app.data.name}
                   </h1>
                   <p class="mt-3 text-lg text-pretty text-zinc-200">
@@ -168,12 +148,7 @@ const schemaOrg = {
                 }
                 {
                   app.data.appStoreUrl ? (
-                    <a
-                      class="btn btn-secondary"
-                      href={app.data.appStoreUrl}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
+                    <a class="btn btn-secondary" href={app.data.appStoreUrl} rel="noopener noreferrer" target="_blank">
                       Download on the App Store
                     </a>
                   ) : null
@@ -181,31 +156,20 @@ const schemaOrg = {
               </div>
 
               {
-                app.data.privacyUrl ||
-                app.data.termsUrl ||
-                app.data.websiteUrl ? (
+                app.data.privacyUrl || app.data.termsUrl || app.data.websiteUrl ? (
                   <div class="mt-6 flex flex-col gap-2 text-sm text-zinc-300 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
                     {app.data.websiteUrl ? (
-                      <a
-                        class="font-semibold text-white hover:underline"
-                        href={app.data.websiteUrl}
-                      >
+                      <a class="font-semibold text-white hover:underline" href={app.data.websiteUrl}>
                         App microsite
                       </a>
                     ) : null}
                     {app.data.privacyUrl ? (
-                      <a
-                        class="font-semibold text-white hover:underline"
-                        href={app.data.privacyUrl}
-                      >
+                      <a class="font-semibold text-white hover:underline" href={app.data.privacyUrl}>
                         App privacy policy
                       </a>
                     ) : null}
                     {app.data.termsUrl ? (
-                      <a
-                        class="font-semibold text-white hover:underline"
-                        href={app.data.termsUrl}
-                      >
+                      <a class="font-semibold text-white hover:underline" href={app.data.termsUrl}>
                         App terms &amp; conditions
                       </a>
                     ) : null}
@@ -216,9 +180,7 @@ const schemaOrg = {
           </div>
         </div>
 
-        <article
-          class="prose prose-invert prose-p:text-zinc-200 prose-li:text-zinc-200 mt-10 max-w-none"
-        >
+        <article class="prose prose-invert prose-p:text-zinc-200 prose-li:text-zinc-200 mt-10 max-w-none">
           <Content />
         </article>
       </div>

@@ -16,19 +16,12 @@ type Props = {
   imageLoading?: "eager" | "lazy";
 };
 
-const {
-  title,
-  body,
-  stockImages,
-  mirror = false,
-  imageLoading = "eager",
-} = Astro.props;
+const { title, body, stockImages, mirror = false, imageLoading = "eager" } = Astro.props;
 
 /** Decorative overlapping rounded tiles; max 5 (placement + base rotation on inner layer for scroll depth). */
 const STOCK_POLAROID_LAYERS = [
   {
-    place:
-      "left-[3%] top-[10%] z-[2] h-[58%] max-h-[248px] w-[54%] sm:top-[12%]",
+    place: "left-[3%] top-[10%] z-[2] h-[58%] max-h-[248px] w-[54%] sm:top-[12%]",
     rotateDeg: -5,
   },
   {
@@ -53,29 +46,15 @@ const STOCK_POLAROID_LAYERS = [
 <section class="py-12 sm:py-16">
   <Container>
     <div class="grid gap-8 lg:grid-cols-12 lg:items-center">
-      <div
-        class:list={[
-          mirror
-            ? "order-1 lg:order-2 lg:col-span-5 lg:col-start-8"
-            : "lg:col-span-5",
-        ]}
-      >
-        <h2
-          class="text-2xl font-semibold tracking-tight text-balance text-white sm:text-3xl"
-        >
+      <div class:list={[mirror ? "order-1 lg:order-2 lg:col-span-5 lg:col-start-8" : "lg:col-span-5"]}>
+        <h2 class="text-2xl font-semibold tracking-tight text-balance text-white sm:text-3xl">
           {title}
         </h2>
         <p class="mt-4 text-sm leading-relaxed text-pretty text-zinc-300">
           {body}
         </p>
       </div>
-      <div
-        class:list={[
-          mirror
-            ? "order-2 lg:order-1 lg:col-span-7 lg:col-start-1"
-            : "lg:col-span-7",
-        ]}
-      >
+      <div class:list={[mirror ? "order-2 lg:order-1 lg:col-span-7 lg:col-start-1" : "lg:col-span-7"]}>
         {
           stockImages?.length === 2 ? (
             <div class="relative isolate mt-5 sm:mt-6">
@@ -103,9 +82,7 @@ const STOCK_POLAROID_LAYERS = [
                       class="h-44 w-full object-cover sm:h-52"
                       loading={imageLoading}
                       decoding="async"
-                      fetchpriority={
-                        imageLoading === "eager" ? "high" : undefined
-                      }
+                      fetchpriority={imageLoading === "eager" ? "high" : undefined}
                     />
                   </div>
                 </div>
@@ -131,8 +108,7 @@ const STOCK_POLAROID_LAYERS = [
           ) : stockImages && stockImages.length >= 3 ? (
             <div class="relative mt-6 sm:mt-7">
               <p class="sr-only">
-                Decorative stock photographs of manuscripts and inscriptions;
-                not screenshots of the app.
+                Decorative stock photographs of manuscripts and inscriptions; not screenshots of the app.
               </p>
               <div
                 aria-hidden="true"
@@ -144,36 +120,29 @@ const STOCK_POLAROID_LAYERS = [
                 class="relative mx-auto min-h-[min(72vw,360px)] w-full max-w-xl [transform-style:preserve-3d] perspective-[1200px] sm:min-h-[380px] lg:max-w-2xl"
                 data-stock-depth-panel
               >
-                {stockImages
-                  .slice(0, STOCK_POLAROID_LAYERS.length)
-                  .map((img, i) => {
-                    const layer =
-                      STOCK_POLAROID_LAYERS[i] ?? STOCK_POLAROID_LAYERS[0];
-                    return (
-                      <div class:list={["absolute", layer.place]}>
-                        <div
-                          class="h-full w-full origin-center overflow-hidden rounded-lg motion-safe:will-change-transform"
-                          data-stock-depth-layer
-                          data-base-rotate={layer.rotateDeg}
-                          data-depth-index={i}
-                          style={`transform: rotate(${layer.rotateDeg}deg);`}
-                        >
-                          <img
-                            src={img.src}
-                            alt=""
-                            class="block h-full w-full border-0 object-cover outline-none"
-                            loading={imageLoading}
-                            decoding="async"
-                            fetchpriority={
-                              i === 0 && imageLoading === "eager"
-                                ? "high"
-                                : undefined
-                            }
-                          />
-                        </div>
+                {stockImages.slice(0, STOCK_POLAROID_LAYERS.length).map((img, i) => {
+                  const layer = STOCK_POLAROID_LAYERS[i] ?? STOCK_POLAROID_LAYERS[0];
+                  return (
+                    <div class:list={["absolute", layer.place]}>
+                      <div
+                        class="h-full w-full origin-center overflow-hidden rounded-lg motion-safe:will-change-transform"
+                        data-stock-depth-layer
+                        data-base-rotate={layer.rotateDeg}
+                        data-depth-index={i}
+                        style={`transform: rotate(${layer.rotateDeg}deg);`}
+                      >
+                        <img
+                          src={img.src}
+                          alt=""
+                          class="block h-full w-full border-0 object-cover outline-none"
+                          loading={imageLoading}
+                          decoding="async"
+                          fetchpriority={i === 0 && imageLoading === "eager" ? "high" : undefined}
+                        />
                       </div>
-                    );
-                  })}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ) : stockImages?.length ? (
@@ -194,9 +163,7 @@ const STOCK_POLAROID_LAYERS = [
                     class="h-28 w-full object-cover sm:h-32"
                     loading={imageLoading}
                     decoding="async"
-                    fetchpriority={
-                      i === 0 && imageLoading === "eager" ? "high" : undefined
-                    }
+                    fetchpriority={i === 0 && imageLoading === "eager" ? "high" : undefined}
                   />
                 </div>
               ))}
@@ -227,21 +194,14 @@ const STOCK_POLAROID_LAYERS = [
       const vh = window.innerHeight || 1;
       const viewportMid = vh * 0.5;
 
-      const panels = document.querySelectorAll<HTMLElement>(
-        "[data-stock-depth-panel]",
-      );
+      const panels = document.querySelectorAll<HTMLElement>("[data-stock-depth-panel]");
 
       for (const panel of panels) {
         const pr = panel.getBoundingClientRect();
         const centerY = pr.top + pr.height * 0.5;
-        const norm = Math.max(
-          -1,
-          Math.min(1, (centerY - viewportMid) / (vh * 0.36)),
-        );
+        const norm = Math.max(-1, Math.min(1, (centerY - viewportMid) / (vh * 0.36)));
 
-        const layers = [
-          ...panel.querySelectorAll<HTMLElement>("[data-stock-depth-layer]"),
-        ];
+        const layers = [...panel.querySelectorAll<HTMLElement>("[data-stock-depth-layer]")];
         const n = layers.length;
         if (n === 0) continue;
 
@@ -249,17 +209,8 @@ const STOCK_POLAROID_LAYERS = [
         const isTwoCardPanel = panel.hasAttribute("data-stock-depth-panel-two");
 
         for (const layer of layers) {
-          const idx = Number.parseInt(
-            layer.dataset.depthIndex ??
-              layer.getAttribute("data-depth-index") ??
-              "0",
-            10,
-          );
-          const base = Number.parseFloat(
-            layer.dataset.baseRotate ??
-              layer.getAttribute("data-base-rotate") ??
-              "0",
-          );
+          const idx = Number.parseInt(layer.dataset.depthIndex ?? layer.getAttribute("data-depth-index") ?? "0", 10);
+          const base = Number.parseFloat(layer.dataset.baseRotate ?? layer.getAttribute("data-base-rotate") ?? "0");
           if (Number.isNaN(base)) continue;
 
           const depth = idx - mid;

@@ -31,10 +31,7 @@ export default [
     files: ["**/*.{js,mjs,cjs,astro}"],
     rules: {
       // Astro frequently uses unused vars in frontmatter during content iteration.
-      "no-unused-vars": [
-        "warn",
-        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
-      ],
+      "no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
     },
   },
 ];

@@ -10,11 +10,9 @@ export interface Props {
 const { stats } = Astro.props;
 const isTwoUpMobile = stats.length === 2;
 
-const isRatingStat = (s: Stat) =>
-  /\b(rating|stars?)\b/i.test(s.label) || /★|⭐|star/i.test(s.value);
+const isRatingStat = (s: Stat) => /\b(rating|stars?)\b/i.test(s.label) || /★|⭐|star/i.test(s.value);
 
-const displayValue = (s: Stat) =>
-  isRatingStat(s) ? s.value.replace(/[★⭐]/g, "").trim() : s.value;
+const displayValue = (s: Stat) => (isRatingStat(s) ? s.value.replace(/[★⭐]/g, "").trim() : s.value);
 
 /** Heroicons solid star shape, 24×24 — works with a vertical midline clip for 4½ stars */
 const STAR_PATH =
@@ -23,10 +21,7 @@ const STAR_PATH =
 const starIconClass = "size-[0.7rem] shrink-0 sm:size-[0.875rem]";
 ---
 
-<section
-  aria-label="Google Play highlights"
-  class="relative mx-auto mt-8 max-w-4xl px-4 sm:mt-10 sm:px-8"
->
+<section aria-label="Google Play highlights" class="relative mx-auto mt-8 max-w-4xl px-4 sm:mt-10 sm:px-8">
   <div
     class:list={[
       isTwoUpMobile ? "grid grid-cols-2 gap-4" : "flex flex-col gap-10",
@@ -43,47 +38,23 @@ const starIconClass = "size-[0.7rem] shrink-0 sm:size-[0.875rem]";
               "sm:h-[5.5rem]",
             ]}
           />
-          <div
-            class:list={[
-              "min-w-0 text-center",
-              isTwoUpMobile ? "px-0.5" : "px-1",
-              "sm:px-2",
-            ]}
-          >
+          <div class:list={["min-w-0 text-center", isTwoUpMobile ? "px-0.5" : "px-1", "sm:px-2"]}>
             {isRatingStat(s) ? (
-              <div
-                class="mb-2 flex justify-center gap-px text-amber-300 sm:gap-[2px]"
-                aria-hidden="true"
-              >
+              <div class="mb-2 flex justify-center gap-px text-amber-300 sm:gap-[2px]" aria-hidden="true">
                 {Array.from({ length: 4 }).map(() => (
-                  <svg
-                    class:list={[starIconClass]}
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
+                  <svg class:list={[starIconClass]} viewBox="0 0 24 24" aria-hidden="true">
                     <path fill="currentColor" d={STAR_PATH} />
                   </svg>
                 ))}
                 {/* Full muted star beneath, crisp left-half fill on top (true half-star geometry) */}
-                <svg
-                  class:list={[starIconClass]}
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
+                <svg class:list={[starIconClass]} viewBox="0 0 24 24" aria-hidden="true">
                   <defs>
-                    <clipPath
-                      id={`hero-gp-half-${rowIndex}`}
-                      clipPathUnits="userSpaceOnUse"
-                    >
+                    <clipPath id={`hero-gp-half-${rowIndex}`} clipPathUnits="userSpaceOnUse">
                       <rect width="12" height="24" />
                     </clipPath>
                   </defs>
                   <path fill="currentColor" opacity="0.28" d={STAR_PATH} />
-                  <path
-                    fill="currentColor"
-                    clip-path={`url(#hero-gp-half-${rowIndex})`}
-                    d={STAR_PATH}
-                  />
+                  <path fill="currentColor" clip-path={`url(#hero-gp-half-${rowIndex})`} d={STAR_PATH} />
                 </svg>
               </div>
             ) : null}

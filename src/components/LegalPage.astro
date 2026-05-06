@@ -28,11 +28,7 @@ const themeStyle = themeColor
   : `--app-primary: var(--color-brand); --app-secondary: ${secondaryVar};`;
 ---
 
-<section
-  class="relative overflow-hidden py-12 sm:py-16"
-  style={themeStyle}
-  data-app-theme={themeColor}
->
+<section class="relative overflow-hidden py-12 sm:py-16" style={themeStyle} data-app-theme={themeColor}>
   <div aria-hidden="true" class="pointer-events-none absolute inset-0">
     <div
       class="absolute -top-24 left-1/2 h-80 w-[56rem] -translate-x-1/2 rounded-full blur-3xl"
@@ -53,9 +49,7 @@ const themeStyle = themeColor
 
   <Container>
     <div class="mx-auto max-w-4xl">
-      <div
-        class="mb-6 text-xs font-medium tracking-wider text-zinc-400 uppercase"
-      >
+      <div class="mb-6 text-xs font-medium tracking-wider text-zinc-400 uppercase">
         {eyebrow}
       </div>
 
