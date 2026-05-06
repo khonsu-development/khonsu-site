@@ -1,0 +1,335 @@
+---
+export type CubeFacePosition = "top" | "left" | "right";
+
+export type CubeFace = {
+  position: CubeFacePosition;
+  /** Short copy only (aim for two lines in the hero). */
+  body: string;
+};
+
+type Props = {
+  logoSrc: string;
+  logoAlt: string;
+  heading?: string;
+  intro?: string;
+  /** Stable id for SVG defs (avoid SSR randomness). */
+  instanceId?: string;
+  faces: CubeFace[];
+};
+
+const { logoSrc, logoAlt, heading, intro, instanceId = "cube-explainer", faces } = Astro.props;
+
+const byPosition = Object.fromEntries(faces.map((f) => [f.position, f])) as Record<
+  CubeFacePosition,
+  CubeFace | undefined
+>;
+const top = byPosition.top;
+const left = byPosition.left;
+const right = byPosition.right;
+const complete = top && left && right;
+
+const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
+---
+
+{
+  complete ? (
+    <div class="mb-0" data-app-cube-explainer aria-labelledby={heading ? `${figureId}-heading` : undefined}>
+      {(heading || intro) && (
+        <div class="mx-auto mb-6 max-w-xl text-center">
+          {heading ? (
+            <h2 id={`${figureId}-heading`} class="text-lg font-semibold tracking-tight text-white sm:text-xl">
+              {heading}
+            </h2>
+          ) : null}
+          {intro ? <p class="mt-2 text-sm leading-relaxed text-zinc-400">{intro}</p> : null}
+        </div>
+      )}
+
+      <div class="relative mx-auto max-w-3xl px-1 sm:max-w-5xl sm:px-0">
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 -z-10 overflow-visible"
+          data-app-cube-explainer-bg
+        >
+          <div
+            class="absolute top-1/2 left-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-50 blur-3xl sm:h-72 sm:w-72"
+            style="background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) 32%, transparent), transparent);"
+          />
+          <div
+            class="absolute top-[58%] left-[42%] h-40 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-35 blur-3xl"
+            style="background: radial-gradient(closest-side, color-mix(in oklab, var(--app-secondary) 26%, transparent), transparent);"
+          />
+        </div>
+
+        <div class="relative min-h-[14rem] py-2 sm:min-h-[19rem] sm:py-4" data-app-cube-explainer-stage>
+          <div class="relative isolate grid grid-cols-1 gap-6 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:grid-rows-[auto_1fr] sm:gap-x-2 sm:gap-y-3">
+            {/* SVG above the cube layer (z-12 vs z-11) so strokes are not covered by the white PNG */}
+            <svg
+              class="pointer-events-none absolute inset-0 z-[12] h-full w-full overflow-visible"
+              data-app-cube-explainer-svg
+              aria-hidden="true"
+            >
+              <defs>
+                <filter
+                  id={`${figureId}-line-shadow`}
+                  x="-35%"
+                  y="-35%"
+                  width="170%"
+                  height="170%"
+                  color-interpolation-filters="sRGB"
+                >
+                  <feDropShadow dx="0" dy="1" stdDeviation="1.25" flood-color="#000000" flood-opacity="0.55" />
+                </filter>
+              </defs>
+              <path
+                data-cube-connector="top"
+                fill="none"
+                stroke="white"
+                stroke-width="1"
+                vector-effect="non-scaling-stroke"
+                stroke-linecap="butt"
+                stroke-linejoin="miter"
+                filter={`url(#${figureId}-line-shadow)`}
+                d=""
+              />
+              <path
+                data-cube-connector="left"
+                fill="none"
+                stroke="white"
+                stroke-width="1"
+                vector-effect="non-scaling-stroke"
+                stroke-linecap="butt"
+                stroke-linejoin="miter"
+                filter={`url(#${figureId}-line-shadow)`}
+                d=""
+              />
+              <path
+                data-cube-connector="right"
+                fill="none"
+                stroke="white"
+                stroke-width="1"
+                vector-effect="non-scaling-stroke"
+                stroke-linecap="butt"
+                stroke-linejoin="miter"
+                filter={`url(#${figureId}-line-shadow)`}
+                d=""
+              />
+              <circle data-cube-dot="top" r="2.5" fill="white" filter={`url(#${figureId}-line-shadow)`} />
+              <circle data-cube-dot="left" r="2.5" fill="white" filter={`url(#${figureId}-line-shadow)`} />
+              <circle data-cube-dot="right" r="2.5" fill="white" filter={`url(#${figureId}-line-shadow)`} />
+            </svg>
+
+            <div class="relative z-[20] order-2 flex -translate-y-2 justify-center sm:order-none sm:col-span-3 sm:row-start-1 sm:-translate-y-4 sm:justify-center sm:pb-0">
+              <p
+                class="max-w-[12rem] text-center text-sm leading-snug text-pretty text-zinc-300 sm:max-w-[13rem] [&_em]:italic"
+                data-cube-key="top"
+                set:html={top.body}
+              />
+            </div>
+
+            <div class="relative z-[20] order-3 flex justify-center sm:order-none sm:col-start-1 sm:row-start-2 sm:items-center sm:justify-end sm:pr-1">
+              <p
+                class="max-w-[12rem] text-center text-sm leading-snug text-pretty text-zinc-300 sm:max-w-[13rem] sm:text-right [&_em]:italic"
+                data-cube-key="left"
+                set:html={left.body}
+              />
+            </div>
+
+            <div class="relative z-[11] order-1 flex justify-center sm:order-none sm:col-start-2 sm:row-start-2 sm:self-center">
+              <div class="relative inline-block drop-shadow-[0_28px_64px_rgba(0,0,0,0.55)]" data-cube-image-wrap>
+                <img
+                  src={logoSrc}
+                  alt={logoAlt}
+                  class="relative block h-28 w-28 object-contain sm:h-36 sm:w-36"
+                  data-cube-logo-img
+                  loading="eager"
+                  decoding="async"
+                />
+                {/* Face anchor points (% of logo box): top = upper apex of top face; left/right = outer bottom corners of side faces (Alphabets cube artwork). */}
+                <span
+                  aria-hidden="true"
+                  class="absolute top-[19%] left-[50%] size-0 -translate-x-1/2 -translate-y-1/2"
+                  data-cube-face-anchor="top"
+                />
+                <span
+                  aria-hidden="true"
+                  class="absolute top-[64%] left-[21%] size-0 -translate-x-1/2 -translate-y-1/2"
+                  data-cube-face-anchor="left"
+                />
+                <span
+                  aria-hidden="true"
+                  class="absolute top-[64%] left-[79%] size-0 -translate-x-1/2 -translate-y-1/2"
+                  data-cube-face-anchor="right"
+                />
+              </div>
+            </div>
+
+            <div class="relative z-[20] order-4 flex justify-center sm:order-none sm:col-start-3 sm:row-start-2 sm:items-center sm:justify-start sm:pl-1">
+              <p
+                class="max-w-[12rem] text-center text-sm leading-snug text-pretty text-zinc-300 sm:max-w-[13rem] sm:text-left [&_em]:italic"
+                data-cube-key="right"
+                set:html={right.body}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  ) : null
+}
+
+<script>
+  function clientToSvg(svg: SVGSVGElement, clientX: number, clientY: number): { x: number; y: number } {
+    const p = svg.createSVGPoint();
+    p.x = clientX;
+    p.y = clientY;
+    const ctm = svg.getScreenCTM();
+    if (!ctm) return { x: 0, y: 0 };
+    const pt = p.matrixTransform(ctm.inverse());
+    return { x: pt.x, y: pt.y };
+  }
+
+  /** Last-line width so the underline matches rendered text, not the full block box (short final lines, alignment). */
+  function getUnderlineSegmentClientCoords(el: HTMLElement, gapPx: number): { lx: number; rx: number; uy: number } {
+    const fallback = el.getBoundingClientRect();
+    try {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      const rects = Array.from(range.getClientRects()).filter((r) => r.width > 0 && r.height > 0);
+      if (rects.length === 0) {
+        return {
+          lx: fallback.left,
+          rx: fallback.right,
+          uy: fallback.bottom + gapPx,
+        };
+      }
+      // Inline elements (e.g. <em>) yield multiple rects per line; the last array entry can be only the tail fragment.
+      // Union every rect on the bottom-most line so the underline spans the full last line.
+      const maxBottom = Math.max(...rects.map((r) => r.bottom));
+      const bottomTolerancePx = 3;
+      const lastLineRects = rects.filter((r) => Math.abs(r.bottom - maxBottom) <= bottomTolerancePx);
+      const lx = Math.min(...lastLineRects.map((r) => r.left));
+      const rx = Math.max(...lastLineRects.map((r) => r.right));
+      return {
+        lx,
+        rx,
+        uy: maxBottom + gapPx,
+      };
+    } catch {
+      return {
+        lx: fallback.left,
+        rx: fallback.right,
+        uy: fallback.bottom + gapPx,
+      };
+    }
+  }
+
+  /** Straight segment from the anchor to the nearer end of the underline, then horizontal along the last line only. */
+  function straightConnectorWithUnderline(
+    svg: SVGSVGElement,
+    axClient: number,
+    ayClient: number,
+    keyEl: HTMLElement,
+  ): string {
+    const underlineGapBelowTextPx = 10;
+    const { lx, rx, uy } = getUnderlineSegmentClientCoords(keyEl, underlineGapBelowTextPx);
+
+    const distToLeft = Math.hypot(axClient - lx, ayClient - uy);
+    const distToRight = Math.hypot(axClient - rx, ayClient - uy);
+
+    const aSvg = clientToSvg(svg, axClient, ayClient);
+    const leftSvg = clientToSvg(svg, lx, uy);
+    const rightSvg = clientToSvg(svg, rx, uy);
+
+    if (distToLeft <= distToRight) {
+      return `M ${aSvg.x} ${aSvg.y} L ${leftSvg.x} ${leftSvg.y} L ${rightSvg.x} ${rightSvg.y}`;
+    }
+    return `M ${aSvg.x} ${aSvg.y} L ${rightSvg.x} ${rightSvg.y} L ${leftSvg.x} ${leftSvg.y}`;
+  }
+
+  function initCubeExplainer(): void {
+    const stage = document.querySelector<HTMLElement>("[data-app-cube-explainer-stage]");
+    const svg = document.querySelector<SVGSVGElement>("[data-app-cube-explainer-svg]");
+    if (!stage || !svg) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const positions = ["top", "left", "right"] as const;
+
+    let rafId = 0;
+
+    function apply(): void {
+      rafId = 0;
+
+      for (const pos of positions) {
+        const anchor = stage.querySelector<HTMLElement>(`[data-cube-face-anchor="${pos}"]`);
+        const keyEl = stage.querySelector<HTMLElement>(`[data-cube-key="${pos}"]`);
+        const path = svg.querySelector<SVGPathElement>(`[data-cube-connector="${pos}"]`);
+        const dot = svg.querySelector<SVGCircleElement>(`[data-cube-dot="${pos}"]`);
+        if (!anchor || !keyEl || !path) continue;
+
+        const ar = anchor.getBoundingClientRect();
+        const ax = ar.left + ar.width / 2;
+        const ay = ar.top + ar.height / 2;
+
+        const d = straightConnectorWithUnderline(svg, ax, ay, keyEl);
+        path.setAttribute("d", d);
+        const aSvg = clientToSvg(svg, ax, ay);
+        if (dot) {
+          dot.setAttribute("cx", String(aSvg.x));
+          dot.setAttribute("cy", String(aSvg.y));
+        }
+      }
+    }
+
+    function parallaxKeys(): void {
+      if (reduced) return;
+
+      const stageRect = stage.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      const center = stageRect.top + stageRect.height / 2;
+      const norm = (center - vh / 2) / (vh / 2);
+
+      const cubeWrap = stage.querySelector<HTMLElement>("[data-cube-image-wrap]");
+      const rates = { top: -22, left: -18, right: -24 } as const;
+      const cubeShift = norm * 10;
+
+      for (const pos of positions) {
+        const keyEl = stage.querySelector<HTMLElement>(`[data-cube-key="${pos}"]`);
+        if (!keyEl) continue;
+        const base = rates[pos];
+        keyEl.style.transform = `translate3d(0, ${(norm * base).toFixed(2)}px, 0)`;
+        keyEl.style.willChange = "transform";
+      }
+
+      if (cubeWrap) {
+        cubeWrap.style.transform = `translate3d(0, ${cubeShift.toFixed(2)}px, 0)`;
+        cubeWrap.style.willChange = "transform";
+      }
+    }
+
+    function tick(): void {
+      parallaxKeys();
+      apply();
+    }
+
+    function onScrollOrResize(): void {
+      if (rafId !== 0) return;
+      rafId = window.requestAnimationFrame(tick);
+    }
+
+    tick();
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
+    if (!reduced) {
+      window.visualViewport?.addEventListener("scroll", onScrollOrResize, { passive: true });
+      window.visualViewport?.addEventListener("resize", onScrollOrResize);
+    }
+
+    const ro = new ResizeObserver(() => onScrollOrResize());
+    ro.observe(stage);
+    const img = stage.querySelector("img[data-cube-logo-img]");
+    if (img) ro.observe(img);
+  }
+
+  initCubeExplainer();
+</script>

@@ -3,6 +3,7 @@ import "photoswipe/style.css";
 
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "./Container.astro";
+import AppCubeLogoExplainer from "./AppCubeLogoExplainer.astro";
 import HeroGooglePlaySpotlight from "./HeroGooglePlaySpotlight.astro";
 import TestimonialsCarousel from "./TestimonialsCarousel.astro";
 import WritingSystemsCloud from "./WritingSystemsCloud.astro";
@@ -64,6 +65,12 @@ type Props = {
   /** YouTube video ID only (from youtube.com/watch?v=…) for an embedded app preview */
   youtubeVideoId?: string;
   youtubeVideoTitle?: string;
+  /** Optional cube logo breakdown below FAQ: three visible faces with callouts (requires `logoSrc`). */
+  cubeExplainer?: {
+    heading?: string;
+    intro?: string;
+    faces: Array<{ position: "top" | "left" | "right"; body: string }>;
+  };
 };
 
 const {
@@ -101,7 +108,13 @@ const {
   ogImage,
   youtubeVideoId,
   youtubeVideoTitle,
+  cubeExplainer,
 } = Astro.props;
+
+const cubeFacePositions = ["top", "left", "right"] as const;
+const cubeExplainerComplete =
+  Boolean(logoSrc && cubeExplainer && cubeExplainer.faces.length === 3) &&
+  cubeFacePositions.every((pos) => cubeExplainer.faces.some((f) => f.position === pos));
 
 const displayStats = stats.slice(0, 5);
 const statSectionClass =
@@ -597,7 +610,28 @@ const youtubeEmbedQuery = youtubeVideoId
         ) : null
       }
 
-      <section class="py-12 sm:py-16">
+      {
+        cubeExplainerComplete && cubeExplainer ? (
+          <section class="overflow-x-clip pt-10 pb-3 sm:pt-14 sm:pb-4">
+            <Container>
+              <AppCubeLogoExplainer
+                logoSrc={logoSrc!}
+                logoAlt={logoAlt ?? `${appName} app logo`}
+                heading={cubeExplainer.heading}
+                intro={cubeExplainer.intro}
+                instanceId={`cube-${themeColor}`}
+                faces={cubeExplainer.faces}
+              />
+            </Container>
+          </section>
+        ) : null
+      }
+
+      <section
+        class:list={[
+          cubeExplainerComplete && cubeExplainer ? "pb-12 pt-5 sm:pb-16 sm:pt-6" : "py-12 sm:py-16",
+        ]}
+      >
         <Container>
           <div class="card relative overflow-hidden p-6 sm:p-10">
             <div
