@@ -709,7 +709,9 @@ const youtubeEmbedQuery = youtubeVideoId
             <div
               class="relative flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:text-left"
             >
-              <div class="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row sm:items-start sm:gap-5">
+              <div
+                class="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row sm:items-start sm:gap-5"
+              >
                 {
                   logoSrc ? (
                     <img
@@ -723,14 +725,16 @@ const youtubeEmbedQuery = youtubeVideoId
                 }
 
                 <div>
-                <h2
-                  class="text-2xl font-semibold tracking-tight text-balance text-white sm:text-3xl"
-                >
-                  Explore {appName}
-                </h2>
-                <p class="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-200">
-                  {description}
-                </p>
+                  <h2
+                    class="text-2xl font-semibold tracking-tight text-balance text-white sm:text-3xl"
+                  >
+                    Explore {appName}
+                  </h2>
+                  <p
+                    class="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-200"
+                  >
+                    {description}
+                  </p>
                 </div>
               </div>
               {
@@ -851,19 +855,26 @@ const youtubeEmbedQuery = youtubeVideoId
         const maxPx = 128;
         const strength = 0.14;
         const travel = Math.min(window.scrollY * strength, maxPx);
-        const progress = maxPx > 0 ? Math.max(0, Math.min(1, travel / maxPx)) : 0;
+        const progress =
+          maxPx > 0 ? Math.max(0, Math.min(1, travel / maxPx)) : 0;
         const fanX = 64;
         const fanRot = 14;
 
         for (const layer of layers) {
-          const baseY = Number.parseFloat(layer.getAttribute("data-base-y") ?? "0");
-          const mult = Number.parseFloat(layer.getAttribute("data-parallax-mult") ?? "1");
+          const baseY = Number.parseFloat(
+            layer.getAttribute("data-base-y") ?? "0",
+          );
+          const mult = Number.parseFloat(
+            layer.getAttribute("data-parallax-mult") ?? "1",
+          );
           const y = baseY - travel * mult;
           const z = mult >= 1 ? 18 : 10;
 
           const side = layer.getAttribute("data-side");
           if (side === "left" || side === "right") {
-            const baseRotate = Number.parseFloat(layer.getAttribute("data-base-rotate") ?? "0");
+            const baseRotate = Number.parseFloat(
+              layer.getAttribute("data-base-rotate") ?? "0",
+            );
             const dir = side === "left" ? -1 : 1;
             const x = dir * fanX * progress;
             const rot = baseRotate + dir * fanRot * progress;
