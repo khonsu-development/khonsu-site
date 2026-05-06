@@ -1,190 +1,219 @@
 ---
 import AppLandingAerium from "../../components/AppLandingAerium.astro";
 
-const heroSpotlightStats = [{ label: "Google Play rating", value: "4.9★" }];
+const heroSpotlightStats = [{label: "Google Play rating", value: "4.9★"}];
 
 const stats = [
-  { label: "Prehistoric animals", value: "1900+" },
-  { label: "Discovery sites", value: "Global map" },
-  { label: "Learning modes", value: "Browse + quiz" },
+    {label: "Prehistoric animals", value: "1900+"},
+    {label: "Discovery sites", value: "Global map"},
+    {label: "Learning modes", value: "Browse + quiz"},
 ];
 
 const testimonials = [
-  {
-    quote:
-      "Fantastic app! I love all the detailed info. And so many species. Super interesting app!",
-    author: "Jennifer Krantz",
-  },
-  {
-    quote:
-      "Awesome app!! A real trove of precious content on dinosaurs and much more. Thanks for dedicating an app to these amazing creatures. I feel incredibly small in the immensity of our beautiful planet!",
-    author: "Alice Roux",
-  },
-  {
-    quote:
-      "So much to learn in this app! It provides extensive data packed with a nice user experience. Both beginners like myself or pros can benefit from it.",
-    author: "Caroline Aumeran",
-  },
-  {
-    quote:
-      "This app is great! I really like the fact that I learned so much from this app.",
-    author: "Luis Antonio Calachan",
-  },
-  {
-    quote:
-      "Congratulations! This app is exactly what I was looking for. It contains a large catalog of dinosaurs and other types, with precise information and links to find more. In other words, it's perfect.",
-    author: "Davide Romeo",
-  },
-  {
-    quote:
-      "Amazing app, packed full of information. Easy to navigate and find the dinosaur you want.",
-    author: "Paul Garvey",
-  },
-  {
-    quote:
-      "I do not know how an app of this caliber can have so few users/downloads. It's perfect for anybody looking to learn more about dinosaurs and other prehistoric beings. Great work on this app from the developers.",
-    author: "Ognjen Petrovic",
-  },
-  {
-    quote: "Just tried this. It is THE BEST APP for Dino enthusiasts.",
-    author: "Arati Nene",
-  },
-  {
-    quote: "Best dinosaur encyclopaedia app.",
-    author: "Twinkle Der",
-  },
-  {
-    quote:
-      "A very good app for finding information about prehistoric animals, I recommend it.",
-    author: "MTT",
-  },
-  {
-    quote: "Best dinsaurs and prehistoric animals app",
-    author: "Rinky Naaz",
-  },
-  {
-    quote: "Wow this app is a good app.",
-    author: "Yabsira Meseret",
-  },
-  {
-    quote: "A very comprehensive, well-presented, and easy-to-use application.",
-    author: "Google Play user",
-  },
-  {
-    quote:
-      "Super idea! Really like the look and feel and the database is huge!",
-    author: "Wesley Connor",
-  },
+    {
+        quote:
+            "Fantastic app! I love all the detailed info. And so many species. Super interesting app!",
+        author: "Jennifer Krantz",
+    },
+    {
+        quote:
+            "Awesome app!! A real trove of precious content on dinosaurs and much more. Thanks for dedicating an app to these amazing creatures. I feel incredibly small in the immensity of our beautiful planet!",
+        author: "Alice Roux",
+    },
+    {
+        quote:
+            "So much to learn in this app! It provides extensive data packed with a nice user experience. Both beginners like myself or pros can benefit from it.",
+        author: "Caroline Aumeran",
+    },
+    {
+        quote:
+            "This app is great! I really like the fact that I learned so much from this app.",
+        author: "Luis Antonio Calachan",
+    },
+    {
+        quote:
+            "Congratulations! This app is exactly what I was looking for. It contains a large catalog of dinosaurs and other types, with precise information and links to find more. In other words, it's perfect.",
+        author: "Davide Romeo",
+    },
+    {
+        quote:
+            "Amazing app, packed full of information. Easy to navigate and find the dinosaur you want.",
+        author: "Paul Garvey",
+    },
+    {
+        quote:
+            "I do not know how an app of this caliber can have so few users/downloads. It's perfect for anybody looking to learn more about dinosaurs and other prehistoric beings. Great work on this app from the developers.",
+        author: "Ognjen Petrovic",
+    },
+    {
+        quote: "Just tried this. It is THE BEST APP for Dino enthusiasts.",
+        author: "Arati Nene",
+    },
+    {
+        quote: "Best dinosaur encyclopaedia app.",
+        author: "Twinkle Der",
+    },
+    {
+        quote:
+            "A very good app for finding information about prehistoric animals, I recommend it.",
+        author: "MTT",
+    },
+    {
+        quote: "Best dinsaurs and prehistoric animals app",
+        author: "Rinky Naaz",
+    },
+    {
+        quote: "Wow this app is a good app.",
+        author: "Yabsira Meseret",
+    },
+    {
+        quote: "A very comprehensive, well-presented, and easy-to-use application.",
+        author: "Google Play user",
+    },
+    {
+        quote:
+            "Super idea! Really like the look and feel and the database is huge!",
+        author: "Wesley Connor",
+    },
 ];
 
 const features = [
-  {
-    title: "A massive bestiary",
-    body: "Explore dinosaurs, pterosaurs, ocean giants, and Cenozoic mammals—organized so you can actually find what you want.",
-    imageSrc: "/apps/dinosaurs/features/animals.png",
-    imageAlt:
-      "Screenshot of the prehistoric animals list in World of Dinosaurs.",
-  },
-  {
-    title: "Rich, readable profiles",
-    body: "Clear descriptions, lifelike illustrations, size comparisons, habitats, and memorable trivia that sticks.",
-    imageSrc: "/apps/dinosaurs/features/animal-detail.png",
-    imageAlt: "Screenshot of an animal profile in World of Dinosaurs.",
-  },
-  {
-    title: "Geological Time Scale",
-    body: "Travel across deep time with an interactive scale that puts every creature in context.",
-    imageSrc: "/apps/dinosaurs/features/geological-time-scale.png",
-    imageAlt: "Screenshot of the interactive geological time scale.",
-  },
-  {
-    title: "Articles worth binge-reading",
-    body: "Fossils, extinctions, new research, and big questions—perfect for quick curiosity or deep rabbit holes.",
-    imageSrc: "/apps/dinosaurs/features/articles.png",
-    imageAlt: "Screenshot of in-app articles in World of Dinosaurs.",
-  },
-  {
-    title: "Quizzes that actually teach",
-    body: "Beginner-friendly and surprisingly challenging. Recognize images, learn names, and lock in facts fast.",
-    imageSrc: "/apps/dinosaurs/features/quiz.png",
-    imageAlt: "Screenshot of a quiz in World of Dinosaurs.",
-  },
-  {
-    title: "Discovery sites map",
-    body: "Explore fossil sites around the world, and see what was discovered near you.",
-    imageSrc: "/apps/dinosaurs/features/locations.png",
-    imageAlt: "Screenshot of the fossil discovery locations map.",
-  },
-  {
-    title: "Tailored quiz modes",
-    body: "Customize quizzes to match your current obsession: names, images, categories, or bite-sized trivia.",
-    imageSrc: "/apps/dinosaurs/features/quiz-menu.png",
-    imageAlt: "Screenshot of tailored quiz options in World of Dinosaurs.",
-  },
-  {
-    title: "Polished dark mode",
-    body: "A calm interface designed for long reading sessions, day or night.",
-    imageSrc: "/apps/dinosaurs/features/animal-detail-dark.png",
-    imageAlt: "Screenshot of World of Dinosaurs in dark mode.",
-  },
+    {
+        title: "A massive bestiary",
+        body: "Explore dinosaurs, pterosaurs, ocean giants, and Cenozoic mammals, organized so you can actually find what you want.",
+        imageSrc: "/apps/dinosaurs/features/animals.png",
+        imageAlt:
+            "Screenshot of the prehistoric animals list in World of Dinosaurs.",
+    },
+    {
+        title: "Rich, readable profiles",
+        body: "Clear descriptions, lifelike illustrations, size comparisons, habitats, and memorable trivia that sticks.",
+        imageSrc: "/apps/dinosaurs/features/animal-detail.png",
+        imageAlt: "Screenshot of an animal profile in World of Dinosaurs.",
+    },
+    {
+        title: "Geological Time Scale",
+        body: "Travel across deep time with an interactive scale that puts every creature in context.",
+        imageSrc: "/apps/dinosaurs/features/geological-time-scale.png",
+        imageAlt: "Screenshot of the interactive geological time scale.",
+    },
+    {
+        title: "Articles worth binge-reading",
+        body: "Fossils, extinctions, new research, and big questions, perfect for quick curiosity or deep rabbit holes.",
+        imageSrc: "/apps/dinosaurs/features/articles.png",
+        imageAlt: "Screenshot of in-app articles in World of Dinosaurs.",
+    },
+    {
+        title: "Quizzes that actually teach",
+        body: "Beginner-friendly and surprisingly challenging. Recognize images, learn names, and lock in facts fast.",
+        imageSrc: "/apps/dinosaurs/features/quiz.png",
+        imageAlt: "Screenshot of a quiz in World of Dinosaurs.",
+    },
+    {
+        title: "Discovery sites map",
+        body: "Explore fossil sites around the world, and see what was discovered near you.",
+        imageSrc: "/apps/dinosaurs/features/locations.png",
+        imageAlt: "Screenshot of the fossil discovery locations map.",
+    },
+    {
+        title: "Tailored quiz modes",
+        body: "Customize quizzes to match your current obsession: names, images, categories, or bite-sized trivia.",
+        imageSrc: "/apps/dinosaurs/features/quiz-menu.png",
+        imageAlt: "Screenshot of tailored quiz options in World of Dinosaurs.",
+    },
+    {
+        title: "Polished dark mode",
+        body: "A calm interface designed for long reading sessions, day or night.",
+        imageSrc: "/apps/dinosaurs/features/animal-detail-dark.png",
+        imageAlt: "Screenshot of World of Dinosaurs in dark mode.",
+    },
 ];
 ---
 
 <AppLandingAerium
-  canonicalPath="/dinosaurs"
-  title="World of Dinosaurs | Khonsu Development"
-  description="Explore dinosaurs and prehistoric animals with profiles, articles, quizzes, discovery sites, and an interactive time scale."
-  themeColor="app-dinosaurs"
-  appName="World of Dinosaurs"
-  logoSrc="/apps/dinosaurs/dinosaurs.png"
-  eyebrow="A pocket-sized natural history museum"
-  headline="Meet the giants of deep time"
-  subhead="Discover 1900+ prehistoric animals, read rich profiles, explore discovery sites, and learn with quizzes that actually stick."
-  googlePlayUrl="https://play.google.com/store/apps/details?id=eu.khonsu.dinosaurs"
-  screenshots={[
-    "/apps/dinosaurs/features/animals.png",
-    "/apps/dinosaurs/features/locations.png",
-  ]}
-  centerScreenshot="/apps/dinosaurs/features/main-menu.png"
-  coverImage="/stock/apps/dinosaurs/cover.jpg"
-  coverImageAlt="A dinosaur skeleton on display in a natural history museum."
-  introBlurbTitle="From quick lookups to deep-time rabbit holes"
-  introBlurbBody="Browse species in minutes or fall into articles, quizzes, and maps for hours. The layout stays calm so the science stays front and center."
-  stockImages={[
-    { src: "/stock/landscape/forest.jpg", alt: "" },
-    { src: "/stock/landscape/lake.jpg", alt: "" },
-  ]}
-  heroSpotlightStats={heroSpotlightStats}
-  stats={stats}
-  testimonials={testimonials}
-  features={features}
-  featuresSectionTitle="Features"
-  featuresSectionSubtitle="Profiles, deep time, articles, maps, and quizzes—everything wrapped in a clean interface."
-  postCarouselBlurb={{
-    title: "Your next rabbit hole is one tap away",
-    body: "Skim a species on the bus, then lose an hour to maps, timelines, and quizzes that make facts stick. Download World of Dinosaurs and let curiosity run: no museum ticket required.",
-    stockImages: [
-      { src: "/stock/landscape/thailand.jpeg", alt: "" },
-      { src: "/stock/landscape/sky.jpg", alt: "" },
-      { src: "/stock/landscape/forest2.jpg", alt: "" },
-      { src: "/stock/stuttgart-library.jpeg", alt: "" },
-      { src: "/stock/knowledge.jpg", alt: "" },
-    ],
-  }}
-  faqs={[
-    {
-      q: "Is this an encyclopedia or a game?",
-      a: "Both. It’s an encyclopedia-first experience with interactive quizzes and discovery tools that make learning feel playful and rewarding.",
-    },
-    {
-      q: "Is it only about dinosaurs?",
-      a: "No. World of Dinosaurs also covers pterosaurs, marine reptiles, and many other prehistoric animals across deep time.",
-    },
-    {
-      q: "Can I focus my learning on one group?",
-      a: "Yes. Use category browsing and tailored quizzes to go deep on exactly what you care about right now.",
-    },
-  ]}
-  termsUrl="/dinosaurs/terms-and-conditions-for-world-of-dinosaurs"
-  privacyUrl="/dinosaurs/privacy-policy-for-world-of-dinosaurs"
+        canonicalPath="/dinosaurs"
+        title="World of Dinosaurs | Khonsu Development"
+        description="Explore dinosaurs and prehistoric animals with profiles, articles, quizzes, discovery sites, and an interactive time scale."
+        themeColor="app-dinosaurs"
+        appName="World of Dinosaurs"
+        logoSrc="/apps/dinosaurs/dinosaurs.png"
+        eyebrow="A pocket-sized natural history museum"
+        headline="Meet the giants of deep time"
+        subhead="Discover 1900+ prehistoric animals, read rich profiles, explore discovery sites, and learn with quizzes that actually stick."
+        googlePlayUrl="https://play.google.com/store/apps/details?id=eu.khonsu.dinosaurs"
+        screenshots={[
+            "/apps/dinosaurs/features/animals.png",
+            "/apps/dinosaurs/features/locations.png",
+        ]}
+        centerScreenshot="/apps/dinosaurs/features/main-menu.png"
+        coverImage="/stock/apps/dinosaurs/cover.jpg"
+        coverImageAlt="A dinosaur skeleton on display in a natural history museum."
+        introBlurbTitle="From quick lookups to deep-time rabbit holes"
+        introBlurbBody="Browse species in minutes or fall into articles, quizzes, and maps for hours. The layout stays calm so the science stays front and center."
+        stockImages={[
+            {
+                src: "/apps/dinosaurs/animals/albertosaurus.jpg",
+                alt: "A Tyrannosaurus rex."
+            },
+            {
+                src: "/apps/dinosaurs/animals/triceratops-2.jpg",
+                alt: "A Triceratops.",
+            },
+            {
+                src: "/apps/dinosaurs/animals/dilophosaurus.jpg",
+                alt: "A Dilophosaurus.",
+            },
+            {
+                src: "/apps/dinosaurs/animals/plesiosaurus.jpg",
+                alt: "A Plesiosaurus.",
+            },
+            {
+                src: "/apps/dinosaurs/animals/eggs.jpg",
+                alt: "A clutch of dinosaur eggs.",
+            },
+        ]}
+        heroSpotlightStats={heroSpotlightStats}
+        stats={stats}
+        testimonials={testimonials}
+        features={features}
+        featuresSectionTitle="Features"
+        featuresSectionSubtitle="Profiles, deep time, articles, maps, and quizzes. Everything wrapped in a clean interface."
+        postCarouselBlurb={{
+            title: "Your next rabbit hole is one tap away",
+            body: "Skim a species on the bus, then lose an hour to maps, timelines, and quizzes that make facts stick. Download World of Dinosaurs and let curiosity run: no museum ticket required.",
+            stockImages: [
+                {
+                    src: "/apps/dinosaurs/animals/synthetoceras.jpg",
+                    alt: "A Synthetoceras in the savannah."
+                },
+                {
+                    src: "/apps/dinosaurs/animals/deinotherium.jpg",
+                    alt: "A plesiosaurus swimming in the ocean.",
+                },
+                {
+                    src: "/apps/dinosaurs/animals/paraceratherium.jpg",
+                    alt: "A herd of Paraceratheria.",
+                },
+                {
+                    src: "/apps/dinosaurs/animals/helicoprion.jpg",
+                    alt: "A Helicoprion swimming in the ocean."
+                },
+            ],
+        }}
+        faqs={[
+            {
+                q: "Is this an encyclopedia or a game?",
+                a: "Both. It’s an encyclopedia-first experience with interactive quizzes and discovery tools that make learning feel playful and rewarding.",
+            },
+            {
+                q: "Is it only about dinosaurs?",
+                a: "No. World of Dinosaurs also covers pterosaurs, marine reptiles, and many other prehistoric animals across deep time.",
+            },
+            {
+                q: "Can I focus my learning on one group?",
+                a: "Yes. Use category browsing and tailored quizzes to go deep on exactly what you care about right now.",
+            },
+        ]}
+        termsUrl="/dinosaurs/terms-and-conditions-for-world-of-dinosaurs"
+        privacyUrl="/dinosaurs/privacy-policy-for-world-of-dinosaurs"
 />
