@@ -9,6 +9,8 @@ export interface Props {
 
 const { stats } = Astro.props;
 const isTwoUpMobile = stats.length === 2;
+const hasBetween = Astro.slots.has("between");
+const usesBetweenLayout = isTwoUpMobile && hasBetween;
 
 const isRatingStat = (s: Stat) => /\b(rating|stars?)\b/i.test(s.label) || /★|⭐|star/i.test(s.value);
 
@@ -19,74 +21,173 @@ const STAR_PATH =
   "M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.728a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.728a1 1 0 00-1.176 0l-3.976 2.728c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.728c-.784-.57-.382-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z";
 
 const starIconClass = "size-[0.7rem] shrink-0 sm:size-[0.875rem]";
+
+const statSequence: Array<number | "between"> = usesBetweenLayout ? [0, "between", 1] : stats.map((_, i) => i);
 ---
 
-<section aria-label="Google Play highlights" class="relative mx-auto mt-8 max-w-4xl px-4 sm:mt-10 sm:px-8">
-  <div
-    class:list={[
-      isTwoUpMobile ? "grid grid-cols-2 gap-4" : "flex flex-col gap-10",
-      "items-stretch sm:flex sm:flex-row sm:justify-center sm:gap-6 lg:gap-14",
-    ]}
-  >
-    {
-      stats.map((s, rowIndex) => (
-        <div class="flex min-w-0 flex-1 items-center justify-center gap-1 sm:gap-2">
-          <LaurelFrond
-            class:list={[
-              "w-auto shrink-0 text-white/90",
-              isTwoUpMobile ? "h-[3.25rem]" : "h-[4.25rem]",
-              "sm:h-[5.5rem]",
-            ]}
-          />
-          <div class:list={["min-w-0 text-center", isTwoUpMobile ? "px-0.5" : "px-1", "sm:px-2"]}>
-            {isRatingStat(s) ? (
-              <div class="mb-2 flex justify-center gap-px text-amber-300 sm:gap-[2px]" aria-hidden="true">
-                {Array.from({ length: 4 }).map(() => (
-                  <svg class:list={[starIconClass]} viewBox="0 0 24 24" aria-hidden="true">
-                    <path fill="currentColor" d={STAR_PATH} />
-                  </svg>
-                ))}
-                {/* Full muted star beneath, crisp left-half fill on top (true half-star geometry) */}
-                <svg class:list={[starIconClass]} viewBox="0 0 24 24" aria-hidden="true">
-                  <defs>
-                    <clipPath id={`hero-gp-half-${rowIndex}`} clipPathUnits="userSpaceOnUse">
-                      <rect width="12" height="24" />
-                    </clipPath>
-                  </defs>
-                  <path fill="currentColor" opacity="0.28" d={STAR_PATH} />
-                  <path fill="currentColor" clip-path={`url(#hero-gp-half-${rowIndex})`} d={STAR_PATH} />
-                </svg>
+<section
+  aria-label="Google Play highlights"
+  class:list={["relative mx-auto mt-8 sm:mt-10", usesBetweenLayout ? "w-full" : "max-w-6xl px-4 sm:px-8"]}
+>
+  {
+    usesBetweenLayout ? (
+      <div
+        class:list={[
+          "hero-google-play-between-grid mx-auto grid w-full max-w-3xl grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-4",
+        ]}
+      >
+        {statSequence.map((item) => {
+          if (item === "between") {
+            return (
+              <div class="flex min-w-0 items-center justify-center [grid-area:badge]">
+                <slot name="between" />
               </div>
-            ) : null}
-            <p
+            );
+          }
+          const s = stats[item];
+          const rowIndex = item;
+          return (
+            <div
               class:list={[
-                "font-semibold tracking-tight text-white",
-                isTwoUpMobile ? "text-2xl" : "text-3xl",
-                "sm:text-4xl",
+                "flex min-w-0 items-center justify-center gap-1 sm:gap-2",
+                rowIndex === 0 ? "[grid-area:stat0]" : "[grid-area:stat1]",
               ]}
             >
-              {displayValue(s)}
-            </p>
-            <p
+              <LaurelFrond
+                class:list={[
+                  "w-auto shrink-0 text-white/90",
+                  isTwoUpMobile ? "h-[3.25rem]" : "h-[4.25rem]",
+                  "sm:h-[5.5rem]",
+                ]}
+              />
+              <div class:list={["min-w-0 text-center", isTwoUpMobile ? "px-0.5" : "px-1", "sm:px-2"]}>
+                {isRatingStat(s) ? (
+                  <div class="mb-2 flex justify-center gap-px text-amber-300 sm:gap-[2px]" aria-hidden="true">
+                    {Array.from({ length: 4 }).map(() => (
+                      <svg class:list={[starIconClass]} viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d={STAR_PATH} />
+                      </svg>
+                    ))}
+                    <svg class:list={[starIconClass]} viewBox="0 0 24 24" aria-hidden="true">
+                      <defs>
+                        <clipPath id={`hero-gp-half-${rowIndex}`} clipPathUnits="userSpaceOnUse">
+                          <rect width="12" height="24" />
+                        </clipPath>
+                      </defs>
+                      <path fill="currentColor" opacity="0.28" d={STAR_PATH} />
+                      <path fill="currentColor" clip-path={`url(#hero-gp-half-${rowIndex})`} d={STAR_PATH} />
+                    </svg>
+                  </div>
+                ) : null}
+                <p
+                  class:list={[
+                    "font-semibold tracking-tight text-white",
+                    isTwoUpMobile ? "text-2xl" : "text-3xl",
+                    "sm:text-4xl",
+                  ]}
+                >
+                  {displayValue(s)}
+                </p>
+                <p
+                  class:list={[
+                    "mt-2 leading-snug font-medium text-pretty text-zinc-300",
+                    isTwoUpMobile ? "text-[11px]" : "text-xs",
+                    "sm:text-sm",
+                  ]}
+                >
+                  {s.label}
+                </p>
+              </div>
+              <LaurelFrond
+                mirrored
+                class:list={[
+                  "w-auto shrink-0 text-white/90",
+                  isTwoUpMobile ? "h-[3.25rem]" : "h-[4.25rem]",
+                  "sm:h-[5.5rem]",
+                ]}
+              />
+            </div>
+          );
+        })}
+      </div>
+    ) : (
+      <div
+        class:list={[
+          isTwoUpMobile ? "grid w-full max-w-4xl grid-cols-2 gap-4" : "flex w-full max-w-4xl flex-col gap-10",
+          "mx-auto items-stretch sm:flex sm:flex-row sm:justify-center sm:gap-6 lg:gap-14",
+        ]}
+      >
+        {stats.map((s, rowIndex) => (
+          <div class="flex min-w-0 flex-1 items-center justify-center gap-1 sm:gap-2">
+            <LaurelFrond
               class:list={[
-                "mt-2 leading-snug font-medium text-pretty text-zinc-300",
-                isTwoUpMobile ? "text-[11px]" : "text-xs",
-                "sm:text-sm",
+                "w-auto shrink-0 text-white/90",
+                isTwoUpMobile ? "h-[3.25rem]" : "h-[4.25rem]",
+                "sm:h-[5.5rem]",
               ]}
-            >
-              {s.label}
-            </p>
+            />
+            <div class:list={["min-w-0 text-center", isTwoUpMobile ? "px-0.5" : "px-1", "sm:px-2"]}>
+              {isRatingStat(s) ? (
+                <div class="mb-2 flex justify-center gap-px text-amber-300 sm:gap-[2px]" aria-hidden="true">
+                  {Array.from({ length: 4 }).map(() => (
+                    <svg class:list={[starIconClass]} viewBox="0 0 24 24" aria-hidden="true">
+                      <path fill="currentColor" d={STAR_PATH} />
+                    </svg>
+                  ))}
+                  <svg class:list={[starIconClass]} viewBox="0 0 24 24" aria-hidden="true">
+                    <defs>
+                      <clipPath id={`hero-gp-half-${rowIndex}`} clipPathUnits="userSpaceOnUse">
+                        <rect width="12" height="24" />
+                      </clipPath>
+                    </defs>
+                    <path fill="currentColor" opacity="0.28" d={STAR_PATH} />
+                    <path fill="currentColor" clip-path={`url(#hero-gp-half-${rowIndex})`} d={STAR_PATH} />
+                  </svg>
+                </div>
+              ) : null}
+              <p
+                class:list={[
+                  "font-semibold tracking-tight text-white",
+                  isTwoUpMobile ? "text-2xl" : "text-3xl",
+                  "sm:text-4xl",
+                ]}
+              >
+                {displayValue(s)}
+              </p>
+              <p
+                class:list={[
+                  "mt-2 leading-snug font-medium text-pretty text-zinc-300",
+                  isTwoUpMobile ? "text-[11px]" : "text-xs",
+                  "sm:text-sm",
+                ]}
+              >
+                {s.label}
+              </p>
+            </div>
+            <LaurelFrond
+              mirrored
+              class:list={[
+                "w-auto shrink-0 text-white/90",
+                isTwoUpMobile ? "h-[3.25rem]" : "h-[4.25rem]",
+                "sm:h-[5.5rem]",
+              ]}
+            />
           </div>
-          <LaurelFrond
-            mirrored
-            class:list={[
-              "w-auto shrink-0 text-white/90",
-              isTwoUpMobile ? "h-[3.25rem]" : "h-[4.25rem]",
-              "sm:h-[5.5rem]",
-            ]}
-          />
-        </div>
-      ))
-    }
-  </div>
+        ))}
+      </div>
+    )
+  }
 </section>
+
+<style>
+  .hero-google-play-between-grid {
+    grid-template-areas:
+      "badge badge"
+      "stat0 stat1";
+  }
+  @media (min-width: 640px) {
+    .hero-google-play-between-grid {
+      grid-template-areas: "stat0 badge stat1";
+    }
+  }
+</style>

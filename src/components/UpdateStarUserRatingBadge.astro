@@ -1,0 +1,51 @@
+---
+const href = "https://world-of-alphabets.updatestar.com/";
+
+/** Heroicons solid star, 24×24 (matches hero spotlight stars) */
+const STAR_PATH =
+  "M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.728a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.728a1 1 0 00-1.176 0l-3.976 2.728c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.728c-.784-.57-.382-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z";
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="block shrink-0 transition outline-none hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50"
+  aria-label="World of Alphabets on UpdateStar: User Rating Very Good (opens in a new tab)"
+>
+  <div
+    class="flex min-h-[4.75rem] flex-col items-center justify-center gap-1 px-4 py-2.5 text-center sm:min-h-[6rem] sm:gap-1.5 sm:px-5 sm:py-3"
+    style="background-color: #7ba4d0"
+  >
+    <p
+      class="text-[11px] leading-tight font-semibold tracking-wide text-white sm:text-xs"
+      style="font-family: 'Noto Serif', ui-serif, Georgia, 'Times New Roman', serif"
+    >
+      User Rating
+    </p>
+    <div class="flex items-center justify-center gap-px sm:gap-[2px]" aria-hidden="true">
+      {
+        Array.from({ length: 4 }).map(() => (
+          <svg class="size-[0.65rem] shrink-0 text-[#f1d302] sm:size-[0.78rem]" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d={STAR_PATH} />
+          </svg>
+        ))
+      }
+      <svg class="size-[0.65rem] shrink-0 text-white sm:size-[0.78rem]" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="currentColor" d={STAR_PATH}></path>
+      </svg>
+    </div>
+    <p
+      class="text-[10px] leading-tight font-bold tracking-wide text-white uppercase sm:text-[11px]"
+      style="font-family: 'Noto Serif', ui-serif, Georgia, 'Times New Roman', serif"
+    >
+      Very Good
+    </p>
+    <p
+      class="text-xs font-semibold tracking-tight text-white lowercase sm:text-sm"
+      style="font-family: 'Urbanist', ui-sans-serif, system-ui, sans-serif"
+    >
+      updatestar
+    </p>
+  </div>
+</a>

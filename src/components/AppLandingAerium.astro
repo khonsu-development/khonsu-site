@@ -5,11 +5,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "./Container.astro";
 import AppCubeLogoExplainer from "./AppCubeLogoExplainer.astro";
 import HeroGooglePlaySpotlight from "./HeroGooglePlaySpotlight.astro";
+import UpdateStarUserRatingBadge from "./UpdateStarUserRatingBadge.astro";
 import TestimonialsCarousel from "./TestimonialsCarousel.astro";
 import WritingSystemsCloud from "./WritingSystemsCloud.astro";
 import StockBlurbSection from "./StockBlurbSection.astro";
 
-type Stat = { label: string; value: string };
+type Stat = { label: string; value: string } | { label: string; valueHtml: string };
+/** Hero Google Play spotlight expects plain `value` strings (not `valueHtml` from the cards grid). */
+type HeroSpotlightStat = { label: string; value: string };
 type Feature = {
   title: string;
   body: string;
@@ -49,7 +52,7 @@ type Props = {
   stockImages?: StockImage[];
   stats: Stat[];
   /** Shown above the stat grid (e.g. Google Play rating & downloads with Palme-style framing). */
-  heroSpotlightStats?: Stat[];
+  heroSpotlightStats?: HeroSpotlightStat[];
   features: Feature[];
   /** When set, overrides the default “Everything you need” heading above the feature grid or rows */
   featuresSectionTitle?: string;
@@ -393,8 +396,17 @@ const youtubeEmbedQuery = youtubeVideoId
             </div>
           </div>
 
-          {heroSpotlightStats?.length ?
-            <HeroGooglePlaySpotlight stats={heroSpotlightStats} /> : null}
+          {
+            heroSpotlightStats?.length ? (
+              <HeroGooglePlaySpotlight stats={heroSpotlightStats}>
+                {isAlphabetsTheme ? (
+                  <div class="flex shrink-0 justify-center" slot="between">
+                    <UpdateStarUserRatingBadge />
+                  </div>
+                ) : null}
+              </HeroGooglePlaySpotlight>
+            ) : null
+          }
 
           <div class={statSectionClass}>
             {
@@ -412,7 +424,14 @@ const youtubeEmbedQuery = youtubeVideoId
                   />
                   <div class="relative">
                     <div class="text-xs font-semibold text-zinc-300">{s.label}</div>
-                    <div class="mt-2 text-2xl font-semibold tracking-tight text-white">{s.value}</div>
+                    {"valueHtml" in s ? (
+                      <div
+                        class="mt-2 flex justify-center [&_a]:inline-flex [&_a]:items-center [&_a]:justify-center [&_a]:outline-none focus-visible:[&_a]:ring-2 focus-visible:[&_a]:ring-white/40 focus-visible:[&_a]:ring-offset-2 focus-visible:[&_a]:ring-offset-zinc-950 [&_img]:h-11 [&_img]:w-auto [&_img]:max-w-[min(100%,10rem)] [&_img]:object-contain"
+                        set:html={s.valueHtml}
+                      />
+                    ) : (
+                      <div class="mt-2 text-2xl font-semibold tracking-tight text-white">{s.value}</div>
+                    )}
                   </div>
                 </div>
               ))
@@ -546,23 +565,18 @@ const youtubeEmbedQuery = youtubeVideoId
                   {rhymeLanguagesTitle ?? "Rhyme languages"}
                 </h2>
                 <p class="mt-3 text-sm leading-relaxed text-zinc-300">
-                  {rhymeLanguagesSubtitle ??
-                    "Rhymes and rhyme prompts are available in the following languages:"}
+                  {rhymeLanguagesSubtitle ?? "Rhymes and rhyme prompts are available in the following languages:"}
                 </p>
               </div>
               <ul
                 class="mx-auto mt-10 flex max-w-5xl list-none flex-wrap justify-center gap-2 px-0 sm:gap-2.5"
                 aria-label={`${rhymeLanguages.length} languages`}
               >
-                {
-                  rhymeLanguages.map((name) => (
-                    <li
-                      class="rounded-full bg-white/[0.06] px-3 py-1.5 text-sm text-zinc-200 ring-1 ring-white/10"
-                    >
-                      {name}
-                    </li>
-                  ))
-                }
+                {rhymeLanguages.map((name) => (
+                  <li class="rounded-full bg-white/[0.06] px-3 py-1.5 text-sm text-zinc-200 ring-1 ring-white/10">
+                    {name}
+                  </li>
+                ))}
               </ul>
             </Container>
           </section>
