@@ -115,7 +115,7 @@ const cubeFacePositions = ["top", "left", "right"] as const;
 const cubeFaces = cubeExplainer?.faces;
 const cubeExplainerComplete =
   Boolean(logoSrc && cubeFaces?.length === 3) &&
-  cubeFacePositions.every((pos) => (cubeFaces?.some((f) => f.position === pos) ?? false));
+  cubeFacePositions.every((pos) => cubeFaces?.some((f) => f.position === pos) ?? false);
 
 const displayStats = stats.slice(0, 5);
 const statSectionClass =
@@ -172,10 +172,10 @@ const featuresForRichLayout: FeatureForRich[] = features.map((f) => {
 /** Embed params: fewer on-screen controls where YouTube honours them (often still shows minimal UI on tap). */
 const youtubeEmbedQuery = youtubeVideoId
   ? `?${new URLSearchParams({
-      controls: "0",
-      modestbranding: "1",
-      rel: "0",
-    }).toString()}`
+    controls: "0",
+    modestbranding: "1",
+    rel: "0",
+  }).toString()}`
   : "";
 ---
 
@@ -257,7 +257,8 @@ const youtubeEmbedQuery = youtubeVideoId
             }
             {
               eyebrow ? (
-                <p class="inline-flex items-center rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-zinc-200 ring-1 ring-white/10">
+                <p
+                  class="inline-flex items-center rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-zinc-200 ring-1 ring-white/10">
                   {eyebrow}
                 </p>
               ) : null
@@ -379,7 +380,8 @@ const youtubeEmbedQuery = youtubeVideoId
             </div>
           </div>
 
-          {heroSpotlightStats?.length ? <HeroGooglePlaySpotlight stats={heroSpotlightStats} /> : null}
+          {heroSpotlightStats?.length ?
+            <HeroGooglePlaySpotlight stats={heroSpotlightStats} /> : null}
 
           <div class={statSectionClass}>
             {
@@ -766,12 +768,27 @@ const youtubeEmbedQuery = youtubeVideoId
         return;
       }
 
+      const panel = document.querySelector<HTMLElement>("[data-app-landing-hero-depth-panel]");
+      if (!panel) return;
+
+      const layers = Array.from(panel.querySelectorAll<HTMLElement>("[data-app-landing-hero-depth-layer]"));
+      if (!layers.length) return;
+
+      const layerData = layers.map((layer) => {
+        const baseY = Number.parseFloat(layer.getAttribute("data-base-y") ?? "0") || 0;
+        const mult = Number.parseFloat(layer.getAttribute("data-parallax-mult") ?? "1") || 1;
+        const side = layer.getAttribute("data-side");
+        const baseRotate = Number.parseFloat(layer.getAttribute("data-base-rotate") ?? "0") || 0;
+        const baseTransform = layer.getAttribute("data-base-transform") ?? "";
+        const dir = side === "left" ? -1 : side === "right" ? 1 : 0;
+        return { layer, baseY, mult, side, baseRotate, baseTransform, dir };
+      });
+
       let rafId = 0;
+      let isAttached = false;
 
       function apply(): void {
         rafId = 0;
-        const layers = document.querySelectorAll<HTMLElement>("[data-app-landing-hero-depth-layer]");
-        if (!layers.length) return;
 
         const maxPx = 128;
         const strength = 0.14;
@@ -780,40 +797,63 @@ const youtubeEmbedQuery = youtubeVideoId
         const fanX = 64;
         const fanRot = 14;
 
-        for (const layer of layers) {
-          const baseY = Number.parseFloat(layer.getAttribute("data-base-y") ?? "0");
-          const mult = Number.parseFloat(layer.getAttribute("data-parallax-mult") ?? "1");
-          const y = baseY - travel * mult;
-          const z = mult >= 1 ? 18 : 10;
+        for (const d of layerData) {
+          const y = d.baseY - travel * d.mult;
+          const z = d.mult >= 1 ? 18 : 10;
 
-          const side = layer.getAttribute("data-side");
-          if (side === "left" || side === "right") {
-            const baseRotate = Number.parseFloat(layer.getAttribute("data-base-rotate") ?? "0");
-            const dir = side === "left" ? -1 : 1;
-            const x = dir * fanX * progress;
-            const rot = baseRotate + dir * fanRot * progress;
-            layer.style.transform = `rotate(${rot.toFixed(2)}deg) translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, ${z}px)`;
+          if (d.side === "left" || d.side === "right") {
+            const x = d.dir * fanX * progress;
+            const rot = d.baseRotate + d.dir * fanRot * progress;
+            d.layer.style.transform = `rotate(${rot}deg) translate3d(${x}px, ${y}px, ${z}px)`;
             continue;
           }
 
-          const baseTransform = layer.getAttribute("data-base-transform") ?? "";
-          if (!baseTransform) continue;
-          layer.style.transform = `${baseTransform} translate3d(0, ${y.toFixed(2)}px, ${z}px)`;
+          if (!d.baseTransform) continue;
+          d.layer.style.transform = `${d.baseTransform} translate3d(0, ${y}px, ${z}px)`;
         }
       }
 
       function onScrollOrResize(): void {
+        if (!isAttached) return;
         if (rafId !== 0) return;
         rafId = window.requestAnimationFrame(apply);
       }
 
       apply();
-      window.addEventListener("scroll", onScrollOrResize, { passive: true });
-      window.addEventListener("resize", onScrollOrResize);
-      window.visualViewport?.addEventListener("scroll", onScrollOrResize, {
-        passive: true,
-      });
-      window.visualViewport?.addEventListener("resize", onScrollOrResize);
+      const opts: AddEventListenerOptions = { passive: true };
+
+      function attach(): void {
+        if (isAttached) return;
+        isAttached = true;
+        window.addEventListener("scroll", onScrollOrResize, opts);
+        window.addEventListener("resize", onScrollOrResize);
+        window.visualViewport?.addEventListener("scroll", onScrollOrResize, opts);
+        window.visualViewport?.addEventListener("resize", onScrollOrResize);
+        onScrollOrResize();
+      }
+
+      function detach(): void {
+        if (!isAttached) return;
+        isAttached = false;
+        window.removeEventListener("scroll", onScrollOrResize);
+        window.removeEventListener("resize", onScrollOrResize);
+        window.visualViewport?.removeEventListener("scroll", onScrollOrResize);
+        window.visualViewport?.removeEventListener("resize", onScrollOrResize);
+      }
+
+      attach();
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          if (!entry) return;
+          if (entry.isIntersecting) attach();
+          else detach();
+        },
+        // Keep it active a bit before/after it's visible so it doesn't "snap" on fast scroll.
+        { root: null, threshold: 0, rootMargin: "250px 0px 250px 0px" },
+      );
+      io.observe(panel);
     }
 
     initHeroScreenshotScrollDepth();
@@ -990,17 +1030,35 @@ const youtubeEmbedQuery = youtubeVideoId
       width: 52%;
       height: 86%;
     }
+
     .device-right {
       right: 2%;
       top: 10%;
       width: 52%;
       height: 86%;
     }
+
     .device-center {
       left: 50%;
       top: 3%;
       width: 42%;
       height: 94%;
+    }
+
+    [data-app-landing-glow-parallax] {
+      will-change: transform;
+      contain: paint;
+      transform: translateZ(0);
+    }
+
+    [data-app-landing-hero-depth-panel] {
+      contain: layout;
+    }
+
+    [data-app-landing-hero-depth-layer] {
+      will-change: transform;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
     }
 
     [data-app-feature-parallax] {
