@@ -3,6 +3,61 @@ import AppLandingAerium from "../../components/AppLandingAerium.astro";
 
 const heroSpotlightStats = [{ label: "Google Play downloads", value: "400k+" }];
 
+/** English names, sorted A–Z (matches in-app rhyme locales). */
+const rhymeLanguages = [
+  "Afrikaans",
+  "Albanian",
+  "Arabic",
+  "Armenian",
+  "Azerbaijani",
+  "Basque",
+  "Bosnian",
+  "Bulgarian",
+  "Catalan",
+  "Chinese",
+  "Croatian",
+  "Czech",
+  "Danish",
+  "Dutch",
+  "English",
+  "English (United States)",
+  "Esperanto",
+  "Estonian",
+  "Finnish",
+  "French",
+  "Georgian",
+  "German",
+  "Greek",
+  "Hindi",
+  "Hungarian",
+  "Indonesian",
+  "Italian",
+  "Kannada",
+  "Korean",
+  "Latin",
+  "Latvian",
+  "Lithuanian",
+  "Macedonian",
+  "Malay",
+  "Malayalam",
+  "Norwegian",
+  "Persian",
+  "Polish",
+  "Portuguese",
+  "Romanian",
+  "Russian",
+  "Serbian",
+  "Slovak",
+  "Slovenian",
+  "Spanish",
+  "Swedish",
+  "Tamil",
+  "Turkish",
+  "Urdu",
+  "Vietnamese",
+  "Welsh",
+];
+
 const stats = [
   { label: "Languages", value: "50+" },
   { label: "Rhyme engine", value: "Double Rhyme" },
@@ -124,6 +179,7 @@ const features = [
   stats={stats}
   testimonials={testimonials}
   features={features}
+  rhymeLanguages={rhymeLanguages}
   featuresSectionTitle="Features"
   featuresSectionSubtitle="Beats, tempo, multilingual prompts, and recording: everything tuned for consistent practice."
   postCarouselBlurb={{
