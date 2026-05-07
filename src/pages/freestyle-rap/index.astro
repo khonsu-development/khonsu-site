@@ -58,9 +58,11 @@ const rhymeLanguages = [
   "Welsh",
 ];
 
+const doubleRhymeLogoStat = `<a href="https://double-rhyme.com/" target="_blank" rel="noopener noreferrer" aria-label="Double Rhyme"><img src="/apps/double-rhyme/doppelreim.png" alt="Double Rhyme" width="193" height="248" loading="lazy" decoding="async" /></a>`;
+
 const stats = [
   { label: "Languages", value: "50+" },
-  { label: "Rhyme engine", value: "Double Rhyme" },
+  { label: "Rhyme engine", valueHtml: doubleRhymeLogoStat },
   { label: "Practice flow", value: "Beats + prompts" },
 ];
 
@@ -205,7 +207,7 @@ const features = [
     {
       q: "Where do the rhymes come from?",
       aHtml:
-        'The app is powered by <a href="https://double-rhyme.com/" target="_blank" rel="noopener noreferrer">Double Rhyme</a> for richer rhyme material than basic lists. Some rhymes are also created and reviewed by users.',
+        'The app is powered by <a href="https://double-rhyme.com/" target="_blank" rel="noopener noreferrer">Double Rhyme</a>, the leader in complex rhyme generation, for richer rhyme material than basic lists. Some rhymes are also created and reviewed by users.',
     },
   ]}
   termsUrl="/freestyle-rap/terms"
