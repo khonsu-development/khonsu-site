@@ -5,10 +5,10 @@ import AppCubeLogoExplainer from "../components/AppCubeLogoExplainer.astro";
 import AppIconBlurbSection from "../components/AppIconBlurbSection.astro";
 
 const appIconImages = [
-  {src: "/apps/alphabets/alphabets-icon-round.png", alt: "World of Alphabets app icon"},
-  {src: "/apps/dinosaurs/dinosaurs-icon-round.png", alt: "World of Dinosaurs app icon"},
-  {src: "/apps/freestyle/freestyle-icon-round.png", alt: "Freestyle Rap app icon"},
-  {src: "/apps/communism/communism-icon-round.png", alt: "World of Communism app icon"},
+  { src: "/apps/alphabets/alphabets-icon-round.png", alt: "World of Alphabets app icon" },
+  { src: "/apps/dinosaurs/dinosaurs-icon-round.png", alt: "World of Dinosaurs app icon" },
+  { src: "/apps/freestyle/freestyle-icon-round.png", alt: "Freestyle Rap app icon" },
+  { src: "/apps/communism/communism-icon-round.png", alt: "World of Communism app icon" },
 ];
 ---
 
@@ -189,8 +189,8 @@ const appIconImages = [
                   class="text-zinc-200 underline decoration-white/20 underline-offset-2 transition hover:text-white"
                   href="https://fitprimers.com/"
                   target="_blank"
-                  rel="noopener noreferrer"
-                >FitPrimers.com</a>.
+                  rel="noopener noreferrer">FitPrimers.com</a
+                >.
               </p>
             </div>
             <a
@@ -230,7 +230,7 @@ const appIconImages = [
             logoSrc="/khonsu/logo/logo-white.svg"
             logoAlt="Khonsu"
             logoImgClass="h-20 w-20 sm:h-28 sm:w-28"
-            faces={[{position: "right", body: "Khonsu's mummy bandages"}]}
+            faces={[{ position: "right", body: "Khonsu's mummy bandages" }]}
           />
         </div>
       </Container>
@@ -319,8 +319,8 @@ const appIconImages = [
         }
       }
 
-      window.addEventListener("scroll", onScroll, {passive: true});
-      window.addEventListener("resize", onScroll, {passive: true});
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll, { passive: true });
       update();
     })();
   </script>
