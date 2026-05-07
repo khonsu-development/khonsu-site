@@ -820,7 +820,7 @@ const youtubeEmbedQuery = youtubeVideoId
       }
 
       apply();
-      const opts: AddEventListenerOptions = { passive: true };
+      const opts = { passive: true };
 
       function attach(): void {
         if (isAttached) return;
@@ -867,11 +867,22 @@ const youtubeEmbedQuery = youtubeVideoId
         return;
       }
 
+      // On small screens the feature layout stacks the screenshot above the copy.
+      // Parallax translation can push the screenshot into the legend text, so disable it.
+      const enableMq = window.matchMedia("(min-width: 768px)");
+      const clearTransforms = (): void => {
+        for (const el of els) el.style.removeProperty("transform");
+      };
+
       const maxPx = 64;
       let rafId = 0;
 
       function apply(): void {
         rafId = 0;
+        if (!enableMq.matches) {
+          clearTransforms();
+          return;
+        }
         const viewportH = window.innerHeight || 1;
         const half = viewportH / 2;
 
@@ -901,6 +912,11 @@ const youtubeEmbedQuery = youtubeVideoId
       window.addEventListener("resize", onScrollOrResize);
       window.visualViewport?.addEventListener("scroll", onScrollOrResize, { passive: true });
       window.visualViewport?.addEventListener("resize", onScrollOrResize);
+
+      enableMq.addEventListener("change", () => {
+        clearTransforms();
+        onScrollOrResize();
+      });
     }
 
     initFeatureScreenshotParallax();
