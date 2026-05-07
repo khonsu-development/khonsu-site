@@ -474,6 +474,8 @@ const youtubeEmbedQuery = youtubeVideoId
                             src={f.imageSrc}
                             alt={f.imageAlt ?? f.title}
                             class="relative block h-auto max-h-[420px] w-auto max-w-full rounded-none object-contain sm:max-h-[520px]"
+                            data-app-feature-parallax
+                            data-parallax-speed={String(0.6 + (i % 3) * 0.15)}
                             loading="lazy"
                             decoding="async"
                             draggable="false"
@@ -814,6 +816,53 @@ const youtubeEmbedQuery = youtubeVideoId
 
     initHeroScreenshotScrollDepth();
 
+    function initFeatureScreenshotParallax(): void {
+      const els = Array.from(document.querySelectorAll<HTMLElement>("[data-app-feature-parallax]"));
+      if (!els.length) return;
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        for (const el of els) el.style.removeProperty("transform");
+        return;
+      }
+
+      const maxPx = 64;
+      let rafId = 0;
+
+      function apply(): void {
+        rafId = 0;
+        const viewportH = window.innerHeight || 1;
+        const half = viewportH / 2;
+
+        for (const el of els) {
+          const rect = el.getBoundingClientRect();
+          if (rect.height <= 0) continue;
+
+          const mid = rect.top + rect.height / 2;
+          const norm = (mid - half) / half; // -1 (top) .. 0 (center) .. 1 (bottom)
+          const clamped = Math.max(-1, Math.min(1, norm));
+
+          const speed = Number.parseFloat(el.getAttribute("data-parallax-speed") ?? "0.25");
+          const strength = Math.max(0, Math.min(1, speed));
+          const offset = -clamped * maxPx * strength;
+          const scale = 1 + 0.02 * strength;
+          el.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0) scale(${scale.toFixed(3)})`;
+        }
+      }
+
+      function onScrollOrResize(): void {
+        if (rafId !== 0) return;
+        rafId = window.requestAnimationFrame(apply);
+      }
+
+      apply();
+      window.addEventListener("scroll", onScrollOrResize, { passive: true });
+      window.addEventListener("resize", onScrollOrResize);
+      window.visualViewport?.addEventListener("scroll", onScrollOrResize, { passive: true });
+      window.visualViewport?.addEventListener("resize", onScrollOrResize);
+    }
+
+    initFeatureScreenshotParallax();
+
     function initFaqWholeCardToggle(): void {
       document.querySelectorAll<HTMLDetailsElement>("[data-app-faq-details]").forEach((el) => {
         el.addEventListener("click", (e) => {
@@ -950,6 +999,10 @@ const youtubeEmbedQuery = youtubeVideoId
       top: 3%;
       width: 42%;
       height: 94%;
+    }
+
+    [data-app-feature-parallax] {
+      will-change: transform;
     }
   </style>
 </BaseLayout>
