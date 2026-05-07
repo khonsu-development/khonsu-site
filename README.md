@@ -9,6 +9,8 @@ pnpm install
 pnpm run dev
 ```
 
+Node.js: this repo expects **Node 20** (Cloudflare Pages runs Node 20+; newer local Node majors may break Astro builds).
+
 ## Build
 
 ```bash
@@ -28,6 +30,7 @@ The static output is generated in `dist/`.
 - **Build command**: `pnpm run build`
 - **Build output directory**: `dist`
 - **Node.js version**: `20` (or newer)
+- **Production branch**: `main` (deploys on every push)
 
 Optional CLI deploy (requires Wrangler login):
 
