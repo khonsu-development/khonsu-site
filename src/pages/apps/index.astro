@@ -26,17 +26,58 @@ const orderedApps = [...apps].sort((a, b) => {
   description="Discover Khonsu’s educational apps: bite-sized learning experiences that go deep into niche topics. Beautiful design, clear structure, and satisfying progress."
   canonicalPath="/apps"
 >
-  <section class="py-12 sm:py-16">
-    <Container>
+  <section
+    data-apps-hero
+    class="relative isolate -mt-16 flex min-h-[min(60vh,560px)] flex-col justify-center overflow-hidden border-b border-white/10 pt-16 sm:min-h-[min(64vh,640px)]"
+  >
+    <div
+      data-apps-hero-parallax
+      class="pointer-events-none absolute inset-x-0 top-[-15%] bottom-[-15%] z-0 will-change-transform"
+      aria-hidden="true"
+    >
+      <div
+        class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style="background-image: url('/stock/landscape/lake.jpg')"
+      >
+      </div>
+      <div
+        class="absolute inset-0"
+        style="background: linear-gradient(
+          to bottom,
+          rgba(9, 9, 11, 0.18) 0%,
+          rgba(9, 9, 11, 0.26) 18%,
+          rgba(9, 9, 11, 0.34) 36%,
+          rgba(9, 9, 11, 0.46) 52%,
+          rgba(9, 9, 11, 0.6) 66%,
+          rgba(9, 9, 11, 0.76) 79%,
+          rgba(9, 9, 11, 0.9) 90%,
+          rgb(9, 9, 11) 100%
+        );"
+      >
+      </div>
+    </div>
+    <Container class="relative z-10 py-16 sm:py-24">
       <div class="max-w-2xl">
-        <h1 class="text-3xl font-black tracking-tight sm:text-5xl">Apps</h1>
-        <p class="mt-4 text-zinc-300">
+        <h1
+          class="text-3xl font-black tracking-tight text-white sm:text-5xl"
+          style="text-shadow: 0 0.06em 0.35em rgba(0, 0, 0, 0.65), 0 0.12em 0.85em rgba(0, 0, 0, 0.45);"
+        >
+          Apps
+        </h1>
+        <p
+          class="mt-4 text-zinc-50"
+          style="text-shadow: 0 0.08em 0.3em rgba(0, 0, 0, 0.55), 0 0.1em 0.65em rgba(0, 0, 0, 0.4);"
+        >
           A small, growing catalog of learning apps, each one a carefully crafted “world” you can explore in minutes a
           day (or lose an entire evening to).
         </p>
       </div>
+    </Container>
+  </section>
 
-      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+  <section class="py-12 sm:py-16">
+    <Container>
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {
           orderedApps.map((app) => (
             <AppCard
@@ -92,6 +133,36 @@ const orderedApps = [...apps].sort((a, b) => {
         },
         true,
       );
+    })();
+  </script>
+
+  <script is:inline>
+    (function () {
+      if (typeof window === "undefined") return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      const heroLayer = document.querySelector("[data-apps-hero-parallax]");
+      if (!heroLayer) return;
+
+      const heroFactor = 0.32;
+      let ticking = false;
+
+      function update() {
+        const scrollY = window.scrollY;
+        heroLayer.style.transform = `translate3d(0, ${scrollY * heroFactor}px, 0)`;
+        ticking = false;
+      }
+
+      function onScroll() {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll, { passive: true });
+      update();
     })();
   </script>
 </BaseLayout>
