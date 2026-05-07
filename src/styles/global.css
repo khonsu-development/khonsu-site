@@ -23,7 +23,7 @@
     --color-app-alphabets: #5b7cfa;
     --color-app-dinosaurs: #22c55e;
     --color-app-communism: #d62b2b;
-    --color-app-freestyle: #f59e0b;
+    --color-app-freestyle: #fdb100;
 
     /*
           App palettes (source-of-truth from the apps)
@@ -83,7 +83,7 @@
 
     /* Freestyle Rap */
     --color-app-freestyle-primary: #212121;
-    --color-app-freestyle-secondary: #fafafa;
+    --color-app-freestyle-secondary: #fdb100;
     --color-app-freestyle-orange: #fdb100;
     --color-app-freestyle-white: #ffffff;
     --color-app-freestyle-black: #000000;

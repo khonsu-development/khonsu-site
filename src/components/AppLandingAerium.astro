@@ -148,10 +148,19 @@ const themeStyle = `--app-primary: var(--color-${themeColor}-primary); --app-sec
 
 /** Stronger cyan/blue ambience on Alphabets so hero glow reads clearly on zinc-950. */
 const isAlphabetsTheme = themeColor === "app-alphabets";
+/** Primary is charcoal; fixed parallax blobs need gold so they read like other themed landings. */
+const isFreestyleTheme = themeColor === "app-freestyle";
 const heroGlowTopPrimaryPct = isAlphabetsTheme ? 52 : 22;
 const heroGlowBottomSecondaryPct = isAlphabetsTheme ? 24 : 16;
 const heroGlowScreenshotPrimaryPct = isAlphabetsTheme ? 48 : 18;
 const heroGlowTopOrbClass = isAlphabetsTheme ? "h-[48rem] w-[80rem]" : "h-[42rem] w-[72rem]";
+
+const fixedGlowTopStyle = isFreestyleTheme
+  ? "opacity: 0.52; background: radial-gradient(closest-side, color-mix(in oklab, var(--app-secondary) 40%, transparent), transparent);"
+  : `opacity: ${isAlphabetsTheme ? 0.82 : 0.66}; background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) ${isAlphabetsTheme ? 42 : 34}%, transparent), transparent);`;
+const fixedGlowBottomStyle = isFreestyleTheme
+  ? "opacity: 0.4; background: radial-gradient(closest-side, color-mix(in oklab, var(--app-secondary) 50%, transparent), transparent);"
+  : `opacity: ${isAlphabetsTheme ? 0.62 : 0.52}; background: radial-gradient(closest-side, color-mix(in oklab, var(--app-secondary) 38%, transparent), transparent);`;
 
 const featuresAreRich = features.some((f) => Boolean(f.imageSrc));
 const reviewsHeadingId = `reviews-heading-${themeColor}`;
@@ -201,12 +210,12 @@ const youtubeEmbedQuery = youtubeVideoId
       <div class="absolute inset-[-12%]" data-app-landing-glow-parallax>
         <div
           class="absolute top-[36%] left-1/2 h-192 w-[min(94vw,88rem)] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
-          style={`opacity: ${isAlphabetsTheme ? 0.82 : 0.66}; background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) ${isAlphabetsTheme ? 42 : 34}%, transparent), transparent);`}
+          style={fixedGlowTopStyle}
         >
         </div>
         <div
           class="absolute bottom-[-8%] left-1/2 h-[min(42vh,28rem)] w-[min(100vw,78rem)] -translate-x-1/2 rounded-full blur-3xl"
-          style={`opacity: ${isAlphabetsTheme ? 0.62 : 0.52}; background: radial-gradient(closest-side, color-mix(in oklab, var(--app-secondary) 38%, transparent), transparent);`}
+          style={fixedGlowBottomStyle}
         >
         </div>
       </div>
