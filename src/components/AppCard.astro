@@ -14,18 +14,19 @@ const style = themeColor
   : `--app-primary: var(--color-brand); --app-secondary: var(--color-brand2);`;
 
 const topics = (app.data.topics ?? []).slice(0, 3);
-const platforms = app.data.platforms ?? [];
+const platforms = (app.data.platforms ?? []).filter((p) => p !== "android");
 ---
 
 <a
   href={href}
   class="card group relative overflow-hidden transition hover:bg-white/7 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
   style={style}
+  data-app-card
 >
   <div aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100">
     <div
       class="absolute inset-0"
-      style={`background: radial-gradient(600px circle at 30% 20%, color-mix(in oklab, var(--app-primary) 30%, transparent), transparent 55%);`}
+      style={`background: radial-gradient(600px circle at var(--app-card-x, 30%) var(--app-card-y, 20%), color-mix(in oklab, var(--app-primary) 30%, transparent), transparent 55%);`}
     >
     </div>
   </div>

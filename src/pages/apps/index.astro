@@ -52,4 +52,46 @@ const orderedApps = [...apps].sort((a, b) => {
       </div>
     </Container>
   </section>
+
+  <script is:inline>
+    (() => {
+      if (window.__khonsuAppCardsCursorGradientInit) return;
+      window.__khonsuAppCardsCursorGradientInit = true;
+
+      const selector = "[data-app-card]";
+
+      const update = (el, clientX, clientY) => {
+        const rect = el.getBoundingClientRect();
+        el.style.setProperty("--app-card-x", `${clientX - rect.left}px`);
+        el.style.setProperty("--app-card-y", `${clientY - rect.top}px`);
+      };
+
+      const clear = (el) => {
+        el.style.removeProperty("--app-card-x");
+        el.style.removeProperty("--app-card-y");
+      };
+
+      window.addEventListener(
+        "pointermove",
+        (e) => {
+          const el = e.target && e.target.closest ? e.target.closest(selector) : null;
+          if (!el) return;
+          update(el, e.clientX, e.clientY);
+        },
+        { passive: true },
+      );
+
+      window.addEventListener(
+        "pointerout",
+        (e) => {
+          const from = e.target && e.target.closest ? e.target.closest(selector) : null;
+          if (!from) return;
+          const to = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest(selector) : null;
+          if (to === from) return;
+          clear(from);
+        },
+        true,
+      );
+    })();
+  </script>
 </BaseLayout>
