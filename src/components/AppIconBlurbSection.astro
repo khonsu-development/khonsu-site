@@ -1,7 +1,13 @@
 ---
 import Container from "./Container.astro";
 
-export type IconImage = { src: string; alt: string; parallax?: boolean };
+export type IconImage = {
+  src: string;
+  alt: string;
+  /** When set, the icon wraps a link (e.g. app landing URL). */
+  href?: string;
+  parallax?: boolean;
+};
 
 type Props = {
   title: string;
@@ -14,10 +20,13 @@ type Props = {
 
 const { title, body, icons, mirror = false, iconLoading = "lazy" } = Astro.props;
 
+const layerMotionClass = "relative origin-center motion-safe:will-change-transform";
+
+const iconLinkClass =
+  "block rounded-full outline-offset-4 transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60";
+
 const parallaxIcons = icons.filter((img) => img.parallax !== false);
 const staticIcons = icons.filter((img) => img.parallax === false);
-
-const ICON_BASE_ROTATIONS = [-4, 3, -2, 2, -3, 4, -1, 1] as const;
 ---
 
 <section class="py-12 sm:py-16">
@@ -42,37 +51,56 @@ const ICON_BASE_ROTATIONS = [-4, 3, -2, 2, -3, 4, -1, 1] as const;
 
       <div class:list={[mirror ? "order-2 lg:order-1 lg:col-span-5 lg:col-start-1" : "lg:col-span-5"]}>
         <div
-          class="mt-6 flex w-full flex-wrap items-center justify-center gap-2 px-3 [transform-style:preserve-3d] perspective-[900px] sm:mt-7 sm:gap-3 sm:px-6 lg:mt-0 lg:justify-center lg:px-6"
+          class="mt-6 flex w-full flex-wrap items-center justify-center gap-2 px-3 sm:mt-7 sm:gap-3 sm:px-6 lg:mt-0 lg:justify-center lg:px-6"
           data-stock-depth-panel
         >
           {
             parallaxIcons.map((img, i) => (
-              <div
-                class="origin-center motion-safe:will-change-transform"
-                data-stock-depth-layer
-                data-base-rotate={ICON_BASE_ROTATIONS[i % ICON_BASE_ROTATIONS.length]}
-                data-depth-index={i}
-              >
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  class="block h-14 w-14 select-none sm:h-16 sm:w-16"
-                  loading={iconLoading}
-                  decoding="async"
-                />
+              <div class={layerMotionClass} data-stock-depth-layer data-depth-index={i}>
+                {img.href ? (
+                  <a href={img.href} class={iconLinkClass}>
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      class="block h-14 w-14 select-none sm:h-16 sm:w-16"
+                      loading={iconLoading}
+                      decoding="async"
+                    />
+                  </a>
+                ) : (
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    class="block h-14 w-14 select-none sm:h-16 sm:w-16"
+                    loading={iconLoading}
+                    decoding="async"
+                  />
+                )}
               </div>
             ))
           }
           {
-            staticIcons.map((img) => (
-              <img
-                src={img.src}
-                alt={img.alt}
-                class="block h-14 w-14 select-none sm:h-16 sm:w-16"
-                loading={iconLoading}
-                decoding="async"
-              />
-            ))
+            staticIcons.map((img) =>
+              img.href ? (
+                <a href={img.href} class:list={[iconLinkClass, "relative"]}>
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    class="block h-14 w-14 select-none sm:h-16 sm:w-16"
+                    loading={iconLoading}
+                    decoding="async"
+                  />
+                </a>
+              ) : (
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  class="relative block h-14 w-14 select-none sm:h-16 sm:w-16"
+                  loading={iconLoading}
+                  decoding="async"
+                />
+              ),
+            )
           }
         </div>
       </div>
@@ -108,14 +136,11 @@ const ICON_BASE_ROTATIONS = [-4, 3, -2, 2, -3, 4, -1, 1] as const;
 
         for (const layer of layers) {
           const idx = Number.parseInt(layer.dataset.depthIndex ?? layer.getAttribute("data-depth-index") ?? "0", 10);
-          const base = Number.parseFloat(layer.dataset.baseRotate ?? layer.getAttribute("data-base-rotate") ?? "0");
-          if (Number.isNaN(base)) continue;
 
           const depth = idx - mid;
           const parallaxY = norm * 18 * depth;
-          const zDepth = depth * 14;
 
-          layer.style.transform = `rotate(${base}deg) translate3d(0, ${parallaxY.toFixed(2)}px, ${zDepth}px)`;
+          layer.style.transform = `translate3d(0, ${parallaxY.toFixed(2)}px, 0)`;
         }
       }
     }
