@@ -55,7 +55,7 @@ const schemaOrg = {
           <div class="relative">
             {
               app.data.coverImage ? (
-                <div class="relative aspect-[16/8] overflow-hidden">
+                <div class="relative aspect-16/8 overflow-hidden">
                   <img
                     src={app.data.coverImage}
                     alt={app.data.coverImageAlt ?? `${app.data.name} cover image`}
@@ -65,13 +65,13 @@ const schemaOrg = {
                   />
                   <div
                     aria-hidden="true"
-                    class="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/50 to-transparent"
+                    class="pointer-events-none absolute inset-0 bg-linear-to-t from-zinc-950 via-zinc-950/50 to-transparent"
                   />
                 </div>
               ) : (
                 <div
                   aria-hidden="true"
-                  class="aspect-[16/8]"
+                  class="aspect-16/8"
                   style={`background: radial-gradient(900px circle at 30% 25%, color-mix(in oklab, var(--app-primary) 38%, transparent), transparent 55%), linear-gradient(135deg, color-mix(in oklab, var(--app-primary) 22%, black), color-mix(in oklab, var(--app-secondary) 16%, black));`}
                 />
               )
@@ -131,7 +131,7 @@ const schemaOrg = {
                 {
                   app.data.googlePlayUrl ? (
                     <a
-                      class="inline-flex focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
+                      class="inline-flex focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-white/60"
                       href={app.data.googlePlayUrl}
                       rel="noopener noreferrer"
                       target="_blank"

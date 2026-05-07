@@ -200,7 +200,7 @@ const youtubeEmbedQuery = youtubeVideoId
     <div aria-hidden="true" class="pointer-events-none fixed inset-0 z-0 overflow-hidden" data-app-landing-fixed-glow>
       <div class="absolute inset-[-12%]" data-app-landing-glow-parallax>
         <div
-          class="absolute top-[36%] left-1/2 h-[48rem] w-[min(94vw,88rem)] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+          class="absolute top-[36%] left-1/2 h-192 w-[min(94vw,88rem)] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
           style={`opacity: ${isAlphabetsTheme ? 0.82 : 0.66}; background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) ${isAlphabetsTheme ? 42 : 34}%, transparent), transparent);`}
         >
         </div>
@@ -233,14 +233,14 @@ const youtubeEmbedQuery = youtubeVideoId
           {
             isAlphabetsTheme ? (
               <div
-                class="absolute -top-36 left-[18%] h-[34rem] w-[34rem] rounded-full blur-3xl"
+                class="absolute -top-36 left-[18%] h-136 w-136 rounded-full blur-3xl"
                 style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) 36%, transparent), transparent);`}
               />
             ) : null
           }
           {
             isAlphabetsTheme ? (
-              <div class="absolute -bottom-72 left-1/2 flex h-[42rem] w-[72rem] -translate-x-1/2 justify-center">
+              <div class="absolute -bottom-72 left-1/2 flex h-168 w-6xl -translate-x-1/2 justify-center">
                 <div
                   class="h-full w-full rounded-full blur-3xl"
                   style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-secondary) ${heroGlowBottomSecondaryPct}%, transparent), transparent);`}
@@ -248,12 +248,12 @@ const youtubeEmbedQuery = youtubeVideoId
               </div>
             ) : (
               <div
-                class="absolute -bottom-72 left-1/2 h-[42rem] w-[72rem] -translate-x-1/2 rounded-full blur-3xl"
+                class="absolute -bottom-72 left-1/2 h-168 w-6xl -translate-x-1/2 rounded-full blur-3xl"
                 style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-secondary) ${heroGlowBottomSecondaryPct}%, transparent), transparent);`}
               />
             )
           }
-          <div class="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-transparent"></div>
+          <div class="absolute inset-0 bg-linear-to-b from-white/0 via-white/0 to-transparent"></div>
         </div>
 
         <Container>
@@ -291,7 +291,7 @@ const youtubeEmbedQuery = youtubeVideoId
               {
                 googlePlayUrl ? (
                   <a
-                    class="inline-flex focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
+                    class="inline-flex focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-white/60"
                     href={googlePlayUrl}
                     rel="noopener noreferrer"
                     target="_blank"
@@ -321,7 +321,7 @@ const youtubeEmbedQuery = youtubeVideoId
               <div
                 class:list={[
                   "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl",
-                  isAlphabetsTheme ? "h-[33rem] w-[33rem] sm:h-[38rem] sm:w-[38rem]" : "h-[26rem] w-[26rem]",
+                  isAlphabetsTheme ? "h-132 w-132 sm:h-152 sm:w-152" : "h-104 w-104",
                 ]}
                 style={isAlphabetsTheme
                   ? `background: radial-gradient(ellipse 68% 66% at 50% 44%, color-mix(in oklab, var(--app-primary) ${heroGlowScreenshotPrimaryPct}%, transparent) 50%, transparent 76%);`
@@ -336,14 +336,14 @@ const youtubeEmbedQuery = youtubeVideoId
                   <img
                     src={centerScreenshot ?? screenshots[0]}
                     alt={`${appName} app screenshot`}
-                    class="block h-auto max-h-[28rem] w-full object-contain"
+                    class="block h-auto max-h-112 w-full object-contain"
                     loading="lazy"
                     decoding="async"
                     draggable="false"
                   />
                 </div>
               </div>
-              <div class="relative hidden h-[34rem] w-full sm:block" data-app-landing-hero-depth-panel>
+              <div class="relative hidden h-136 w-full sm:block" data-app-landing-hero-depth-panel>
                 <div
                   class="device device-left"
                   data-app-landing-hero-depth-layer
@@ -499,7 +499,7 @@ const youtubeEmbedQuery = youtubeVideoId
                       >
                         <button
                           type="button"
-                          class="group relative z-10 inline-block max-w-[520px] cursor-zoom-in border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
+                          class="group relative z-10 inline-block max-w-130 cursor-zoom-in border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-white/60"
                           aria-label={`Browse screenshots (opens gallery): ${f.imageAlt ?? f.title}`}
                           data-app-feature-pswp-trigger
                           data-app-feature-pswp-index={String(f.featurePswpIndex ?? 0)}
@@ -508,7 +508,7 @@ const youtubeEmbedQuery = youtubeVideoId
                           <img
                             src={f.imageSrc}
                             alt={f.imageAlt ?? f.title}
-                            class="relative block h-auto max-h-[420px] w-auto max-w-full rounded-none object-contain sm:max-h-[520px]"
+                            class="relative block h-auto max-h-105 w-auto max-w-full rounded-none object-contain sm:max-h-130"
                             data-app-feature-parallax
                             data-parallax-speed={String(0.6 + (i % 3) * 0.15)}
                             loading="lazy"
@@ -573,7 +573,7 @@ const youtubeEmbedQuery = youtubeVideoId
                 aria-label={`${rhymeLanguages.length} languages`}
               >
                 {rhymeLanguages.map((name) => (
-                  <li class="rounded-full bg-white/[0.06] px-3 py-1.5 text-sm text-zinc-200 ring-1 ring-white/10">
+                  <li class="rounded-full bg-white/6 px-3 py-1.5 text-sm text-zinc-200 ring-1 ring-white/10">
                     {name}
                   </li>
                 ))}
@@ -586,7 +586,7 @@ const youtubeEmbedQuery = youtubeVideoId
       {
         writingSystemsWithSigns?.length ? (
           <section class="overflow-x-clip py-12 sm:py-16">
-            <Container class="!max-w-7xl">
+            <Container class="max-w-7xl!">
               <div class="mx-auto max-w-2xl text-center">
                 <h2 class="text-2xl font-semibold tracking-tight text-balance text-white sm:text-3xl">
                   {writingSystemsTitle ?? "Writing systems with signs"}
@@ -600,11 +600,11 @@ const youtubeEmbedQuery = youtubeVideoId
               <div class="relative isolate mx-auto mt-10 w-full">
                 <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -inset-y-32 z-0 opacity-70">
                   <div
-                    class="absolute top-1/2 left-1/2 h-[46rem] w-[min(110vw,88rem)] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+                    class="absolute top-1/2 left-1/2 h-184 w-[min(110vw,88rem)] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
                     style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) 26%, transparent), transparent);`}
                   />
                   <div
-                    class="absolute bottom-[-20%] left-1/2 h-[28rem] w-[min(100vw,72rem)] -translate-x-1/2 rounded-full blur-3xl"
+                    class="absolute bottom-[-20%] left-1/2 h-112 w-[min(100vw,72rem)] -translate-x-1/2 rounded-full blur-3xl"
                     style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) 14%, transparent), transparent);`}
                   />
                 </div>
@@ -739,7 +739,7 @@ const youtubeEmbedQuery = youtubeVideoId
                 googlePlayUrl ? (
                   <div class="flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center">
                     <a
-                      class="inline-flex focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
+                      class="inline-flex focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-white/60"
                       href={googlePlayUrl}
                       rel="noopener noreferrer"
                       target="_blank"

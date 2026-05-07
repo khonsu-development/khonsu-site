@@ -34,19 +34,19 @@ const apps = order
         <source src="/videos/stars-hero-h264.mp4" type="video/mp4" />
       </video>
     </div>
-    <div class="pointer-events-none absolute inset-0 z-[1] bg-zinc-950/45"></div>
-    <div class="pointer-events-none absolute inset-0 z-[2] opacity-70">
+    <div class="pointer-events-none absolute inset-0 z-1 bg-zinc-950/45"></div>
+    <div class="pointer-events-none absolute inset-0 z-2 opacity-70">
       <div
-        class="absolute -top-32 left-1/2 h-[520px] w-[920px] -translate-x-1/2 rounded-full bg-gradient-to-tr from-indigo-500/20 via-fuchsia-500/20 to-amber-400/10 blur-3xl"
+        class="absolute -top-32 left-1/2 h-130 w-230 -translate-x-1/2 rounded-full bg-linear-to-tr from-indigo-500/20 via-fuchsia-500/20 to-amber-400/10 blur-3xl"
       >
       </div>
       <div
-        class="absolute -bottom-40 left-1/2 h-[520px] w-[920px] -translate-x-1/2 rounded-full bg-gradient-to-tr from-emerald-400/10 via-cyan-400/10 to-indigo-500/10 blur-3xl"
+        class="absolute -bottom-40 left-1/2 h-130 w-230 -translate-x-1/2 rounded-full bg-linear-to-tr from-emerald-400/10 via-cyan-400/10 to-indigo-500/10 blur-3xl"
       >
       </div>
     </div>
 
-    <div class="relative z-[3] mx-auto w-full max-w-6xl px-5 py-16 sm:py-24">
+    <div class="relative z-3 mx-auto w-full max-w-6xl px-5 py-16 sm:py-24">
       <div class="max-w-2xl">
         <p class="text-sm font-semibold tracking-wide text-zinc-300">Learned anything fun today?</p>
         <h1 class="mt-4 text-4xl font-black tracking-tight text-white sm:text-6xl">
@@ -135,10 +135,7 @@ const apps = order
   </style>
 
   <script>
-    function initHomeHeroVideoParallax(): void {
-      const video = document.querySelector<HTMLElement>("[data-hero-video-parallax]");
-      if (!(video instanceof HTMLElement)) return;
-
+    function attachHomeHeroVideoParallax(video: HTMLElement): void {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         video.style.removeProperty("transform");
         return;
@@ -164,6 +161,12 @@ const apps = order
       window.addEventListener("resize", onScrollOrResize);
       window.visualViewport?.addEventListener("scroll", onScrollOrResize, { passive: true });
       window.visualViewport?.addEventListener("resize", onScrollOrResize);
+    }
+
+    function initHomeHeroVideoParallax(): void {
+      const video = document.querySelector<HTMLElement>("[data-hero-video-parallax]");
+      if (!(video instanceof HTMLElement)) return;
+      attachHomeHeroVideoParallax(video);
     }
 
     initHomeHeroVideoParallax();

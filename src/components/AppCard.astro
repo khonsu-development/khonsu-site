@@ -32,7 +32,7 @@ const platforms = (app.data.platforms ?? []).filter((p) => p !== "android");
   </div>
 
   <div class="relative">
-    <div class="relative aspect-[16/10] overflow-hidden">
+    <div class="relative aspect-16/10 overflow-hidden">
       {
         app.data.coverImage ? (
           <img
@@ -51,7 +51,7 @@ const platforms = (app.data.platforms ?? []).filter((p) => p !== "android");
       }
       <div
         aria-hidden="true"
-        class="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/40 to-transparent"
+        class="pointer-events-none absolute inset-0 bg-linear-to-t from-zinc-950/90 via-zinc-950/40 to-transparent"
       >
       </div>
     </div>

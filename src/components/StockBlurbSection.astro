@@ -64,11 +64,11 @@ const STOCK_POLAROID_LAYERS = [
                 style={`background: radial-gradient(closest-side, color-mix(in oklab, var(--app-primary) 22%, transparent), transparent);`}
               />
               <div
-                class="relative mx-auto h-[14rem] max-w-xl sm:h-[16rem]"
+                class="relative mx-auto h-56 max-w-xl sm:h-64"
                 data-stock-depth-panel
                 data-stock-depth-panel-two
               >
-                <div class="absolute top-1/2 left-1/2 w-[70%] -translate-x-[60%] -translate-y-[55%]">
+                <div class="absolute top-1/2 left-1/2 w-[70%] translate-x-[-60%] translate-y-[-55%]">
                   <div
                     class="overflow-hidden rounded-lg backface-hidden"
                     data-stock-depth-layer
@@ -86,7 +86,7 @@ const STOCK_POLAROID_LAYERS = [
                     />
                   </div>
                 </div>
-                <div class="absolute top-1/2 left-1/2 w-[72%] -translate-x-[35%] -translate-y-[40%]">
+                <div class="absolute top-1/2 left-1/2 w-[72%] translate-x-[-35%] translate-y-[-40%]">
                   <div
                     class="overflow-hidden rounded-lg backface-hidden"
                     data-stock-depth-layer
@@ -117,7 +117,7 @@ const STOCK_POLAROID_LAYERS = [
               />
               <div
                 aria-hidden="true"
-                class="relative mx-auto min-h-[min(72vw,360px)] w-full max-w-xl [transform-style:preserve-3d] perspective-[1200px] sm:min-h-[380px] lg:max-w-2xl"
+                class="relative mx-auto min-h-[min(72vw,360px)] w-full max-w-xl transform-3d perspective-distant sm:min-h-95 lg:max-w-2xl"
                 data-stock-depth-panel
               >
                 {stockImages.slice(0, STOCK_POLAROID_LAYERS.length).map((img, i) => {
@@ -147,7 +147,7 @@ const STOCK_POLAROID_LAYERS = [
             </div>
           ) : stockImages?.length ? (
             <div
-              class="mt-4 grid gap-3 [transform-style:preserve-3d] perspective-[1000px] sm:mt-5 sm:grid-cols-3"
+              class="mt-4 grid gap-3 transform-3d perspective-[1000px] sm:mt-5 sm:grid-cols-3"
               data-stock-depth-panel
             >
               {stockImages.slice(0, 3).map((img, i) => (

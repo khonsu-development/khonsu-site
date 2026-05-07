@@ -83,11 +83,11 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
         </div>
 
         {threeFaceMode ? (
-          <div class="relative min-h-[11rem] py-1 sm:min-h-[19rem] sm:py-4" data-app-cube-explainer-stage>
+          <div class="relative min-h-44 py-1 sm:min-h-76 sm:py-4" data-app-cube-explainer-stage>
             <div class="relative isolate grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] grid-rows-[auto_auto] gap-x-1.5 gap-y-2 sm:gap-x-2 sm:gap-y-3">
               {/* SVG above the cube layer (z-12 vs z-11) so strokes are not covered by the white PNG */}
               <svg
-                class="pointer-events-none absolute inset-0 z-[12] h-full w-full overflow-visible"
+                class="pointer-events-none absolute inset-0 z-12 h-full w-full overflow-visible"
                 data-app-cube-explainer-svg
                 aria-hidden="true"
               >
@@ -141,23 +141,23 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
                 <circle data-cube-dot="right" r="2.5" fill="white" filter={`url(#${figureId}-line-shadow)`} />
               </svg>
 
-              <div class="relative z-[20] col-span-3 col-start-1 row-start-1 flex -translate-y-5 justify-center sm:-translate-y-10 sm:pb-0">
+              <div class="relative z-20 col-span-3 col-start-1 row-start-1 flex -translate-y-5 justify-center sm:-translate-y-10 sm:pb-0">
                 <p
-                  class="max-w-md px-0.5 text-center text-[15px] leading-relaxed text-pretty text-zinc-300 sm:max-w-[13rem] sm:px-0 sm:text-sm sm:leading-snug [&_em]:italic"
+                  class="max-w-md px-0.5 text-center text-[15px] leading-relaxed text-pretty text-zinc-300 sm:max-w-52 sm:px-0 sm:text-sm sm:leading-snug [&_em]:italic"
                   data-cube-key="top"
                   set:html={top!.body}
                 />
               </div>
 
-              <div class="relative z-[20] col-start-1 row-start-2 flex min-w-0 items-center justify-start pr-0.5 sm:justify-end sm:pr-1">
+              <div class="relative z-20 col-start-1 row-start-2 flex min-w-0 items-center justify-start pr-0.5 sm:justify-end sm:pr-1">
                 <p
-                  class="w-full min-w-0 text-left text-[13px] leading-snug text-pretty text-zinc-300 sm:max-w-[13rem] sm:text-right sm:text-sm sm:leading-snug [&_em]:italic"
+                  class="w-full min-w-0 text-left text-[13px] leading-snug text-pretty text-zinc-300 sm:max-w-52 sm:text-right sm:text-sm sm:leading-snug [&_em]:italic"
                   data-cube-key="left"
                   set:html={left!.body}
                 />
               </div>
 
-              <div class="relative z-[11] col-start-2 row-start-2 flex shrink-0 justify-center self-center">
+              <div class="relative z-11 col-start-2 row-start-2 flex shrink-0 justify-center self-center">
                 <div class="relative inline-block drop-shadow-[0_28px_64px_rgba(0,0,0,0.55)]" data-cube-image-wrap>
                   <img
                     src={logoSrc}
@@ -186,9 +186,9 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
                 </div>
               </div>
 
-              <div class="relative z-[20] col-start-3 row-start-2 flex min-w-0 items-center justify-end pl-0.5 sm:justify-start sm:pl-1">
+              <div class="relative z-20 col-start-3 row-start-2 flex min-w-0 items-center justify-end pl-0.5 sm:justify-start sm:pl-1">
                 <p
-                  class="w-full min-w-0 text-right text-[13px] leading-snug text-pretty text-zinc-300 sm:max-w-[13rem] sm:text-left sm:text-sm sm:leading-snug [&_em]:italic"
+                  class="w-full min-w-0 text-right text-[13px] leading-snug text-pretty text-zinc-300 sm:max-w-52 sm:text-left sm:text-sm sm:leading-snug [&_em]:italic"
                   data-cube-key="right"
                   set:html={right!.body}
                 />
@@ -196,9 +196,9 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
             </div>
           </div>
         ) : (
-          <div class="relative min-h-[10rem] py-1 sm:min-h-[13rem] sm:py-4" data-app-cube-explainer-stage>
+          <div class="relative min-h-40 py-1 sm:min-h-52 sm:py-4" data-app-cube-explainer-stage>
             <svg
-              class="pointer-events-none absolute inset-0 z-[12] h-full w-full overflow-visible"
+              class="pointer-events-none absolute inset-0 z-12 h-full w-full overflow-visible"
               data-app-cube-explainer-svg
               aria-hidden="true"
             >
@@ -229,10 +229,10 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
             </svg>
 
             {/* 1fr | auto (logo) | 1fr: logo column stays viewport-centered; key only in the right track. */}
-            <div class="relative isolate z-[10] grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto_minmax(0,1fr)] sm:items-center sm:gap-x-4">
+            <div class="relative isolate z-10 grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto_minmax(0,1fr)] sm:items-center sm:gap-x-4">
               <div class="hidden sm:block" aria-hidden="true" />
 
-              <div class="relative z-[11] order-1 flex justify-center sm:order-none sm:justify-center">
+              <div class="relative z-11 order-1 flex justify-center sm:order-0 sm:justify-center">
                 <div class="relative inline-block drop-shadow-[0_28px_64px_rgba(0,0,0,0.55)]" data-cube-image-wrap>
                   <img
                     src={logoSrc}
@@ -250,7 +250,7 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
                 </div>
               </div>
 
-              <div class="relative z-[20] order-2 flex justify-center sm:order-none sm:items-center sm:justify-start">
+              <div class="relative z-20 order-2 flex justify-center sm:order-0 sm:items-center sm:justify-start">
                 <p
                   class="w-full max-w-md px-1 text-center text-[15px] leading-relaxed text-pretty text-zinc-300 sm:max-w-[16rem] sm:min-w-0 sm:px-0 sm:text-left sm:text-sm sm:leading-snug [&_em]:italic"
                   data-cube-key="right"
