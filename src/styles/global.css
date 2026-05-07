@@ -4,7 +4,8 @@
 
 @theme {
   --font-sans:
-    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji",
+    sans-serif;
   --color-brand: oklch(0.72 0.16 265);
   --color-brand2: oklch(0.74 0.18 330);
 }
@@ -99,10 +100,7 @@
 
   body {
     touch-action: pan-y;
-  }
-
-  body {
-    font-family: var(--font-sans);
+    font-family: var(--font-sans), sans-serif;
   }
 
   /*
