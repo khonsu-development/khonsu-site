@@ -21,6 +21,7 @@ const apps = order
     <div class="hero-video-wrap absolute inset-0 z-0">
       <video
         class="h-full min-h-full w-full object-cover object-center"
+        data-hero-video-parallax
         autoplay
         muted
         loop
@@ -124,5 +125,47 @@ const apps = order
         background-size: cover;
       }
     }
+
+    [data-hero-video-parallax] {
+      will-change: transform;
+      transform: translate3d(0, 0, 0) scale(1.14);
+      transform-origin: center;
+      backface-visibility: hidden;
+    }
   </style>
+
+  <script>
+    function initHomeHeroVideoParallax(): void {
+      const video = document.querySelector<HTMLElement>("[data-hero-video-parallax]");
+      if (!(video instanceof HTMLElement)) return;
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        video.style.removeProperty("transform");
+        return;
+      }
+
+      const maxPx = 160;
+      const strength = 0.22;
+      let rafId = 0;
+
+      function apply(): void {
+        rafId = 0;
+        const travel = Math.min(window.scrollY * strength, maxPx);
+        video.style.transform = `translate3d(0, ${travel.toFixed(2)}px, 0) scale(1.14)`;
+      }
+
+      function onScrollOrResize(): void {
+        if (rafId !== 0) return;
+        rafId = window.requestAnimationFrame(apply);
+      }
+
+      apply();
+      window.addEventListener("scroll", onScrollOrResize, { passive: true });
+      window.addEventListener("resize", onScrollOrResize);
+      window.visualViewport?.addEventListener("scroll", onScrollOrResize, { passive: true });
+      window.visualViewport?.addEventListener("resize", onScrollOrResize);
+    }
+
+    initHomeHeroVideoParallax();
+  </script>
 </BaseLayout>
