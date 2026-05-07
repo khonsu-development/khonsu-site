@@ -18,13 +18,8 @@ export default defineConfig({
     sitemap({
       filter: (page) => {
         const path = new URL(page).pathname;
-        // Legacy legal URLs redirect to shorter paths and use noindex; omit from sitemap.
-        if (
-          path === "/privacy-policy/" ||
-          path === "/privacy-policy" ||
-          path.includes("/privacy-policy-for-") ||
-          path.includes("/terms-and-conditions-for-")
-        )
+        // Legacy app-store legal URLs redirect to shorter paths; omit from sitemap.
+        if (path.includes("/privacy-policy-for-") || path.includes("/terms-and-conditions-for-"))
           return false;
         return true;
       },
