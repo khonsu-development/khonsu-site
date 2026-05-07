@@ -1,0 +1,138 @@
+---
+import Container from "./Container.astro";
+
+export type IconImage = { src: string; alt: string; parallax?: boolean };
+
+type Props = {
+  title: string;
+  body: string | string[];
+  icons: IconImage[];
+  /** Desktop: icons on the left, copy on the right. Mobile keeps headline first. */
+  mirror?: boolean;
+  iconLoading?: "eager" | "lazy";
+};
+
+const { title, body, icons, mirror = false, iconLoading = "lazy" } = Astro.props;
+
+const parallaxIcons = icons.filter((img) => img.parallax !== false);
+const staticIcons = icons.filter((img) => img.parallax === false);
+
+const ICON_BASE_ROTATIONS = [-4, 3, -2, 2, -3, 4, -1, 1] as const;
+---
+
+<section class="py-12 sm:py-16">
+  <Container>
+    <div class="grid gap-8 lg:grid-cols-12 lg:items-center">
+      <div class:list={[mirror ? "order-1 lg:order-2 lg:col-span-7 lg:col-start-6" : "lg:col-span-7"]}>
+        <h2 class="text-2xl font-semibold tracking-tight text-balance text-white sm:text-3xl">
+          {title}
+        </h2>
+        {
+          Array.isArray(body) ? (
+            body.map((paragraph, idx) => (
+              <p class:list={["text-sm leading-relaxed text-pretty text-zinc-300", idx === 0 ? "mt-4" : "mt-4"]}>
+                {paragraph}
+              </p>
+            ))
+          ) : (
+            <p class="mt-4 text-sm leading-relaxed text-pretty text-zinc-300">{body}</p>
+          )
+        }
+      </div>
+
+      <div class:list={[mirror ? "order-2 lg:order-1 lg:col-span-5 lg:col-start-1" : "lg:col-span-5"]}>
+        <div
+          class="mt-6 flex w-full flex-wrap items-center justify-center gap-2 px-3 [transform-style:preserve-3d] perspective-[900px] sm:mt-7 sm:gap-3 sm:px-6 lg:mt-0 lg:justify-center lg:px-6"
+          data-stock-depth-panel
+        >
+          {
+            parallaxIcons.map((img, i) => (
+              <div
+                class="origin-center motion-safe:will-change-transform"
+                data-stock-depth-layer
+                data-base-rotate={ICON_BASE_ROTATIONS[i % ICON_BASE_ROTATIONS.length]}
+                data-depth-index={i}
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  class="block h-14 w-14 select-none sm:h-16 sm:w-16"
+                  loading={iconLoading}
+                  decoding="async"
+                />
+              </div>
+            ))
+          }
+          {
+            staticIcons.map((img) => (
+              <img
+                src={img.src}
+                alt={img.alt}
+                class="block h-14 w-14 select-none sm:h-16 sm:w-16"
+                loading={iconLoading}
+                decoding="async"
+              />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<script>
+  function initAppIconScrollDepth(): void {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    let rafId = 0;
+
+    function apply(): void {
+      rafId = 0;
+      const vh = window.innerHeight || 1;
+      const viewportMid = vh * 0.5;
+
+      const panels = document.querySelectorAll<HTMLElement>("[data-stock-depth-panel]");
+
+      for (const panel of panels) {
+        const pr = panel.getBoundingClientRect();
+        const centerY = pr.top + pr.height * 0.5;
+        const norm = Math.max(-1, Math.min(1, (centerY - viewportMid) / (vh * 0.36)));
+
+        const layers = [...panel.querySelectorAll<HTMLElement>("[data-stock-depth-layer]")];
+        const n = layers.length;
+        if (n === 0) continue;
+
+        const mid = (n - 1) / 2;
+
+        for (const layer of layers) {
+          const idx = Number.parseInt(layer.dataset.depthIndex ?? layer.getAttribute("data-depth-index") ?? "0", 10);
+          const base = Number.parseFloat(layer.dataset.baseRotate ?? layer.getAttribute("data-base-rotate") ?? "0");
+          if (Number.isNaN(base)) continue;
+
+          const depth = idx - mid;
+          const parallaxY = norm * 18 * depth;
+          const zDepth = depth * 14;
+
+          layer.style.transform = `rotate(${base}deg) translate3d(0, ${parallaxY.toFixed(2)}px, ${zDepth}px)`;
+        }
+      }
+    }
+
+    function onScrollOrResize(): void {
+      if (rafId !== 0) return;
+      rafId = window.requestAnimationFrame(apply);
+    }
+
+    apply();
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
+    window.visualViewport?.addEventListener("scroll", onScrollOrResize, {
+      passive: true,
+    });
+    window.visualViewport?.addEventListener("resize", onScrollOrResize);
+  }
+
+  initAppIconScrollDepth();
+</script>

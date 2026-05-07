@@ -2,62 +2,326 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/Container.astro";
 import AppCubeLogoExplainer from "../components/AppCubeLogoExplainer.astro";
+import AppIconBlurbSection from "../components/AppIconBlurbSection.astro";
+
+const appIconImages = [
+  {src: "/apps/alphabets/alphabets-icon-round.png", alt: "World of Alphabets app icon"},
+  {src: "/apps/dinosaurs/dinosaurs-icon-round.png", alt: "World of Dinosaurs app icon"},
+  {src: "/apps/freestyle/freestyle-icon-round.png", alt: "Freestyle Rap app icon"},
+  {src: "/apps/communism/communism-icon-round.png", alt: "World of Communism app icon"},
+];
 ---
 
 <BaseLayout
   title="About | Khonsu Development"
-  description="Khonsu Development builds educational apps for curious minds: beautiful, structured deep dives into niche topics."
+  description="Khonsu Development creates educational apps that blend careful research with calm, nature-inspired design: light on the path to niche knowledge."
   canonicalPath="/about"
 >
   <section class="flex min-h-[calc(100dvh-4rem)] flex-col">
+    <div
+      data-about-hero
+      class="relative isolate flex min-h-[min(80vh,800px)] flex-col justify-center overflow-hidden border-b border-white/10 sm:min-h-[min(76vh,940px)]"
+    >
+      <div
+        data-about-hero-parallax
+        class="pointer-events-none absolute inset-x-0 top-[-15%] bottom-[-15%] z-0 will-change-transform"
+        aria-hidden="true"
+      >
+        <div
+          class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style="background-image: url('/stock/landscape/sky.jpg')"
+        >
+        </div>
+        <div
+          class="absolute inset-0"
+          style="background: linear-gradient(
+          to bottom,
+          rgba(9, 9, 11, 0.14) 0%,
+          rgba(9, 9, 11, 0.2) 18%,
+          rgba(9, 9, 11, 0.28) 36%,
+          rgba(9, 9, 11, 0.4) 52%,
+          rgba(9, 9, 11, 0.55) 66%,
+          rgba(9, 9, 11, 0.72) 79%,
+          rgba(9, 9, 11, 0.88) 90%,
+          rgb(9, 9, 11) 100%
+        );"
+        >
+        </div>
+      </div>
+      <Container class="relative z-10 py-16 sm:py-24">
+        <h1
+          class="text-3xl font-black tracking-tight text-white sm:text-5xl"
+          style="text-shadow: 0 0.06em 0.35em rgba(0, 0, 0, 0.65), 0 0.12em 0.85em rgba(0, 0, 0, 0.45);"
+        >
+          About
+        </h1>
+        <p
+          class="mt-4 max-w-3xl text-zinc-50"
+          style="text-shadow: 0 0.08em 0.3em rgba(0, 0, 0, 0.55), 0 0.1em 0.65em rgba(0, 0, 0, 0.4);"
+        >
+          We are a small studio building learning apps for people who like to go deep. Every title is a self-contained
+          world: accurate content, clear structure, and interfaces that stay out of the way so the subject can shine.
+        </p>
+        <p
+          class="mt-4 max-w-3xl text-zinc-50"
+          style="text-shadow: 0 0.08em 0.3em rgba(0, 0, 0, 0.55), 0 0.1em 0.65em rgba(0, 0, 0, 0.4);"
+        >
+          If you have ever wished there were a patient, well-researched guide to an oddly specific interest, that is the
+          kind of software we want to put in your hands.
+        </p>
+      </Container>
+    </div>
+
     <div class="flex-1 py-12 sm:py-16">
       <Container>
-        <div class="max-w-3xl">
-          <h1 class="text-3xl font-black tracking-tight sm:text-5xl">About</h1>
-          <p class="mt-4 text-zinc-300">
-            Khonsu Development builds focused learning apps, thoughtfully structured, visually clean, and designed to
-            make niche subjects feel approachable (and hard to put down).
-          </p>
-
-          <div class="mt-10 grid gap-5 sm:grid-cols-2">
-            <div class="card p-6">
-              <div class="text-sm font-semibold text-white">A “World of Apps”</div>
-              <p class="mt-3 text-sm leading-relaxed text-zinc-300">
-                We’re building one app per letter, each a deep dive into a specific topic. It’s a playful constraint
-                that keeps the catalog eclectic and the quality bar high.
-              </p>
-            </div>
-            <div class="card p-6">
-              <div class="text-sm font-semibold text-white">Confidence through clarity</div>
-              <p class="mt-3 text-sm leading-relaxed text-zinc-300">
-                Every app aims for structure, accuracy, and a calm reading experience, so you can trust what you’re
-                learning and enjoy the journey.
-              </p>
-            </div>
-          </div>
-
-          <div class="card mt-10 p-6">
-            <div class="text-sm font-semibold text-white">Collaboration</div>
-            <p class="mt-3 text-sm leading-relaxed text-zinc-300">
-              We also collaborate with friends at Lyricspiration, creators of Double Rhyme, on learning experiences
-              around freestyle rap.
+        <h2 class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Khonsu</h2>
+        <div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)] lg:items-start lg:gap-12">
+          <div class="mx-auto w-full max-w-[min(100%,15.5rem)] sm:max-w-[min(100%,17rem)] lg:mx-0 lg:max-w-none">
+            <figure class="group relative overflow-hidden rounded-lg border border-white/10 bg-zinc-900/40">
+              <img
+                src="/stock/khonsu/khonsu.jpg"
+                alt="Close-up of an ancient Egyptian stone statue of the god Khonsu as a child, with a braided sidelock of youth, uraeus on the forehead, and regalia including a crook, flail, and composite scepter."
+                class="aspect-[4/5] w-full object-cover sm:aspect-[3/4]"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption
+                class="pointer-events-none absolute right-2 bottom-2 z-10 max-w-[min(100%-1rem,18rem)] rounded-full border border-white/25 bg-white/55 px-2 py-1 text-[10px] leading-snug font-semibold text-zinc-700 opacity-[0.2] shadow-sm backdrop-blur-sm transition-opacity duration-300 ease-out group-hover:opacity-[0.82] [@media(hover:none)]:opacity-100"
+              >
+                Photo: AbouYassin
+              </figcaption>
+            </figure>
+            <p class="mt-3 text-center text-xs leading-relaxed text-zinc-400">
+              Grey granite statute of the god Khonsu, the Egyptian Museum, Cairo, Egypt
             </p>
           </div>
+          <div class="text-sm leading-relaxed text-zinc-300">
+            <img
+              src="/stock/khonsu/khonsu-name.svg"
+              alt="Khonsu written in Egyptian hieroglyphs"
+              class="mb-7 h-10 w-auto max-w-full object-contain object-left brightness-0 invert sm:mb-9 sm:h-11"
+              width={686}
+              height={239}
+              loading="lazy"
+              decoding="async"
+            />
+            <p>
+              Khonsu is the Ancient Egyptian god of the moon. His name means “Traveller”, and this may relate to the
+              nightly travel of the moon across the sky.
+            </p>
+            <p class="mt-4">
+              Along with Thoth he marked the passage of time. Khonsu was instrumental in the creation of new life in all
+              living creatures.
+            </p>
+            <p class="mt-4">
+              Just like the ancient god, Khonsu Development shines a light on knowledge waiting to be discovered. Each
+              app is designed with care, blending expert research with an intuitive, nature-inspired interface that
+              makes learning feel like an adventure.
+            </p>
+          </div>
+        </div>
+      </Container>
+
+      <AppIconBlurbSection
+        title="How we work"
+        body={[
+          "We treat each app as a long-lived reference, not a disposable trend.",
+          "That means careful sourcing, interfaces you can read for minutes or hours without fatigue, and navigation that respects both newcomers and returning learners.",
+          "Our catalog spans writing systems, natural history, political history, and more. What ties them together is the same standard: depth you can trust, presented with restraint so the facts (and the wonder) stay in focus.",
+        ]}
+        icons={appIconImages}
+        iconLoading="lazy"
+      />
+
+      <Container>
+        <div class="mt-2 grid gap-5 sm:grid-cols-2">
+          <div class="card p-6">
+            <div class="text-sm font-semibold text-white">A “World of Apps”</div>
+            <p class="mt-3 text-sm leading-relaxed text-zinc-300">
+              We’re building one app per letter of the alphabet, each devoted to a single passion-shaped topic. It is a
+              playful constraint that keeps the lineup surprising and forces every release to earn its place on your
+              home screen.
+            </p>
+            <p class="mt-3 text-sm leading-relaxed text-zinc-300">
+              Browse the collection on our{" "}
+              <a
+                class="text-zinc-200 underline decoration-white/20 underline-offset-2 transition hover:text-white"
+                href="/apps">Apps page</a
+              >{" "}
+              when you are ready to pick your next rabbit hole.
+            </p>
+          </div>
+          <div class="card p-6">
+            <div class="text-sm font-semibold text-white">Collaboration</div>
+            <p class="mt-3 text-sm leading-relaxed text-zinc-300">
+              We also work with friends at{" "}
+              <a
+                class="text-zinc-200 underline decoration-white/20 underline-offset-2 transition hover:text-white"
+                href="https://play.google.com/store/apps/developer?id=Lyricspiration"
+                target="_blank"
+                rel="noopener noreferrer">Lyricspiration</a
+              >, creators of{" "}
+              <a
+                class="text-zinc-200 underline decoration-white/20 underline-offset-2 transition hover:text-white"
+                href="https://double-rhyme.com/"
+                target="_blank"
+                rel="noopener noreferrer">Double Rhyme</a
+              >, on{" "}
+              <a
+                class="text-zinc-200 underline decoration-white/20 underline-offset-2 transition hover:text-white"
+                href="/freestyle-rap">Freestyle Rap</a
+              >, an app for vocabulary, rhythm, and finding your voice on the mic. Partnerships like that let us combine
+              our craft in structured learning with specialists who live and breathe the culture behind the subject.
+            </p>
+          </div>
+        </div>
+
+        <div class="card mt-5 p-6">
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div class="min-w-0">
+              <div class="text-sm font-semibold text-white">
+                Looking for a simple but powerful fitness app? Try FitPrimers.
+              </div>
+              <p class="mt-2 text-sm leading-relaxed text-zinc-300">
+                FitPrimers is another app we are building. It generates fitness programs tailored to you. No fluff, no
+                nonsense, just efficient workouts for less than a coffee per month! Try{" "}
+                <a
+                  class="text-zinc-200 underline decoration-white/20 underline-offset-2 transition hover:text-white"
+                  href="https://fitprimers.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >FitPrimers.com</a>.
+              </p>
+            </div>
+            <a
+              class="shrink-0"
+              href="https://fitprimers.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open FitPrimers.com"
+            >
+              <img
+                src="/apps/fitprimers/fitprimers.png"
+                alt="FitPrimers logo"
+                class="block h-16 w-16 rounded-2xl object-contain ring-1 ring-white/10"
+                width={2048}
+                height={2048}
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+          </div>
+        </div>
+
+        <p class="mt-10 text-sm leading-relaxed text-zinc-400">
+          Questions, ideas, or a bug to report?{" "}
+          <a
+            class="text-zinc-200 underline decoration-white/20 underline-offset-2 transition hover:text-white"
+            href="/contact">Get in touch</a
+          >, we read every message.
+        </p>
+
+        <div
+          class="mt-12 flex w-full justify-center"
+          style="--app-primary: var(--color-brand); --app-secondary: var(--color-brand2);"
+        >
+          <AppCubeLogoExplainer
+            instanceId="about-khonsu-logo"
+            logoSrc="/logo/logo-white.svg"
+            logoAlt="Khonsu"
+            logoImgClass="h-20 w-20 sm:h-28 sm:w-28"
+            faces={[{position: "right", body: "Khonsu's mummy bandages"}]}
+          />
         </div>
       </Container>
     </div>
 
     <div
-      class="flex w-full shrink-0 justify-center px-5 pt-6 pb-10 sm:pb-12"
-      style="--app-primary: var(--color-brand); --app-secondary: var(--color-brand2);"
+      data-about-karnak
+      class="relative isolate mt-3 flex min-h-[min(75vw,640px)] w-full flex-col overflow-hidden border-t border-white/10"
     >
-      <AppCubeLogoExplainer
-        instanceId="about-khonsu-logo"
-        logoSrc="/logo/logo-white.svg"
-        logoAlt="Khonsu"
-        logoImgClass="h-20 w-20 sm:h-28 sm:w-28"
-        faces={[{ position: "right", body: "Khonsu's mummy bandages" }]}
-      />
+      <div
+        data-about-karnak-parallax
+        class="pointer-events-none absolute inset-0 z-0 will-change-transform"
+        aria-hidden="true"
+      >
+        <div
+          class="absolute inset-0 bg-contain bg-no-repeat"
+          style="background-image: url('/stock/khonsu/khonsu-karnak.png'); background-position: 50% 64px;"
+        >
+        </div>
+        <div
+          class="absolute inset-0"
+          aria-hidden="true"
+          style="background: linear-gradient(
+            to bottom,
+            rgba(9, 9, 11, 0.18) 0%,
+            rgba(9, 9, 11, 0.28) 38%,
+            rgba(9, 9, 11, 0.55) 78%,
+            rgb(9, 9, 11) 100%
+          );"
+        >
+        </div>
+      </div>
+
+      <div class="relative z-10 mt-auto flex w-full justify-center pt-8 pb-0 sm:pt-10">
+        <img
+          src="/stock/khonsu/khonsu-statue.png"
+          alt="Upper body of an ancient Egyptian statue of the god Khonsu with sidelock of youth, holding crook and flail."
+          class="block h-auto max-h-[min(44vh,360px)] w-auto max-w-[min(92vw,560px)] object-contain select-none"
+          loading="lazy"
+          decoding="async"
+          draggable="false"
+        />
+      </div>
     </div>
   </section>
+
+  <script is:inline>
+    (function () {
+      if (typeof window === "undefined") return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      const heroLayer = document.querySelector("[data-about-hero-parallax]");
+      const karnakWrap = document.querySelector("[data-about-karnak]");
+      const karnakLayer = document.querySelector("[data-about-karnak-parallax]");
+      if (!heroLayer && !karnakLayer) return;
+
+      const heroFactor = 0.32;
+      const karnakMaxShiftPx = 45;
+      let ticking = false;
+
+      function update() {
+        const scrollY = window.scrollY;
+        const vh = window.innerHeight;
+
+        if (heroLayer) {
+          heroLayer.style.transform = `translate3d(0, ${scrollY * heroFactor}px, 0)`;
+        }
+
+        if (karnakLayer && karnakWrap) {
+          const rect = karnakWrap.getBoundingClientRect();
+          const wrapTop = rect.top + scrollY;
+          const wrapH = rect.height || 1;
+          const progress = (scrollY + vh * 0.7 - wrapTop) / (vh + wrapH);
+          const t = Math.max(-0.5, Math.min(0.5, progress - 0.5));
+          const y = t * 2 * karnakMaxShiftPx;
+          karnakLayer.style.transform = `translate3d(0, ${y}px, 0)`;
+        }
+
+        ticking = false;
+      }
+
+      function onScroll() {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      }
+
+      window.addEventListener("scroll", onScroll, {passive: true});
+      window.addEventListener("resize", onScroll, {passive: true});
+      update();
+    })();
+  </script>
 </BaseLayout>
