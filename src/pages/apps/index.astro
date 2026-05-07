@@ -7,7 +7,7 @@ import AppCard from "../../components/AppCard.astro";
 const apps = await getCollection("apps");
 const priority = ["world-of-alphabets", "world-of-dinosaurs", "world-of-communism", "freestyle-rap"] as const;
 
-const priorityRank = new Map(priority.map((slug, idx) => [slug, idx]));
+const priorityRank = new Map<string, number>(priority.map((slug, idx) => [slug, idx]));
 
 function slugOf(app: (typeof apps)[number]) {
   return app.id.replace(/\.(md|mdx)$/, "");

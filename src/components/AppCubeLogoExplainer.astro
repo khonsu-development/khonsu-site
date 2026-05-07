@@ -364,24 +364,26 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
     if (!stage || !svg) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const safeStage: HTMLElement = stage;
+    const safeSvg: SVGSVGElement = svg;
 
     function apply(): void {
-      const connectors = svg.querySelectorAll<SVGPathElement>("[data-cube-connector]");
+      const connectors = safeSvg.querySelectorAll<SVGPathElement>("[data-cube-connector]");
       connectors.forEach((path) => {
         const pos = path.getAttribute("data-cube-connector");
         if (!pos) return;
-        const anchor = stage.querySelector<HTMLElement>(`[data-cube-face-anchor="${pos}"]`);
-        const keyEl = stage.querySelector<HTMLElement>(`[data-cube-key="${pos}"]`);
-        const dot = svg.querySelector<SVGCircleElement>(`[data-cube-dot="${pos}"]`);
+        const anchor = safeStage.querySelector<HTMLElement>(`[data-cube-face-anchor="${pos}"]`);
+        const keyEl = safeStage.querySelector<HTMLElement>(`[data-cube-key="${pos}"]`);
+        const dot = safeSvg.querySelector<SVGCircleElement>(`[data-cube-dot="${pos}"]`);
         if (!anchor || !keyEl) return;
 
         const ar = anchor.getBoundingClientRect();
         const ax = ar.left + ar.width / 2;
         const ay = ar.top + ar.height / 2;
 
-        const d = straightConnectorWithUnderline(svg, ax, ay, keyEl);
+        const d = straightConnectorWithUnderline(safeSvg, ax, ay, keyEl);
         path.setAttribute("d", d);
-        const aSvg = clientToSvg(svg, ax, ay);
+        const aSvg = clientToSvg(safeSvg, ax, ay);
         if (dot) {
           dot.setAttribute("cx", String(aSvg.x));
           dot.setAttribute("cy", String(aSvg.y));
@@ -392,16 +394,16 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
     function parallaxKeys(): void {
       if (reduced) return;
 
-      const stageRect = stage.getBoundingClientRect();
+      const stageRect = safeStage.getBoundingClientRect();
       const vh = window.innerHeight || 1;
       const center = stageRect.top + stageRect.height / 2;
       const norm = (center - vh / 2) / (vh / 2);
 
-      const cubeWrap = stage.querySelector<HTMLElement>("[data-cube-image-wrap]");
+      const cubeWrap = safeStage.querySelector<HTMLElement>("[data-cube-image-wrap]");
       const rates: Record<CubeKey, number> = { top: -22, left: -18, right: -24 };
       const cubeShift = norm * 10;
 
-      stage.querySelectorAll<HTMLElement>("[data-cube-key]").forEach((keyEl) => {
+      safeStage.querySelectorAll<HTMLElement>("[data-cube-key]").forEach((keyEl) => {
         const pos = keyEl.getAttribute("data-cube-key") as CubeKey | null;
         if (pos !== "top" && pos !== "left" && pos !== "right") return;
         const base = rates[pos];
@@ -425,8 +427,8 @@ const figureId = instanceId.replace(/[^a-zA-Z0-9_-]/g, "");
     tick();
 
     const ro = new ResizeObserver(() => scheduleAllCubeExplainers());
-    ro.observe(stage);
-    const img = stage.querySelector("img[data-cube-logo-img]");
+    ro.observe(safeStage);
+    const img = safeStage.querySelector("img[data-cube-logo-img]");
     if (img) ro.observe(img);
   }
 

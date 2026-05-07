@@ -112,9 +112,10 @@ const {
 } = Astro.props;
 
 const cubeFacePositions = ["top", "left", "right"] as const;
+const cubeFaces = cubeExplainer?.faces;
 const cubeExplainerComplete =
-  Boolean(logoSrc && cubeExplainer && cubeExplainer.faces.length === 3) &&
-  cubeFacePositions.every((pos) => cubeExplainer.faces.some((f) => f.position === pos));
+  Boolean(logoSrc && cubeFaces?.length === 3) &&
+  cubeFacePositions.every((pos) => (cubeFaces?.some((f) => f.position === pos) ?? false));
 
 const displayStats = stats.slice(0, 5);
 const statSectionClass =
@@ -731,9 +732,10 @@ const youtubeEmbedQuery = youtubeVideoId
     function initFixedGlowParallax(): void {
       const parallaxEl = document.querySelector<HTMLElement>("[data-app-landing-glow-parallax]");
       if (!parallaxEl) return;
+      const el = parallaxEl;
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        parallaxEl.style.removeProperty("transform");
+        el.style.removeProperty("transform");
         return;
       }
 
@@ -744,7 +746,7 @@ const youtubeEmbedQuery = youtubeVideoId
       function apply(): void {
         rafId = 0;
         const y = Math.min(window.scrollY * strength, maxPx);
-        parallaxEl.style.transform = `translate3d(0, ${y}px, 0)`;
+        el.style.transform = `translate3d(0, ${y}px, 0)`;
       }
 
       function onScrollOrResize(): void {
