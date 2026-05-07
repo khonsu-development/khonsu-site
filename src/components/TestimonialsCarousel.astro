@@ -74,7 +74,7 @@ const n = testimonials.length;
 
   {
     n > 1 ? (
-      <div class="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+      <div class="mt-6 flex flex-nowrap items-center justify-center gap-x-4 gap-y-4 sm:gap-x-10">
         <button
           type="button"
           class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-white ring-1 ring-white/15 transition hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50 sm:h-12 sm:w-12"
@@ -90,7 +90,7 @@ const n = testimonials.length;
           </svg>
         </button>
 
-        <nav class="flex max-w-[16rem] flex-wrap justify-center gap-2 px-2" aria-label="Testimonial pagination">
+        <nav class="flex max-w-[16rem] min-w-0 flex-wrap justify-center gap-2 px-2" aria-label="Testimonial pagination">
           {testimonials.map((_, dotIndex) => (
             <button
               type="button"
@@ -216,12 +216,14 @@ const n = testimonials.length;
      */
     let touchStartX = 0;
     let touchStartY = 0;
+
     function onTouchStart(e: TouchEvent): void {
       const t = e.touches[0];
       if (!t) return;
       touchStartX = t.clientX;
       touchStartY = t.clientY;
     }
+
     function onTouchEnd(e: TouchEvent): void {
       const t = e.changedTouches[0];
       if (!t) return;
