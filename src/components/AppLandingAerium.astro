@@ -16,7 +16,13 @@ type Feature = {
   imageSrc?: string;
   imageAlt?: string;
 };
-type FAQ = { q: string; a: string };
+type FAQ =
+  | { q: string; a: string }
+  | {
+  q: string;
+  /** Answer may include inline markup (e.g. external links); prefer `a` plain text otherwise. */
+  aHtml: string;
+};
 type StockImage = { src: string; alt: string };
 type Testimonial = { quote: string; author: string };
 
@@ -611,7 +617,14 @@ const youtubeEmbedQuery = youtubeVideoId
                         {f.q}
                       </span>
                     </summary>
-                    <p class="mt-3 text-sm leading-relaxed text-zinc-300">{f.a}</p>
+                    {"aHtml" in f ? (
+                      <p
+                        class="mt-3 text-sm leading-relaxed text-zinc-300 [&_a]:text-zinc-100 [&_a]:underline [&_a]:decoration-white/20 [&_a]:underline-offset-2 [&_a]:transition-colors hover:[&_a]:text-white"
+                        set:html={f.aHtml}
+                      />
+                    ) : (
+                      <p class="mt-3 text-sm leading-relaxed text-zinc-300">{f.a}</p>
+                    )}
                   </details>
                 ))}
               </div>
