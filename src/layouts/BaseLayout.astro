@@ -3,10 +3,12 @@ import "../styles/global.css";
 import Container from "../components/Container.astro";
 import Logo from "../components/Logo.astro";
 import FacebookIcon from "../components/icons/FacebookIcon.astro";
+import EmailIcon from "../components/icons/EmailIcon.astro";
 import GitHubIcon from "../components/icons/GitHubIcon.astro";
 import GooglePlayIcon from "../components/icons/GooglePlayIcon.astro";
 import InstagramIcon from "../components/icons/InstagramIcon.astro";
 import YouTubeIcon from "../components/icons/YouTubeIcon.astro";
+import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO } from "../constants";
 
 type Props = {
   title: string;
@@ -203,6 +205,16 @@ const showAlphabetsFacebook = pathname.startsWith("/alphabets");
             >
               <GooglePlayIcon class="h-5 w-5" />
             </a>
+
+            <a
+              class="inline-flex items-center justify-center text-zinc-300 transition hover:text-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-white/60"
+              href={CONTACT_EMAIL_MAILTO}
+              aria-label={`Email (${CONTACT_EMAIL})`}
+              title={`Email (${CONTACT_EMAIL})`}
+            >
+              <EmailIcon class="h-5 w-5" />
+            </a>
+
             <a class="hover:text-white" href="/terms"> Website Terms </a>
             <a class="hover:text-white" href="/privacy"> Website Privacy </a>
           </div>
