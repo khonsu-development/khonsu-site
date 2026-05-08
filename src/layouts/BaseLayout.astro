@@ -8,7 +8,7 @@ import GitHubIcon from "../components/icons/GitHubIcon.astro";
 import GooglePlayIcon from "../components/icons/GooglePlayIcon.astro";
 import InstagramIcon from "../components/icons/InstagramIcon.astro";
 import YouTubeIcon from "../components/icons/YouTubeIcon.astro";
-import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO } from "../constants";
+import { APP_SOCIAL_LINKS, CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, SOCIAL_LINKS } from "../constants";
 
 type Props = {
   title: string;
@@ -149,7 +149,7 @@ const showAlphabetsFacebook = pathname.startsWith("/alphabets");
           <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
             <a
               class="inline-flex items-center justify-center text-zinc-300 transition hover:text-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-white/60"
-              href="https://www.youtube.com/@khonsudevelopment"
+              href={SOCIAL_LINKS.youtube}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube"
@@ -160,7 +160,7 @@ const showAlphabetsFacebook = pathname.startsWith("/alphabets");
 
             <a
               class="inline-flex items-center justify-center text-zinc-300 transition hover:text-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-white/60"
-              href="https://www.instagram.com/khonsu.development/"
+              href={SOCIAL_LINKS.instagram}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
@@ -173,7 +173,7 @@ const showAlphabetsFacebook = pathname.startsWith("/alphabets");
               showAlphabetsFacebook ? (
                 <a
                   class="inline-flex items-center justify-center text-zinc-300 transition hover:text-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-white/60"
-                  href="https://www.facebook.com/alphabetsapp"
+                  href={APP_SOCIAL_LINKS.alphabets.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook (World of Alphabets)"
@@ -186,7 +186,7 @@ const showAlphabetsFacebook = pathname.startsWith("/alphabets");
 
             <a
               class="inline-flex items-center justify-center text-zinc-300 transition hover:text-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-white/60"
-              href="https://github.com/khonsu-development"
+              href={SOCIAL_LINKS.github}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -197,7 +197,7 @@ const showAlphabetsFacebook = pathname.startsWith("/alphabets");
 
             <a
               class="inline-flex items-center justify-center text-zinc-300 transition hover:text-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-white/60"
-              href="https://play.google.com/store/apps/dev?id=5635874583313520174"
+              href={SOCIAL_LINKS.googlePlay}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Google Play"
