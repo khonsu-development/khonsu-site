@@ -2,7 +2,13 @@
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/Container.astro";
-import { APP_GOOGLE_PLAY_PACKAGE_IDS, googlePlayListingUrlForApp, type AppGooglePlaySlug } from "../../constants";
+import {
+  APP_GOOGLE_PLAY_PACKAGE_IDS,
+  GOOGLE_PLAY_BADGE_SRC,
+  ORG_NAME,
+  googlePlayListingUrlForApp,
+  type AppGooglePlaySlug,
+} from "../../constants";
 
 export async function getStaticPaths() {
   const apps = await getCollection("apps");
@@ -28,7 +34,7 @@ const themeStyle = themeColor
   ? `--app-primary: var(--color-${themeColor}-primary); --app-secondary: var(--color-${themeColor}-secondary);`
   : `--app-primary: var(--color-brand); --app-secondary: var(--color-brand2);`;
 
-const pageTitle = app.data.seoTitle ?? `${app.data.name} | Khonsu Development`;
+const pageTitle = app.data.seoTitle ?? `${app.data.name} | ${ORG_NAME}`;
 const pageDescription = app.data.seoDescription ?? app.data.tagline;
 const ogImage = app.data.ogImage ?? app.data.coverImage;
 
@@ -41,8 +47,8 @@ const schemaOrg = {
   operatingSystem: (app.data.platforms ?? [])
     .map((p) => (p === "android" ? "Android" : p === "ios" ? "iOS" : "Web"))
     .join(", "),
-  image: ogImage ? (ogImage.startsWith("http") ? ogImage : `https://www.khonsu.eu${ogImage}`) : undefined,
-  url: `https://www.khonsu.eu/apps/${slug}`,
+  image: ogImage ? (ogImage.startsWith("http") ? ogImage : new URL(ogImage, Astro.site).toString()) : undefined,
+  url: new URL(`/apps/${slug}`, Astro.site).toString(),
   downloadUrl: googlePlayUrl ?? app.data.appStoreUrl,
 };
 ---
@@ -142,7 +148,7 @@ const schemaOrg = {
                       aria-label="Get it on Google Play"
                     >
                       <img
-                        src="/google-play-badges/GetItOnGooglePlay_Badge_Web_color_English.svg"
+                        src={GOOGLE_PLAY_BADGE_SRC}
                         alt="Get it on Google Play"
                         class="h-14 w-auto sm:h-16"
                         decoding="async"

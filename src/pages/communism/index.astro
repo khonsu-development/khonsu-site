@@ -1,6 +1,6 @@
 ---
 import AppLandingAerium from "../../components/AppLandingAerium.astro";
-import { googlePlayListingUrlForApp } from "../../constants";
+import { ORG_NAME, googlePlayListingUrlForApp } from "../../constants";
 
 const heroSpotlightStats = [{ label: "Google Play rating", value: "4.7★" }];
 
@@ -82,7 +82,7 @@ const features = [
 
 <AppLandingAerium
   canonicalPath="/communism"
-  title="World of Communism | Khonsu Development"
+  title={`World of Communism | ${ORG_NAME}`}
   description="Explore Communism, Socialism, and Anarchism through thinkers, movements, maps, music, and quizzes."
   themeColor="app-communism"
   appName="World of Communism"

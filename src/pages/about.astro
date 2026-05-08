@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/Container.astro";
 import AppCubeLogoExplainer from "../components/AppCubeLogoExplainer.astro";
 import AppIconBlurbSection from "../components/AppIconBlurbSection.astro";
+import { ORG_NAME, PARTNER_LINKS } from "../constants";
 
 const appIconImages = [
   {
@@ -29,7 +30,7 @@ const appIconImages = [
 ---
 
 <BaseLayout
-  title="About | Khonsu Development"
+  title={`About | ${ORG_NAME}`}
   description="Khonsu Development creates educational apps that blend careful research with calm, nature-inspired design: light on the path to niche knowledge."
   canonicalPath="/about"
 >
@@ -173,13 +174,13 @@ const appIconImages = [
               We also work with friends at{" "}
               <a
                 class="text-zinc-200 underline decoration-white/20 underline-offset-2 transition hover:text-white"
-                href="https://play.google.com/store/apps/developer?id=Lyricspiration"
+                href={PARTNER_LINKS.lyricspiration}
                 target="_blank"
                 rel="noopener noreferrer">Lyricspiration</a
               >, creators of{" "}
               <a
                 class="text-zinc-200 underline decoration-white/20 underline-offset-2 transition hover:text-white"
-                href="https://double-rhyme.com/"
+                href={PARTNER_LINKS.doubleRhyme}
                 target="_blank"
                 rel="noopener noreferrer">Double Rhyme</a
               >, on{" "}

@@ -8,7 +8,7 @@ import GitHubIcon from "../components/icons/GitHubIcon.astro";
 import GooglePlayIcon from "../components/icons/GooglePlayIcon.astro";
 import InstagramIcon from "../components/icons/InstagramIcon.astro";
 import YouTubeIcon from "../components/icons/YouTubeIcon.astro";
-import { APP_SOCIAL_LINKS, CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, SOCIAL_LINKS } from "../constants";
+import { APP_SOCIAL_LINKS, CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, ORG_NAME, SOCIAL_LINKS } from "../constants";
 
 type Props = {
   title: string;
@@ -21,7 +21,7 @@ type Props = {
 const { title, description, canonicalPath, ogImage, ogType } = Astro.props;
 
 const site = {
-  name: "Khonsu Development",
+  name: ORG_NAME,
   description: description ?? "Modern educational apps that make learning niche topics immersive, fun, and accessible.",
   url: (Astro.site?.toString() ?? "https://www.khonsu.eu").replace(/\/$/, ""),
 };
@@ -220,7 +220,7 @@ const showAlphabetsFacebook = pathname.startsWith("/alphabets");
           </div>
         </div>
         <div class="mt-6 text-xs text-zinc-500">
-          © {new Date().getFullYear()} Khonsu Development. All rights reserved.
+          © {new Date().getFullYear()} {ORG_NAME}. All rights reserved.
         </div>
       </Container>
     </footer>

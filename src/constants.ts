@@ -1,3 +1,5 @@
+export const ORG_NAME = "Khonsu Development";
+
 export const CONTACT_EMAIL = "hello@khonsu.eu";
 export const CONTACT_EMAIL_MAILTO = `mailto:${CONTACT_EMAIL}`;
 
@@ -33,3 +35,22 @@ export function googlePlayListingUrl(packageId: string): string {
 export function googlePlayListingUrlForApp(slug: AppGooglePlaySlug): string {
   return googlePlayListingUrl(APP_GOOGLE_PLAY_PACKAGE_IDS[slug]);
 }
+
+export const GOOGLE_PLAY_BADGE_SRC = "/google-play-badges/GetItOnGooglePlay_Badge_Web_color_English.svg";
+
+export const THIRD_PARTY_POLICY_URLS = {
+  googleAdMob: "https://policies.google.com/technologies/ads",
+  firebasePrivacy: "https://firebase.google.com/support/privacy",
+  firebaseTerms: "https://firebase.google.com/terms",
+} as const;
+
+export const PARTNER_LINKS = {
+  doubleRhyme: "https://double-rhyme.com/",
+  lyricspiration: "https://play.google.com/store/apps/developer?id=Lyricspiration",
+} as const;
+
+// Last review date applied across all legal pages. Bump when the legal copy is updated.
+export const LEGAL_LAST_UPDATED = "May 6, 2026";
+
+// Original effective date for the per-app terms.
+export const LEGAL_APP_TERMS_EFFECTIVE_DATE = "2024-11-17";

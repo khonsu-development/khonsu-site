@@ -1,6 +1,6 @@
 ---
 import AppLandingAerium from "../../components/AppLandingAerium.astro";
-import { googlePlayListingUrlForApp } from "../../constants";
+import { ORG_NAME, googlePlayListingUrlForApp } from "../../constants";
 
 const heroSpotlightStats = [{ label: "Google Play rating", value: "4.9★" }];
 
@@ -127,7 +127,7 @@ const features = [
 
 <AppLandingAerium
   canonicalPath="/dinosaurs"
-  title="World of Dinosaurs | Khonsu Development"
+  title={`World of Dinosaurs | ${ORG_NAME}`}
   description="Explore dinosaurs and prehistoric animals with profiles, articles, quizzes, discovery sites, and an interactive time scale."
   themeColor="app-dinosaurs"
   appName="World of Dinosaurs"

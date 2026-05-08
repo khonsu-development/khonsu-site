@@ -1,6 +1,6 @@
 ---
 import AppLandingAerium from "../../components/AppLandingAerium.astro";
-import { googlePlayListingUrlForApp } from "../../constants";
+import { ORG_NAME, googlePlayListingUrlForApp } from "../../constants";
 
 const heroSpotlightStats = [
   { label: "Google Play downloads", value: "140k+" },
@@ -182,7 +182,7 @@ const writingSystemsWithSigns = [
 
 <AppLandingAerium
   canonicalPath="/alphabets"
-  title="World of Alphabets | Khonsu Development"
+  title={`World of Alphabets | ${ORG_NAME}`}
   description="Learn writing systems with flashcards, quizzes, and a script map. Explore 267+ alphabets and 2400+ characters."
   themeColor="app-alphabets"
   appName="World of Alphabets"

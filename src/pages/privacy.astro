@@ -1,18 +1,18 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import LegalPage from "../components/LegalPage.astro";
-import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO } from "../constants";
+import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, LEGAL_LAST_UPDATED, ORG_NAME } from "../constants";
 ---
 
 <BaseLayout title="Privacy Policy | khonsu.eu" canonicalPath="/privacy">
   <LegalPage eyebrow="Website">
     <h1>Privacy Policy for khonsu.eu</h1>
-    <p><strong>Last updated:</strong> May 6, 2026</p>
+    <p><strong>Last updated:</strong> {LEGAL_LAST_UPDATED}</p>
 
     <p>We process limited personal data to operate and secure this Website, and to respond if you contact us.</p>
 
     <h2>Controller and contact</h2>
-    <p><strong>Controller:</strong> Khonsu Development (Berlin, Germany).</p>
+    <p><strong>Controller:</strong> {ORG_NAME} (Berlin, Germany).</p>
     <p>
       <strong>Email:</strong>{" "}
       <a href={CONTACT_EMAIL_MAILTO}> {CONTACT_EMAIL} </a>

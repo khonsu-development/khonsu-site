@@ -1,11 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/Container.astro";
-import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO } from "../constants";
+import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, ORG_NAME } from "../constants";
 ---
 
 <BaseLayout
-  title="Contact | Khonsu Development"
+  title={`Contact | ${ORG_NAME}`}
   description="Contact Khonsu Development with feedback, topic suggestions, bug reports, or collaboration ideas."
   canonicalPath="/contact"
 >

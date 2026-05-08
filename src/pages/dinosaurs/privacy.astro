@@ -1,13 +1,13 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import LegalPage from "../../components/LegalPage.astro";
-import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO } from "../../constants";
+import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, LEGAL_LAST_UPDATED, THIRD_PARTY_POLICY_URLS } from "../../constants";
 ---
 
 <BaseLayout title="Privacy Policy | World of Dinosaurs" canonicalPath="/dinosaurs/privacy">
   <LegalPage eyebrow="World of Dinosaurs" themeColor="app-dinosaurs">
     <h1>Privacy Policy for World of Dinosaurs</h1>
-    <p><strong>Last updated:</strong> May 6, 2026</p>
+    <p><strong>Last updated:</strong> {LEGAL_LAST_UPDATED}</p>
 
     <p>
       This privacy policy applies to the World of Dinosaurs app (the &quot;Application&quot;) for mobile devices,
@@ -38,10 +38,10 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO } from "../../constants";
     <p>The Application uses third-party services that have their own privacy policies. In particular:</p>
     <ul>
       <li>
-        <a href="https://policies.google.com/technologies/ads">Google AdMob</a>
+        <a href={THIRD_PARTY_POLICY_URLS.googleAdMob}>Google AdMob</a>
       </li>
       <li>
-        <a href="https://firebase.google.com/support/privacy">Firebase Crashlytics</a>
+        <a href={THIRD_PARTY_POLICY_URLS.firebasePrivacy}>Firebase Crashlytics</a>
       </li>
     </ul>
 

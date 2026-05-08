@@ -1,13 +1,19 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import LegalPage from "../../components/LegalPage.astro";
-import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO } from "../../constants";
+import {
+  CONTACT_EMAIL,
+  CONTACT_EMAIL_MAILTO,
+  LEGAL_APP_TERMS_EFFECTIVE_DATE,
+  LEGAL_LAST_UPDATED,
+  THIRD_PARTY_POLICY_URLS,
+} from "../../constants";
 ---
 
 <BaseLayout title="Terms & Conditions | World of Communism" canonicalPath="/communism/terms">
   <LegalPage eyebrow="World of Communism" themeColor="app-communism">
     <h1>Terms &amp; Conditions for World of Communism</h1>
-    <p><strong>Last updated:</strong> May 6, 2026</p>
+    <p><strong>Last updated:</strong> {LEGAL_LAST_UPDATED}</p>
     <p>
       These terms and conditions applies to the World of Communism app (hereby referred to as &quot;Application&quot;)
       for mobile devices that was created by Khonsu Development (hereby referred to as &quot;Service Provider&quot;) as
@@ -52,10 +58,10 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO } from "../../constants";
     </p>
     <ul>
       <li>
-        <a href="https://policies.google.com/technologies/ads">Google AdMob</a>
+        <a href={THIRD_PARTY_POLICY_URLS.googleAdMob}>Google AdMob</a>
       </li>
       <li>
-        <a href="https://firebase.google.com/terms">Firebase</a> (includes Crashlytics)
+        <a href={THIRD_PARTY_POLICY_URLS.firebaseTerms}>Firebase</a> (includes Crashlytics)
       </li>
     </ul>
     <p>
@@ -102,7 +108,7 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO } from "../../constants";
       page regularly for any changes. The Service Provider will notify you of any changes by posting the new Terms and
       Conditions on this page.
     </p>
-    <p>These terms and conditions are effective as of 2024-11-17.</p>
+    <p>These terms and conditions are effective as of {LEGAL_APP_TERMS_EFFECTIVE_DATE}.</p>
 
     <h2>Contact Us</h2>
     <p>

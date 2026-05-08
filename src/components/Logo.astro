@@ -1,4 +1,6 @@
 ---
+import { ORG_NAME } from "../constants";
+
 type Props = { class?: string };
 const { class: className } = Astro.props;
 ---
@@ -12,5 +14,5 @@ const { class: className } = Astro.props;
     decoding="async"
     aria-hidden="true"
   />
-  <span>Khonsu Development</span>
+  <span>{ORG_NAME}</span>
 </span>

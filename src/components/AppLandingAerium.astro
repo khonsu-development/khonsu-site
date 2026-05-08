@@ -9,6 +9,7 @@ import UpdateStarUserRatingBadge from "./UpdateStarUserRatingBadge.astro";
 import TestimonialsCarousel from "./TestimonialsCarousel.astro";
 import WritingSystemsCloud from "./WritingSystemsCloud.astro";
 import StockBlurbSection from "./StockBlurbSection.astro";
+import { GOOGLE_PLAY_BADGE_SRC } from "../constants";
 
 type Stat = { label: string; value: string } | { label: string; valueHtml: string };
 /** Hero Google Play spotlight expects plain `value` strings (not `valueHtml` from the cards grid). */
@@ -307,7 +308,7 @@ const youtubeEmbedQuery = youtubeVideoId
                     aria-label="Get it on Google Play"
                   >
                     <img
-                      src="/google-play-badges/GetItOnGooglePlay_Badge_Web_color_English.svg"
+                      src={GOOGLE_PLAY_BADGE_SRC}
                       alt="Get it on Google Play"
                       class="h-14 w-auto sm:h-16"
                       decoding="async"
@@ -755,7 +756,7 @@ const youtubeEmbedQuery = youtubeVideoId
                       aria-label="Get it on Google Play"
                     >
                       <img
-                        src="/google-play-badges/GetItOnGooglePlay_Badge_Web_color_English.svg"
+                        src={GOOGLE_PLAY_BADGE_SRC}
                         alt="Get it on Google Play"
                         class="h-14 w-auto sm:h-16"
                         loading="lazy"

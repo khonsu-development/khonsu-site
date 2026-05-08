@@ -1,6 +1,6 @@
 ---
 import AppLandingAerium from "../../components/AppLandingAerium.astro";
-import { googlePlayListingUrlForApp } from "../../constants";
+import { ORG_NAME, PARTNER_LINKS, googlePlayListingUrlForApp } from "../../constants";
 
 const heroSpotlightStats = [{ label: "Google Play downloads", value: "400k+" }];
 
@@ -59,7 +59,7 @@ const rhymeLanguages = [
   "Welsh",
 ];
 
-const doubleRhymeLogoStat = `<a href="https://double-rhyme.com/" target="_blank" rel="noopener noreferrer" aria-label="Double Rhyme"><img src="/apps/double-rhyme/doppelreim.png" alt="Double Rhyme" width="193" height="248" loading="lazy" decoding="async" /></a>`;
+const doubleRhymeLogoStat = `<a href="${PARTNER_LINKS.doubleRhyme}" target="_blank" rel="noopener noreferrer" aria-label="Double Rhyme"><img src="/apps/double-rhyme/doppelreim.png" alt="Double Rhyme" width="193" height="248" loading="lazy" decoding="async" /></a>`;
 
 const stats = [
   { label: "Languages", value: "50+" },
@@ -153,7 +153,7 @@ const features = [
 
 <AppLandingAerium
   canonicalPath="/freestyle-rap"
-  title="Freestyle Rap | Khonsu Development"
+  title={`Freestyle Rap | ${ORG_NAME}`}
   description="Train freestyle rap with beats, tempo control, multilingual rhyme prompts, and recording."
   themeColor="app-freestyle"
   appName="Freestyle Rap"
@@ -207,8 +207,7 @@ const features = [
     },
     {
       q: "Where do the rhymes come from?",
-      aHtml:
-        'The app is powered by <a href="https://double-rhyme.com/" target="_blank" rel="noopener noreferrer">Double Rhyme</a>, the leader in complex rhyme generation, for richer rhyme material than basic lists. Some rhymes are also created and reviewed by users.',
+      aHtml: `The app is powered by <a href="${PARTNER_LINKS.doubleRhyme}" target="_blank" rel="noopener noreferrer">Double Rhyme</a>, the leader in complex rhyme generation, for richer rhyme material than basic lists. Some rhymes are also created and reviewed by users.`,
     },
   ]}
   termsUrl="/freestyle-rap/terms"
