@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/Container.astro";
+import { APP_GOOGLE_PLAY_PACKAGE_IDS, googlePlayListingUrlForApp, type AppGooglePlaySlug } from "../../constants";
 
 export async function getStaticPaths() {
   const apps = await getCollection("apps");
@@ -18,6 +19,9 @@ const { Content } = await render(app);
 if (app.data.websiteUrl && app.data.websiteUrl.startsWith("/") && !app.data.websiteUrl.startsWith("/apps/")) {
   return Astro.redirect(app.data.websiteUrl, 301);
 }
+
+const googlePlayUrl =
+  slug in APP_GOOGLE_PLAY_PACKAGE_IDS ? googlePlayListingUrlForApp(slug as AppGooglePlaySlug) : undefined;
 
 const themeColor = app.data.themeColor;
 const themeStyle = themeColor
@@ -39,7 +43,7 @@ const schemaOrg = {
     .join(", "),
   image: ogImage ? (ogImage.startsWith("http") ? ogImage : `https://www.khonsu.eu${ogImage}`) : undefined,
   url: `https://www.khonsu.eu/apps/${slug}`,
-  downloadUrl: app.data.googlePlayUrl ?? app.data.appStoreUrl,
+  downloadUrl: googlePlayUrl ?? app.data.appStoreUrl,
 };
 ---
 
@@ -129,10 +133,10 @@ const schemaOrg = {
 
               <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
                 {
-                  app.data.googlePlayUrl ? (
+                  googlePlayUrl ? (
                     <a
                       class="inline-flex focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-white/60"
-                      href={app.data.googlePlayUrl}
+                      href={googlePlayUrl}
                       rel="noopener noreferrer"
                       target="_blank"
                       aria-label="Get it on Google Play"

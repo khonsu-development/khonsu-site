@@ -1,5 +1,6 @@
 ---
 import AppLandingAerium from "../../components/AppLandingAerium.astro";
+import { googlePlayListingUrlForApp } from "../../constants";
 
 const heroSpotlightStats = [{ label: "Google Play rating", value: "4.9★" }];
 
@@ -134,7 +135,7 @@ const features = [
   eyebrow="A pocket-sized natural history museum"
   headline="Meet the giants of deep time"
   subhead="Discover 1900+ prehistoric animals, read rich profiles, explore discovery sites, and learn with quizzes that actually stick."
-  googlePlayUrl="https://play.google.com/store/apps/details?id=eu.khonsu.dinosaurs"
+  googlePlayUrl={googlePlayListingUrlForApp("world-of-dinosaurs")}
   screenshots={["/apps/dinosaurs/features/animals.png", "/apps/dinosaurs/features/locations.png"]}
   centerScreenshot="/apps/dinosaurs/features/main-menu.png"
   coverImage="/apps/dinosaurs/cover.jpg"

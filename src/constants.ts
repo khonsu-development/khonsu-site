@@ -14,3 +14,22 @@ export const APP_SOCIAL_LINKS = {
     facebook: "https://www.facebook.com/alphabetsapp",
   },
 } as const;
+
+// Google Play package IDs, keyed by the MDX file slug under `src/content/apps/`.
+// This is the single source of truth for the per-app store listing URL.
+export const APP_GOOGLE_PLAY_PACKAGE_IDS = {
+  "world-of-alphabets": "eu.khonsu.alphabets",
+  "world-of-communism": "eu.khonsu.communism",
+  "world-of-dinosaurs": "eu.khonsu.dinosaurs",
+  "freestyle-rap": "com.lyricspiration.freestyle",
+} as const satisfies Record<string, string>;
+
+export type AppGooglePlaySlug = keyof typeof APP_GOOGLE_PLAY_PACKAGE_IDS;
+
+export function googlePlayListingUrl(packageId: string): string {
+  return `https://play.google.com/store/apps/details?id=${packageId}`;
+}
+
+export function googlePlayListingUrlForApp(slug: AppGooglePlaySlug): string {
+  return googlePlayListingUrl(APP_GOOGLE_PLAY_PACKAGE_IDS[slug]);
+}

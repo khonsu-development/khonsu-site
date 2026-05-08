@@ -1,5 +1,6 @@
 ---
 import AppLandingAerium from "../../components/AppLandingAerium.astro";
+import { googlePlayListingUrlForApp } from "../../constants";
 
 const heroSpotlightStats = [{ label: "Google Play rating", value: "4.7★" }];
 
@@ -89,7 +90,7 @@ const features = [
   eyebrow="Ideas, history, and movements, made navigable"
   headline="Understand the left, clearly"
   subhead="A structured guide to communist, socialist, and anarchist ideas: key thinkers, movements, writings, maps, songs, and quizzes."
-  googlePlayUrl="https://play.google.com/store/apps/details?id=eu.khonsu.communism"
+  googlePlayUrl={googlePlayListingUrlForApp("world-of-communism")}
   screenshots={["/apps/communism/features/person-detail.png", "/apps/communism/features/locations.png"]}
   centerScreenshot="/apps/communism/features/main-menu.png"
   coverImage="/apps/communism/cover.jpg"

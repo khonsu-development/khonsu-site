@@ -1,5 +1,6 @@
 ---
 import AppLandingAerium from "../../components/AppLandingAerium.astro";
+import { googlePlayListingUrlForApp } from "../../constants";
 
 const heroSpotlightStats = [
   { label: "Google Play downloads", value: "140k+" },
@@ -205,7 +206,7 @@ const writingSystemsWithSigns = [
   eyebrow="A writing systems atlas in your pocket"
   headline="Learn writing systems without the overwhelm"
   subhead="Explore 267+ writing systems and 2400+ characters with flashcards and quizzes, plus a world map of scripts."
-  googlePlayUrl="https://play.google.com/store/apps/details?id=eu.khonsu.alphabets"
+  googlePlayUrl={googlePlayListingUrlForApp("world-of-alphabets")}
   screenshots={["/apps/alphabets/features/alphabet-overview.png", "/apps/alphabets/features/script-map.png"]}
   centerScreenshot="/apps/alphabets/features/main-menu.png"
   coverImage="/apps/alphabets/cover.jpg"

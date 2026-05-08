@@ -15,7 +15,6 @@ const apps = defineCollection({
     keywords: z.array(z.string()).default([]),
     topics: z.array(z.string()).default([]),
     platforms: z.array(z.enum(["android", "ios", "web"])).default([]),
-    googlePlayUrl: absoluteOrSitePathUrl.optional(),
     appStoreUrl: absoluteOrSitePathUrl.optional(),
     websiteUrl: absoluteOrSitePathUrl.optional(),
     icon: z.string().optional(),
