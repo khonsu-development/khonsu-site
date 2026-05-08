@@ -5,6 +5,7 @@ import Logo from "../components/Logo.astro";
 import FacebookIcon from "../components/icons/FacebookIcon.astro";
 import GitHubIcon from "../components/icons/GitHubIcon.astro";
 import GooglePlayIcon from "../components/icons/GooglePlayIcon.astro";
+import InstagramIcon from "../components/icons/InstagramIcon.astro";
 import YouTubeIcon from "../components/icons/YouTubeIcon.astro";
 
 type Props = {
@@ -157,13 +158,13 @@ const showAlphabetsFacebook = pathname.startsWith("/alphabets");
 
             <a
               class="inline-flex items-center justify-center text-zinc-300 transition hover:text-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-white/60"
-              href="https://github.com/khonsu-development"
+              href="https://www.instagram.com/khonsu.development/"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="GitHub"
-              title="GitHub"
+              aria-label="Instagram"
+              title="Instagram"
             >
-              <GitHubIcon class="h-5 w-5" />
+              <InstagramIcon class="h-5 w-5" />
             </a>
 
             {
@@ -180,6 +181,17 @@ const showAlphabetsFacebook = pathname.startsWith("/alphabets");
                 </a>
               ) : null
             }
+
+            <a
+              class="inline-flex items-center justify-center text-zinc-300 transition hover:text-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-white/60"
+              href="https://github.com/khonsu-development"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              title="GitHub"
+            >
+              <GitHubIcon class="h-5 w-5" />
+            </a>
 
             <a
               class="inline-flex items-center justify-center text-zinc-300 transition hover:text-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-white/60"
