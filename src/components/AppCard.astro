@@ -9,9 +9,13 @@ type Props = {
 const { app, href } = Astro.props;
 
 const themeColor = app.data.themeColor;
-const style = themeColor
-  ? `--app-primary: var(--color-${themeColor}-primary); --app-secondary: var(--color-${themeColor}-secondary);`
-  : `--app-primary: var(--color-brand); --app-secondary: var(--color-brand2);`;
+/** Freestyle uses dark gray as CSS “primary” for landing pages; cards need the orange accent for hover glows. */
+const style =
+  themeColor === "app-freestyle"
+    ? `--app-primary: var(--color-app-freestyle-orange); --app-secondary: var(--color-app-freestyle-secondary);`
+    : themeColor
+      ? `--app-primary: var(--color-${themeColor}-primary); --app-secondary: var(--color-${themeColor}-secondary);`
+      : `--app-primary: var(--color-brand); --app-secondary: var(--color-brand2);`;
 
 const topics = (app.data.topics ?? []).slice(0, 3);
 const platforms = (app.data.platforms ?? []).filter((p) => p !== "android");
