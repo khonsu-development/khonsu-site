@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import LegalPage from "../components/LegalPage.astro";
+import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO } from "../constants";
 ---
 
 <BaseLayout title="Terms & Conditions | khonsu.eu" canonicalPath="/terms">
@@ -222,7 +223,7 @@ import LegalPage from "../components/LegalPage.astro";
     <h2>Contact Us</h2>
     <p>
       If you have any questions about these Terms and Conditions, you can contact us by email at{" "}
-      <a href="mailto:hello@khonsu.eu"> hello@khonsu.eu. </a>
+      <a href={CONTACT_EMAIL_MAILTO}> {CONTACT_EMAIL}. </a>
     </p>
   </LegalPage>
 </BaseLayout>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import LegalPage from "../components/LegalPage.astro";
+import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO } from "../constants";
 ---
 
 <BaseLayout title="Privacy Policy | khonsu.eu" canonicalPath="/privacy">
@@ -14,7 +15,7 @@ import LegalPage from "../components/LegalPage.astro";
     <p><strong>Controller:</strong> Khonsu Development (Berlin, Germany).</p>
     <p>
       <strong>Email:</strong>{" "}
-      <a href="mailto:hello@khonsu.eu"> hello@khonsu.eu </a>
+      <a href={CONTACT_EMAIL_MAILTO}> {CONTACT_EMAIL} </a>
     </p>
 
     <h2>What we process</h2>

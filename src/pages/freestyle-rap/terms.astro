@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import LegalPage from "../../components/LegalPage.astro";
+import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO } from "../../constants";
 ---
 
 <BaseLayout title="Terms & Conditions | Freestyle Rap" canonicalPath="/freestyle-rap/terms">
@@ -118,7 +119,7 @@ import LegalPage from "../../components/LegalPage.astro";
     <p>
       If you have any questions or suggestions about the Terms and Conditions, please do not hesitate to contact the
       Service Provider at{" "}
-      <a href="mailto:hello@khonsu.eu"> hello@khonsu.eu </a>.
+      <a href={CONTACT_EMAIL_MAILTO}> {CONTACT_EMAIL} </a>.
     </p>
   </LegalPage>
 </BaseLayout>
