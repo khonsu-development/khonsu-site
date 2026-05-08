@@ -13,7 +13,7 @@ Cloudflare Pages settings:
 
 - **Build command**: `pnpm run build`
 - **Output directory**: `dist`
-- **Node.js**: `20` (or newer)
+- **Node.js**: `22` (see `.nvmrc` / `.node-version`)
 
 ## Content model
 
