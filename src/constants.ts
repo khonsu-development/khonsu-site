@@ -40,6 +40,8 @@ export const GOOGLE_PLAY_BADGE_SRC = "/google-play-badges/GetItOnGooglePlay_Badg
 
 export const THIRD_PARTY_POLICY_URLS = {
   googleAdMob: "https://policies.google.com/technologies/ads",
+  googlePrivacy: "https://policies.google.com/privacy",
+  googlePlayTerms: "https://play.google.com/intl/en_us/about/play-terms/",
   firebasePrivacy: "https://firebase.google.com/support/privacy",
   firebaseTerms: "https://firebase.google.com/terms",
 } as const;
@@ -51,6 +53,9 @@ export const PARTNER_LINKS = {
 
 // Last review date applied across all legal pages. Bump when the legal copy is updated.
 export const LEGAL_LAST_UPDATED = "May 6, 2026";
+
+// Freestyle Rap legal pages were last reviewed separately.
+export const LEGAL_FREESTYLE_LAST_UPDATED = "June 17, 2026";
 
 // Original effective date for the per-app terms.
 export const LEGAL_APP_TERMS_EFFECTIVE_DATE = "2024-11-17";

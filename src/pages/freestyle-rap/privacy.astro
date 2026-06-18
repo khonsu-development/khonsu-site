@@ -1,13 +1,13 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import LegalPage from "../../components/LegalPage.astro";
-import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, LEGAL_LAST_UPDATED, THIRD_PARTY_POLICY_URLS } from "../../constants";
+import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, LEGAL_FREESTYLE_LAST_UPDATED, THIRD_PARTY_POLICY_URLS } from "../../constants";
 ---
 
 <BaseLayout title="Privacy Policy | Freestyle Rap" canonicalPath="/freestyle-rap/privacy">
   <LegalPage eyebrow="Freestyle Rap" themeColor="app-freestyle">
     <h1>Privacy Policy for Freestyle Rap</h1>
-    <p><strong>Last updated:</strong> {LEGAL_LAST_UPDATED}</p>
+    <p><strong>Last updated:</strong> {LEGAL_FREESTYLE_LAST_UPDATED}</p>
 
     <p>
       This privacy policy applies to the Freestyle Rap app (the &quot;Application&quot;) for mobile devices, provided by
@@ -18,8 +18,54 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, LEGAL_LAST_UPDATED, THIRD_PARTY_PO
     <h2>What information does the Application process and why?</h2>
     <h3>Information you provide</h3>
     <p>
-      The Application does not require you to create an account. If you contact the Service Provider (for example, by
-      email), the Service Provider will process the information you provide in your message to respond to you.
+      You can use most features of the Application without creating a Google account. If you contact the Service Provider
+      (for example, by email), the Service Provider will process the information you provide in your message to
+      respond to you.
+    </p>
+    <p>
+      If you choose to sign in with Google, the Application processes information from your Google account (such as your
+      email address and profile photo) to show your account in the app and to link purchases and preferences to your
+      account.
+    </p>
+
+    <h3>Optional Google account, purchases, and cloud sync</h3>
+    <p>
+      Signing in with Google is optional for training features, but required before you can buy beats in the Beat Store.
+      When you sign in, the Application links your Google account to a Firebase user profile and may store the following
+      in Google Firebase (Firestore and Cloud Functions), associated with your Firebase user ID:
+    </p>
+    <ul>
+      <li>
+        <strong>Purchase entitlements</strong>: which beats you have unlocked, and metadata needed to verify Google Play
+        purchases and prevent duplicate grants (for example, purchase tokens and product IDs).
+      </li>
+      <li>
+        <strong>Favorite beats</strong>: the list of beat IDs you mark as favorites, so favorites can sync across your
+        devices when you use the same Google account.
+      </li>
+    </ul>
+    <p>
+      Payment card details are processed by Google Play, not by the Service Provider. The Service Provider does not
+      receive your full payment credentials.
+    </p>
+    <p>
+      If you sign out of Google in the Application, cloud sync for favorites stops. Favorites already stored on your
+      device remain there. Purchase entitlements remain linked to your Google account and are available again when you
+      sign back in with the same account.
+    </p>
+
+    <h3>Anonymous app session</h3>
+    <p>
+      The Application may sign you in anonymously to Firebase when you open it. This anonymous session helps deliver beat
+      content and protect backend access (for example, via Firebase App Check). It is not the same as signing in with
+      Google and does not by itself store your favorites or purchases in the cloud.
+    </p>
+
+    <h3>Information stored on your device</h3>
+    <p>
+      The Application stores certain data locally on your device, including freestyle recordings, app settings, cached
+      beat files, favorite beats (when you are not signed in or before sync completes), and purchase state used for
+      offline access. Recordings are not uploaded to the Service Provider&apos;s servers.
     </p>
 
     <h3>Information collected automatically</h3>
@@ -28,7 +74,11 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, LEGAL_LAST_UPDATED, THIRD_PARTY_PO
       such as device information (for example, device model, operating system version), IP address, app version,
       approximate location inferred from IP address, and identifiers associated with your device or app instance (for
       example, the advertising ID). This information is used to deliver ads, measure ad performance, improve stability,
-      and diagnose crashes.
+      diagnose crashes, and understand how the Application is used.
+    </p>
+    <p>
+      Firebase Analytics may receive usage events (for example, which screens you open and freestyle session settings
+      such as beat, language, and speed). These events do not include your audio recordings.
     </p>
 
     <h2>Does the Application collect precise real-time location?</h2>
@@ -41,7 +91,14 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, LEGAL_LAST_UPDATED, THIRD_PARTY_PO
         <a href={THIRD_PARTY_POLICY_URLS.googleAdMob}>Google AdMob</a>
       </li>
       <li>
-        <a href={THIRD_PARTY_POLICY_URLS.firebasePrivacy}>Firebase Crashlytics</a>
+        <a href={THIRD_PARTY_POLICY_URLS.googlePrivacy}>Google</a> (Sign-In and account services)
+      </li>
+      <li>
+        <a href={THIRD_PARTY_POLICY_URLS.googlePlayTerms}>Google Play</a> (in-app purchases and billing)
+      </li>
+      <li>
+        <a href={THIRD_PARTY_POLICY_URLS.firebasePrivacy}>Firebase</a> (Analytics, Crashlytics, Authentication,
+        Firestore, Cloud Functions, App Check, and Storage for beat assets)
       </li>
     </ul>
 
@@ -56,8 +113,12 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, LEGAL_LAST_UPDATED, THIRD_PARTY_PO
         User Messaging Platform (UMP).
       </li>
       <li>
-        <strong>Legitimate interests</strong>: to ensure security, prevent abuse, and diagnose and fix crashes (for
-        example, via Crashlytics).
+        <strong>Contract</strong>: to provide beat purchases, restore entitlements, and sync favorites when you sign in
+        with Google.
+      </li>
+      <li>
+        <strong>Legitimate interests</strong>: to ensure security, prevent abuse, diagnose and fix crashes (for
+        example, via Crashlytics), and understand aggregate app usage (for example, via Analytics).
       </li>
       <li>
         <strong>Legal obligations</strong>: where processing is required to comply with applicable laws.
@@ -76,16 +137,23 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, LEGAL_LAST_UPDATED, THIRD_PARTY_PO
         Android advertising settings).
       </li>
       <li>
-        <strong>Uninstall</strong>: you can stop further data processing by uninstalling the Application.
+        <strong>Google account</strong>: you can sign out in the Application&apos;s account settings. To remove cloud
+        data linked to your account, contact{" "}
+        <a href={CONTACT_EMAIL_MAILTO}>{CONTACT_EMAIL}</a>.
+      </li>
+      <li>
+        <strong>Uninstall</strong>: you can stop further data processing by uninstalling the Application. Local data on
+        the device is removed when the app is uninstalled.
       </li>
     </ul>
 
     <h2>Data retention</h2>
     <p>
-      The Service Provider does not typically receive crash and ad measurement data directly on their own servers. This
-      information is processed by the third-party services listed above and retained according to their retention
-      settings and policies. The Service Provider retains communications (if you contact them) for as long as needed to
-      respond and for a reasonable period thereafter.
+      Crash, analytics, and ad measurement data are processed by the third-party services listed above and retained
+      according to their retention settings and policies. Purchase and favorites data stored in Firebase is kept for as
+      long as needed to provide the service and enforce entitlements, unless you request deletion or the Service Provider
+      no longer needs it for legal or operational reasons. The Service Provider retains communications (if you contact
+      them) for as long as needed to respond and for a reasonable period thereafter.
     </p>
 
     <h2>Children</h2>
@@ -93,7 +161,7 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, LEGAL_LAST_UPDATED, THIRD_PARTY_PO
       The Application is not intended for children and the Service Provider does not knowingly collect personal data
       from children. If you are a parent or guardian and believe your child has provided personal information, contact
       the Service Provider at{" "}
-      <a href={CONTACT_EMAIL_MAILTO}> {CONTACT_EMAIL}. </a>
+      <a href={CONTACT_EMAIL_MAILTO}>{CONTACT_EMAIL}</a>.
     </p>
 
     <h2>Security</h2>
@@ -107,7 +175,7 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, LEGAL_LAST_UPDATED, THIRD_PARTY_PO
       Depending on where you live, you may have rights such as access, rectification, deletion, objection, restriction,
       and portability. If the GDPR (or UK GDPR) applies, you also have the right to lodge a complaint with a supervisory
       authority. To exercise your rights, contact{" "}
-      <a href={CONTACT_EMAIL_MAILTO}> {CONTACT_EMAIL}. </a>
+      <a href={CONTACT_EMAIL_MAILTO}>{CONTACT_EMAIL}</a>.
     </p>
 
     <h2>International transfers</h2>
@@ -125,7 +193,7 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, LEGAL_LAST_UPDATED, THIRD_PARTY_PO
     <h2>Contact us</h2>
     <p>
       If you have questions about privacy while using the Application, contact the Service Provider at{" "}
-      <a href={CONTACT_EMAIL_MAILTO}> {CONTACT_EMAIL}. </a>
+      <a href={CONTACT_EMAIL_MAILTO}>{CONTACT_EMAIL}</a>.
     </p>
   </LegalPage>
 </BaseLayout>
