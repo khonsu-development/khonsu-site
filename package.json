@@ -27,7 +27,7 @@
     "@astrojs/mdx": "^5.0.4",
     "@astrojs/sitemap": "^3.7.2",
     "@tailwindcss/vite": "^4.2.4",
-    "astro": "^6.1.9",
+    "astro": "^6.4.6",
     "photoswipe": "^5.4.4",
     "tailwindcss": "^4.2.4"
   },
