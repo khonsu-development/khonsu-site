@@ -1,0 +1,88 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LegalPage from "../../components/LegalPage.astro";
+import {
+  CONTACT_EMAIL,
+  FREESTYLE_ACCOUNT_DELETION_MAILTO,
+  LEGAL_FREESTYLE_LAST_UPDATED,
+  THIRD_PARTY_POLICY_URLS,
+} from "../../constants";
+---
+
+<BaseLayout title="Account Deletion | Freestyle Rap" canonicalPath="/freestyle-rap/delete-account">
+  <LegalPage eyebrow="Freestyle Rap" themeColor="app-freestyle">
+    <h1>Freestyle Rap account deletion request</h1>
+    <p><strong>Last updated:</strong> {LEGAL_FREESTYLE_LAST_UPDATED}</p>
+
+    <p>
+      This page explains how to request deletion of your Freestyle Rap account and associated cloud data. Freestyle Rap
+      is provided by Lyricspiration and Khonsu Development (the &quot;Service Provider&quot;).
+    </p>
+
+    <h2>How to request account deletion</h2>
+    <ol>
+      <li>
+        Open Freestyle Rap on your device and note the <strong>Google account email</strong> shown in account settings
+        (or the email you used to sign in with Google).
+      </li>
+      <li>
+        Send an email to <a href={FREESTYLE_ACCOUNT_DELETION_MAILTO}>{CONTACT_EMAIL}</a> from that same Google account
+        address. Use the subject line &quot;Freestyle Rap account deletion request&quot; and include the Google account
+        email in the message body.
+      </li>
+      <li>
+        The Service Provider verifies that you own the account, then deletes your Firebase account and linked cloud
+        data described below.
+      </li>
+      <li>The Service Provider confirms by email when deletion is complete.</li>
+    </ol>
+
+    <p>
+      <a href={FREESTYLE_ACCOUNT_DELETION_MAILTO}>Request account deletion by email</a>
+    </p>
+
+    <h2>What will be deleted</h2>
+    <p>When your request is processed, the Service Provider deletes cloud data tied to your Google-linked account:</p>
+    <ul>
+      <li>
+        Your Firebase Authentication profile linked to Google (for example, your email address and profile photo
+        reference).
+      </li>
+      <li>Synced favorite beats stored in Firebase.</li>
+      <li>
+        Cloud purchase entitlements and related verification metadata stored in Firebase (for example, unlocked beat
+        product IDs and purchase tokens used to enforce entitlements).
+      </li>
+    </ul>
+
+    <h2>What is not deleted</h2>
+    <p>The following data is not removed by an account deletion request, or is not controlled by the Service Provider:</p>
+    <ul>
+      <li>
+        <strong>Local app data on your device</strong>, including freestyle recordings, app settings, cached beat files,
+        and offline purchase state. Delete recordings in the app or uninstall Freestyle Rap to remove local data.
+      </li>
+      <li>
+        Data held by <a href={THIRD_PARTY_POLICY_URLS.googlePlayTerms}>Google Play</a> (billing and purchase history),
+        <a href={THIRD_PARTY_POLICY_URLS.firebasePrivacy}>Firebase Analytics</a> and Crashlytics, and{" "}
+        <a href={THIRD_PARTY_POLICY_URLS.googleAdMob}>Google AdMob</a>, retained according to their policies.
+      </li>
+      <li>
+        <strong>Purchase refunds</strong>: deleting your account does not refund past purchases. If you sign in again
+        later with the same Google account, Google Play purchases may be restored when the app re-verifies them.
+      </li>
+    </ul>
+
+    <h2>Processing time</h2>
+    <p>
+      Verified account deletion requests are processed within <strong>30 days</strong>. The Service Provider may contact
+      you if additional verification is needed.
+    </p>
+
+    <h2>Questions</h2>
+    <p>
+      If you have questions about account deletion, contact the Service Provider at{" "}
+      <a href={FREESTYLE_ACCOUNT_DELETION_MAILTO}>{CONTACT_EMAIL}</a>.
+    </p>
+  </LegalPage>
+</BaseLayout>

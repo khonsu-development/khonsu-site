@@ -55,7 +55,10 @@ export const PARTNER_LINKS = {
 export const LEGAL_LAST_UPDATED = "May 6, 2026";
 
 // Freestyle Rap legal pages were last reviewed separately.
-export const LEGAL_FREESTYLE_LAST_UPDATED = "June 17, 2026";
+export const LEGAL_FREESTYLE_LAST_UPDATED = "June 28, 2026";
+
+export const FREESTYLE_ACCOUNT_DELETION_MAILTO =
+  `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Freestyle Rap account deletion request")}&body=${encodeURIComponent("Google account email:\n\nPlease delete my Freestyle Rap account and associated cloud data.")}`;
 
 // Original effective date for the per-app terms.
 export const LEGAL_APP_TERMS_EFFECTIVE_DATE = "2024-11-17";

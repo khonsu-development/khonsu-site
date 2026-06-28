@@ -2,6 +2,8 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import LegalPage from "../../components/LegalPage.astro";
 import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, LEGAL_FREESTYLE_LAST_UPDATED, THIRD_PARTY_POLICY_URLS } from "../../constants";
+
+const FREESTYLE_DELETE_ACCOUNT_PATH = "/freestyle-rap/delete-account";
 ---
 
 <BaseLayout title="Privacy Policy | Freestyle Rap" canonicalPath="/freestyle-rap/privacy">
@@ -137,9 +139,9 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, LEGAL_FREESTYLE_LAST_UPDATED, THIR
         Android advertising settings).
       </li>
       <li>
-        <strong>Google account</strong>: you can sign out in the Application&apos;s account settings. To remove cloud
-        data linked to your account, contact{" "}
-        <a href={CONTACT_EMAIL_MAILTO}>{CONTACT_EMAIL}</a>.
+        <strong>Google account</strong>: you can sign out in the Application&apos;s account settings. To delete your
+        account and remove cloud data linked to it, follow the steps on our{" "}
+        <a href={FREESTYLE_DELETE_ACCOUNT_PATH}>account deletion page</a>.
       </li>
       <li>
         <strong>Uninstall</strong>: you can stop further data processing by uninstalling the Application. Local data on
@@ -174,7 +176,8 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO, LEGAL_FREESTYLE_LAST_UPDATED, THIR
     <p>
       Depending on where you live, you may have rights such as access, rectification, deletion, objection, restriction,
       and portability. If the GDPR (or UK GDPR) applies, you also have the right to lodge a complaint with a supervisory
-      authority. To exercise your rights, contact{" "}
+      authority. To exercise your rights, including account deletion, see our{" "}
+      <a href={FREESTYLE_DELETE_ACCOUNT_PATH}>account deletion page</a> or contact{" "}
       <a href={CONTACT_EMAIL_MAILTO}>{CONTACT_EMAIL}</a>.
     </p>
 
