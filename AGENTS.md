@@ -2,6 +2,10 @@
 
 This repo is a modern marketing site built with **Astro + Tailwind** and deployed on **Cloudflare Pages**.
 
+## Task tracking
+
+Trello is the source of truth for tasks. This site, and work that spans the Khonsu Development apps, is tracked on the [Khonsu Development board](https://trello.com/b/g6H53j4z/khonsu-development). Each app keeps its own board for work that stays inside that app.
+
 ## Quick start
 
 - **Install**: `pnpm install`
